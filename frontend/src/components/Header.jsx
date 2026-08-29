@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, LayoutDashboard, UserPlus, ShieldAlert, Building2, Cpu, Lock, UserCheck, RefreshCw } from 'lucide-react';
+import AshokaStambhaLogo from './AshokaStambhaLogo';
 
 export default function Header({
   persona,
@@ -9,7 +10,9 @@ export default function Header({
   onTriggerAnalytics,
   isRefreshing,
   onOpenCopilot,
-  onOpenCitizenRequest
+  onOpenCitizenRequest,
+  onOpenLogin,
+  loggedInUser
 }) {
   return (
     <header>
@@ -33,21 +36,16 @@ export default function Header({
         </div>
       </div>
 
-      {/* 3. Main eSAKSHI Portal Branding Header */}
+      {/* 3. Main eSAKSHI Header with Ashoka Stambha Emblem */}
       <div className="esakshi-header">
         <div className="esakshi-brand-left">
-          {/* Ashoka Stambh National Emblem SVG */}
-          <svg className="emblem-icon" viewBox="0 0 100 100" fill="#002147">
-            <path d="M50 5 L55 25 L75 25 L60 38 L65 58 L50 45 L35 58 L40 38 L25 25 L45 25 Z" fill="#d97706" />
-            <circle cx="50" cy="65" r="18" fill="none" stroke="#002147" strokeWidth="4" />
-            <path d="M50 47 L50 83 M32 65 L68 65 M37 52 L63 78 M37 78 L63 52" stroke="#002147" strokeWidth="2" />
-            <rect x="20" y="86" width="60" height="8" rx="2" fill="#002147" />
-          </svg>
+          {/* Authentic Ashoka Stambha State Emblem of India Logo */}
+          <AshokaStambhaLogo size={52} color="#002147" showMotto={true} />
 
-          <div>
+          <div style={{ borderLeft: '2px solid #e2e8f0', paddingLeft: '1rem' }}>
             <div className="esakshi-title-hi">सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय</div>
             <div className="esakshi-title-en">MINISTRY OF STATISTICS AND PROGRAMME IMPLEMENTATION</div>
-            <div className="esakshi-subtitle">MPLADS e-SAKSHI Portal • AI Anomaly, Fraud & Inefficiency Risk Intelligence Platform (PS-102)</div>
+            <div className="esakshi-subtitle">MPLADS e-SAKSHI Portal • AI Anomaly, Fraud & Inefficiency Platform (PS-102)</div>
           </div>
         </div>
 
@@ -95,9 +93,17 @@ export default function Header({
         </div>
       </div>
 
-      {/* 4. Official eSAKSHI Navigation Bar (Matching mplads.mospi.gov.in) */}
+      {/* 4. Official eSAKSHI Navigation Bar */}
       <nav className="esakshi-navbar">
         <div className="esakshi-nav-tabs">
+          <button
+            className={`esakshi-nav-btn ${activeTab === 'home' ? 'active' : ''}`}
+            onClick={() => setActiveTab('home')}
+          >
+            <Home size={16} color="var(--esakshi-teal)" />
+            Home
+          </button>
+
           <button
             className={`esakshi-nav-btn ${activeTab === 'alerts' ? 'active' : ''}`}
             onClick={() => setActiveTab('alerts')}
@@ -130,6 +136,14 @@ export default function Header({
             style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', borderColor: 'var(--goi-saffron)', color: '#b45309' }}
           >
             <Cpu size={16} /> Ask AI Copilot (सक्षम AI)
+          </button>
+
+          <button
+            onClick={onOpenLogin}
+            className="btn-esakshi-outline"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', borderColor: '#002147', color: '#002147', fontWeight: 800 }}
+          >
+            <Lock size={15} /> {loggedInUser ? `Officer: ${loggedInUser}` : 'Login'}
           </button>
         </div>
       </nav>

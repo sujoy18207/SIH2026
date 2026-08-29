@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, RefreshCw, User, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
+import AshokaStambhaLogo from './AshokaStambhaLogo';
 
 export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
   const [username, setUsername] = useState('');
@@ -39,7 +40,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         style={{
           width: '90%',
           maxWidth: '850px',
-          height: '520px',
+          height: '540px',
           background: '#ffffff',
           borderRadius: '12px',
           overflow: 'hidden',
@@ -80,7 +81,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             color: '#ffffff',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-end'
+            justify: 'flex-end'
           }}
         >
           <h1 style={{ fontSize: '3rem', fontWeight: 800, letterSpacing: '1px', marginBottom: '0.2rem' }}>
@@ -98,14 +99,9 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
         <div style={{ flex: 1, padding: '2.5rem 2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           {/* Header Emblem */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
-              <svg width="32" height="32" viewBox="0 0 100 100" fill="#002147">
-                <path d="M50 5 L55 25 L75 25 L60 38 L65 58 L50 45 L35 58 L40 38 L25 25 L45 25 Z" fill="#d97706" />
-                <circle cx="50" cy="65" r="18" fill="none" stroke="#002147" strokeWidth="4" />
-                <path d="M50 47 L50 83 M32 65 L68 65 M37 52 L63 78 M37 78 L63 52" stroke="#002147" strokeWidth="2" />
-                <rect x="20" y="86" width="60" height="8" rx="2" fill="#002147" />
-              </svg>
-              <div style={{ textTransform: 'uppercase', fontSize: '0.65rem', fontWeight: 800, color: '#002147', textAlign: 'left', lineHeight: 1.2 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.4rem' }}>
+              <AshokaStambhaLogo size={42} color="#002147" showMotto={true} />
+              <div style={{ textTransform: 'uppercase', fontSize: '0.65rem', fontWeight: 800, color: '#002147', textAlign: 'left', lineHeight: 1.25 }}>
                 Government of India<br />
                 <span style={{ color: '#475569', fontWeight: 600 }}>Ministry of Statistics & Programme Implementation</span>
               </div>
