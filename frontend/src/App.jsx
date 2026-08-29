@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
+import HeroLanding from './components/HeroLanding';
 import OverviewCards from './components/OverviewCards';
 import RiskAlertsFeed from './components/RiskAlertsFeed';
 import AgencyRiskMatrix from './components/AgencyRiskMatrix';
 import InvestigationDrawer from './components/InvestigationDrawer';
 import AICopilotModal from './components/AICopilotModal';
 import CitizenRequestModal from './components/CitizenRequestModal';
+import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
 
 export default function App() {
   const [persona, setPersona] = useState('Ministry');
-  const [activeTab, setActiveTab] = useState('alerts'); // 'alerts' | 'agencies'
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'agencies'
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
+  
+  // Modals
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
   const [isCitizenRequestOpen, setIsCitizenRequestOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchDashboardData = () => {
@@ -53,7 +59,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f4f6f9' }}>
       <Header
         persona={persona}
         setPersona={setPersona}
@@ -63,21 +69,36 @@ export default function App() {
         isRefreshing={isRefreshing}
         onOpenCopilot={() => setIsCopilotOpen(true)}
         onOpenCitizenRequest={() => setIsCitizenRequestOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
+        loggedInUser={loggedInUser}
       />
 
-      <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem 1.5rem', flex: 1 }}>
-        {/* KPI Overview Summary Cards */}
-        <OverviewCards stats={stats} />
+      {/* Landing Hero View */}
+      {activeTab === 'home' && (
+        <HeroLanding
+          onNavigateTab={(tab) => setActiveTab(tab)}
+          onOpenCitizenRequest={() => setIsCitizenRequestOpen(true)}
+          onOpenLogin={() => setIsLoginOpen(true)}
+          onOpenCopilot={() => setIsCopilotOpen(true)}
+        />
+      )}
 
-        {/* Tab Content */}
-        {activeTab === 'alerts' && (
-          <RiskAlertsFeed alerts={alerts} onSelectAlert={(wid) => setSelectedWorkId(wid)} />
-        )}
+      {/* Dashboard & Analytics View */}
+      {activeTab !== 'home' && (
+        <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem 1.5rem', flex: 1 }}>
+          {/* KPI Overview Summary Cards */}
+          <OverviewCards stats={stats} />
 
-        {activeTab === 'agencies' && (
-          <AgencyRiskMatrix />
-        )}
-      </main>
+          {/* Tab Content */}
+          {activeTab === 'alerts' && (
+            <RiskAlertsFeed alerts={alerts} onSelectAlert={(wid) => setSelectedWorkId(wid)} />
+          )}
+
+          {activeTab === 'agencies' && (
+            <AgencyRiskMatrix />
+          )}
+        </main>
+      )}
 
       {/* Investigation Drawer Dossier */}
       <InvestigationDrawer
@@ -96,6 +117,16 @@ export default function App() {
       <CitizenRequestModal
         isOpen={isCitizenRequestOpen}
         onClose={() => setIsCitizenRequestOpen(false)}
+      />
+
+      {/* Official eSAKSHI Split-Screen Login Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={(user) => {
+          setLoggedInUser(user);
+          setActiveTab('alerts');
+        }}
       />
 
       {/* Official Government Footer */}
