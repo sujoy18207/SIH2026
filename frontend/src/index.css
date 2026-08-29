@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap');
 
 :root {
+  --esakshi-teal: #1a936f;
+  --esakshi-teal-dark: #126b51;
+  --esakshi-blue: #0199ca;
   --goi-navy: #002147;
-  --goi-navy-light: #003366;
+  --goi-navy-dark: #00152e;
   --goi-saffron: #d97706;
-  --goi-green: #15803d;
-  --goi-bg: #f1f5f9;
+  --goi-bg: #f4f6f9;
   --goi-card-bg: #ffffff;
   --goi-border: #cbd5e1;
   --goi-text-dark: #0f172a;
@@ -28,7 +30,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
   background-color: var(--goi-bg);
   color: var(--goi-text-dark);
   min-height: 100vh;
@@ -37,17 +39,17 @@ body {
 
 /* Tricolor Top Bar */
 .tricolor-bar {
-  height: 5px;
+  height: 4px;
   background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
   width: 100%;
 }
 
-/* Top Utility & Accessibility Bar */
+/* Accessibility Header */
 .top-utility-bar {
   background: #00152e;
   color: #f1f5f9;
   font-size: 0.78rem;
-  padding: 0.4rem 2rem;
+  padding: 0.35rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,96 +73,135 @@ body {
   cursor: pointer;
 }
 
-/* Main GoI Branding Header */
-.goi-header {
+/* Main Official eSAKSHI Header */
+.esakshi-header {
   background: #ffffff;
-  padding: 1rem 2rem;
-  border-bottom: 2px solid var(--goi-navy);
+  padding: 0.75rem 2rem;
+  border-bottom: 2px solid var(--esakshi-teal);
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.06);
 }
 
-.goi-brand-left {
+.esakshi-brand-left {
   display: flex;
   align-items: center;
   gap: 1.25rem;
 }
 
-.emblem-icon {
-  width: 52px;
-  height: 52px;
+.esakshi-logo-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.goi-title-en {
-  font-size: 1.2rem;
+.emblem-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.esakshi-title-hi {
+  font-family: 'Mukta', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #334155;
+  line-height: 1.2;
+}
+
+.esakshi-title-en {
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--goi-navy);
   letter-spacing: 0.2px;
 }
 
-.goi-title-hi {
-  font-family: 'Mukta', sans-serif;
-  font-size: 1rem;
+.esakshi-subtitle {
+  font-size: 0.8rem;
+  color: var(--esakshi-teal);
   font-weight: 700;
-  color: #334155;
+  letter-spacing: 0.3px;
 }
 
-.sub-title {
-  font-size: 0.78rem;
-  color: #b45309;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Main Navigation Menu Bar */
-.goi-navbar {
-  background: var(--goi-navy);
+/* eSAKSHI Primary Navbar */
+.esakshi-navbar {
+  background: #ffffff;
+  border-bottom: 2px solid #e2e8f0;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
 }
 
-.nav-tabs {
+.esakshi-nav-tabs {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
-.nav-tab-btn {
+.esakshi-nav-btn {
   background: transparent;
   border: none;
-  color: #f8fafc;
-  padding: 0.95rem 1.25rem;
+  color: #334155;
+  padding: 0.85rem 1.2rem;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border-bottom: 4px solid transparent;
+  gap: 0.4rem;
+  border-bottom: 3px solid transparent;
   transition: all 0.2s ease;
 }
 
-.nav-tab-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+.esakshi-nav-btn:hover {
+  color: var(--esakshi-teal);
+  background: #f8fafc;
 }
 
-.nav-tab-btn.active {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border-bottom-color: #f59e0b;
+.esakshi-nav-btn.active {
+  color: var(--esakshi-teal);
+  border-bottom-color: var(--esakshi-teal);
+  font-weight: 800;
 }
 
-/* Marquee Bar */
-.marquee-bar {
-  background: #fffbeb;
-  border-bottom: 1px solid #fde68a;
-  color: #78350f;
+/* Action Buttons */
+.btn-esakshi-teal {
+  background: var(--esakshi-teal);
+  color: #ffffff;
+  border: 1px solid var(--esakshi-teal-dark);
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-esakshi-teal:hover {
+  background: var(--esakshi-teal-dark);
+}
+
+.btn-esakshi-outline {
+  background: #ffffff;
+  color: var(--esakshi-teal);
+  border: 1px solid var(--esakshi-teal);
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-esakshi-outline:hover {
+  background: #f0fdf4;
+}
+
+/* Ticker Bar */
+.esakshi-marquee {
+  background: #f0fdf4;
+  border-bottom: 1px solid #bbf7d0;
+  color: #166534;
   padding: 0.45rem 2rem;
   font-size: 0.825rem;
   font-weight: 600;
@@ -169,12 +210,12 @@ body {
   gap: 0.75rem;
 }
 
-/* Cards & Panels */
+/* Cards & Layout */
 .goi-card {
   background: var(--goi-card-bg);
   border: 1px solid var(--goi-border);
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   margin-bottom: 1.5rem;
   overflow: hidden;
 }
@@ -197,7 +238,7 @@ body {
   gap: 0.5rem;
 }
 
-/* Overview Stat Cards Grid */
+/* KPI Cards Grid */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -208,7 +249,7 @@ body {
 .kpi-card {
   background: #ffffff;
   border: 1px solid var(--goi-border);
-  border-top: 4px solid var(--goi-navy);
+  border-top: 4px solid var(--esakshi-teal);
   border-radius: 6px;
   padding: 1.1rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -216,7 +257,7 @@ body {
 
 .kpi-card.critical { border-top-color: var(--risk-critical); }
 .kpi-card.warning { border-top-color: var(--goi-saffron); }
-.kpi-card.success { border-top-color: var(--goi-green); }
+.kpi-card.success { border-top-color: var(--esakshi-teal); }
 
 .kpi-title {
   font-size: 0.78rem;
@@ -276,7 +317,7 @@ body {
   color: var(--risk-low);
 }
 
-/* Custom Official Data Table */
+/* Data Table */
 .custom-table-container {
   width: 100%;
   overflow-x: auto;
@@ -314,38 +355,6 @@ body {
   cursor: pointer;
 }
 
-/* Official Government Buttons */
-.btn-goi-primary {
-  background: var(--goi-navy);
-  color: #ffffff;
-  border: 1px solid #00152e;
-  padding: 0.5rem 1.1rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.btn-goi-primary:hover {
-  background: var(--goi-navy-light);
-}
-
-.btn-goi-saffron {
-  background: #d97706;
-  color: #ffffff;
-  border: 1px solid #b45309;
-  padding: 0.5rem 1.1rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn-goi-saffron:hover {
-  background: #b45309;
-}
-
 /* Modal Drawer Overlay */
 .modal-overlay {
   position: fixed;
@@ -364,20 +373,20 @@ body {
   max-width: 740px;
   height: 100%;
   background: #ffffff;
-  border-left: 4px solid var(--goi-navy);
+  border-left: 4px solid var(--esakshi-teal);
   padding: 2rem;
   overflow-y: auto;
   box-shadow: -6px 0 25px rgba(0,0,0,0.25);
   color: #0f172a;
 }
 
-/* Official Footer */
+/* Footer */
 .goi-footer {
   background: #00152e;
   color: #cbd5e1;
   font-size: 0.8rem;
   padding: 1.75rem 2rem;
   text-align: center;
-  border-top: 4px solid var(--goi-saffron);
+  border-top: 4px solid var(--esakshi-teal);
   margin-top: 3rem;
 }

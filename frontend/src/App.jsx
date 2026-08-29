@@ -5,6 +5,7 @@ import RiskAlertsFeed from './components/RiskAlertsFeed';
 import AgencyRiskMatrix from './components/AgencyRiskMatrix';
 import InvestigationDrawer from './components/InvestigationDrawer';
 import AICopilotModal from './components/AICopilotModal';
+import CitizenRequestModal from './components/CitizenRequestModal';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
+  const [isCitizenRequestOpen, setIsCitizenRequestOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchDashboardData = () => {
@@ -60,6 +62,7 @@ export default function App() {
         onTriggerAnalytics={handleTriggerAnalytics}
         isRefreshing={isRefreshing}
         onOpenCopilot={() => setIsCopilotOpen(true)}
+        onOpenCitizenRequest={() => setIsCitizenRequestOpen(true)}
       />
 
       <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem 1.5rem', flex: 1 }}>
@@ -76,7 +79,7 @@ export default function App() {
         )}
       </main>
 
-      {/* Investigation Drawer */}
+      {/* Investigation Drawer Dossier */}
       <InvestigationDrawer
         workId={selectedWorkId}
         onClose={() => setSelectedWorkId(null)}
@@ -87,6 +90,12 @@ export default function App() {
       <AICopilotModal
         isOpen={isCopilotOpen}
         onClose={() => setIsCopilotOpen(false)}
+      />
+
+      {/* Citizen Request Portal Modal */}
+      <CitizenRequestModal
+        isOpen={isCitizenRequestOpen}
+        onClose={() => setIsCitizenRequestOpen(false)}
       />
 
       {/* Official Government Footer */}

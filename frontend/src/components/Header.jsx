@@ -1,10 +1,19 @@
 import React from 'react';
-import { ShieldCheck, UserCheck, RefreshCw, Layers, ShieldAlert, Building2, Cpu, FileSpreadsheet } from 'lucide-react';
+import { Home, LayoutDashboard, UserPlus, ShieldAlert, Building2, Cpu, Lock, UserCheck, RefreshCw } from 'lucide-react';
 
-export default function Header({ persona, setPersona, activeTab, setActiveTab, onTriggerAnalytics, isRefreshing, onOpenCopilot }) {
+export default function Header({
+  persona,
+  setPersona,
+  activeTab,
+  setActiveTab,
+  onTriggerAnalytics,
+  isRefreshing,
+  onOpenCopilot,
+  onOpenCitizenRequest
+}) {
   return (
     <header>
-      {/* 1. Tricolor Top Accent Strip */}
+      {/* 1. Tricolor Top Accent Line */}
       <div className="tricolor-bar" />
 
       {/* 2. Top Utility & Accessibility Bar */}
@@ -24,9 +33,9 @@ export default function Header({ persona, setPersona, activeTab, setActiveTab, o
         </div>
       </div>
 
-      {/* 3. Main GoI Branding Header */}
-      <div className="goi-header">
-        <div className="goi-brand-left">
+      {/* 3. Main eSAKSHI Portal Branding Header */}
+      <div className="esakshi-header">
+        <div className="esakshi-brand-left">
           {/* Ashoka Stambh National Emblem SVG */}
           <svg className="emblem-icon" viewBox="0 0 100 100" fill="#002147">
             <path d="M50 5 L55 25 L75 25 L60 38 L65 58 L50 45 L35 58 L40 38 L25 25 L45 25 Z" fill="#d97706" />
@@ -36,14 +45,14 @@ export default function Header({ persona, setPersona, activeTab, setActiveTab, o
           </svg>
 
           <div>
-            <div className="goi-title-hi">सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय</div>
-            <div className="goi-title-en">MINISTRY OF STATISTICS AND PROGRAMME IMPLEMENTATION</div>
-            <div className="sub-title">MPLADS eSAKSHI Portal — AI Risk Intelligence & Decision Support Layer</div>
+            <div className="esakshi-title-hi">सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय</div>
+            <div className="esakshi-title-en">MINISTRY OF STATISTICS AND PROGRAMME IMPLEMENTATION</div>
+            <div className="esakshi-subtitle">MPLADS e-SAKSHI Portal • AI Anomaly, Fraud & Inefficiency Risk Intelligence Platform (PS-102)</div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          {/* Persona Switcher Dropdown */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          {/* Persona Access Switcher */}
           <div style={{
             background: '#f8fafc',
             border: '1px solid #cbd5e1',
@@ -51,10 +60,10 @@ export default function Header({ persona, setPersona, activeTab, setActiveTab, o
             padding: '0.35rem 0.75rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem'
+            gap: '0.4rem'
           }}>
-            <UserCheck size={16} color="#002147" />
-            <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>Persona Access:</span>
+            <UserCheck size={16} color="var(--esakshi-teal)" />
+            <span style={{ fontSize: '0.78rem', color: '#475569', fontWeight: 600 }}>Persona:</span>
             <select
               value={persona}
               onChange={(e) => setPersona(e.target.value)}
@@ -77,53 +86,61 @@ export default function Header({ persona, setPersona, activeTab, setActiveTab, o
           <button
             onClick={onTriggerAnalytics}
             disabled={isRefreshing}
-            className="btn-goi-primary"
+            className="btn-esakshi-outline"
             style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
             <RefreshCw size={14} className={isRefreshing ? 'spin' : ''} />
-            {isRefreshing ? 'Re-Running AI Pipeline...' : 'Re-Run Analytics'}
+            {isRefreshing ? 'Re-Running AI...' : 'Re-Run Analytics'}
           </button>
         </div>
       </div>
 
-      {/* 4. Official GoI Navbar */}
-      <nav className="goi-navbar">
-        <div className="nav-tabs">
+      {/* 4. Official eSAKSHI Navigation Bar (Matching mplads.mospi.gov.in) */}
+      <nav className="esakshi-navbar">
+        <div className="esakshi-nav-tabs">
           <button
-            className={`nav-tab-btn ${activeTab === 'alerts' ? 'active' : ''}`}
+            className={`esakshi-nav-btn ${activeTab === 'alerts' ? 'active' : ''}`}
             onClick={() => setActiveTab('alerts')}
           >
-            <ShieldAlert size={16} color="#FF9933" />
-            Risk Intelligence & Priority Review Feed
+            <ShieldAlert size={16} color="var(--esakshi-teal)" />
+            AI Risk Intelligence & Priority Review Feed
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'agencies' ? 'active' : ''}`}
+            className={`esakshi-nav-btn ${activeTab === 'agencies' ? 'active' : ''}`}
             onClick={() => setActiveTab('agencies')}
           >
-            <Building2 size={16} color="#FF9933" />
-            Implementing Agency Performance Matrix
+            <Building2 size={16} color="var(--esakshi-teal)" />
+            Executing Agency Risk Matrix
           </button>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+          <button
+            onClick={onOpenCitizenRequest}
+            className="btn-esakshi-teal"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+          >
+            <UserPlus size={16} /> Citizen Request Portal
+          </button>
+
           <button
             onClick={onOpenCopilot}
-            className="btn-goi-saffron"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            className="btn-esakshi-outline"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', borderColor: 'var(--goi-saffron)', color: '#b45309' }}
           >
             <Cpu size={16} /> Ask AI Copilot (सक्षम AI)
           </button>
         </div>
       </nav>
 
-      {/* 5. Official Ticker Bar */}
-      <div className="marquee-bar">
-        <span style={{ background: '#d97706', color: '#fff', padding: '0.1rem 0.5rem', borderRadius: '3px', fontSize: '0.7rem', fontWeight: 800 }}>
+      {/* 5. Official Announcement Ticker Bar */}
+      <div className="esakshi-marquee">
+        <span style={{ background: 'var(--esakshi-teal)', color: '#fff', padding: '0.1rem 0.5rem', borderRadius: '3px', fontSize: '0.7rem', fontWeight: 800 }}>
           NOTICE
         </span>
         <span>
-          eSAKSHI Portal AI Decision-Support Monitoring System — Currently analyzing 10,000+ sanctioned MPLADS works across 10 States & 30 Districts for cost overruns, delays, and duplicates.
+          Official eSAKSHI Portal AI Decision-Support Layer — Monitoring 10,000+ sanctioned MPLADS works across 10 States & 30 Districts for cost overruns, timeline delays, and spatial duplicate candidate works.
         </span>
       </div>
     </header>
