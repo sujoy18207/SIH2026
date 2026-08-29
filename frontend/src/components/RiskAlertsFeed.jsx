@@ -13,13 +13,17 @@ export default function RiskAlertsFeed({ alerts, onSelectAlert }) {
       if (!hasSignal) return false;
     }
     if (searchTerm) {
-      const s = searchTerm.toLowerCase();
+      const s = searchTerm.toLowerCase().trim();
       const match = (
-        alert.work_id.toLowerCase().includes(s) ||
-        alert.work_title.toLowerCase().includes(s) ||
-        alert.district.toLowerCase().includes(s) ||
-        alert.mp_name.toLowerCase().includes(s) ||
-        alert.implementing_agency_name.toLowerCase().includes(s)
+        (alert.work_id && alert.work_id.toLowerCase().includes(s)) ||
+        (alert.work_title && alert.work_title.toLowerCase().includes(s)) ||
+        (alert.district && alert.district.toLowerCase().includes(s)) ||
+        (alert.state && alert.state.toLowerCase().includes(s)) ||
+        (alert.constituency && alert.constituency.toLowerCase().includes(s)) ||
+        (alert.mp_name && alert.mp_name.toLowerCase().includes(s)) ||
+        (alert.implementing_agency_name && alert.implementing_agency_name.toLowerCase().includes(s)) ||
+        // Support searching "MLA" / "MP" / "Representative" / local terms
+        (s.includes('mla') || s.includes('mp') || s.includes('rep'))
       );
       if (!match) return false;
     }
@@ -47,12 +51,12 @@ export default function RiskAlertsFeed({ alerts, onSelectAlert }) {
           </span>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <div style={{ position: 'relative', width: '220px' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ position: 'relative', width: '280px' }}>
             <Search size={14} color="#6b7280" style={{ position: 'absolute', left: '10px', top: '10px' }} />
             <input
               type="text"
-              placeholder="Search Work ID, MP..."
+              placeholder="Search MP / MLA / Constituency / District / Work ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
