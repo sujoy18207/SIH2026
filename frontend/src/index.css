@@ -1,0 +1,397 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --goi-navy: #002147;
+  --goi-navy-light: #003366;
+  --goi-saffron: #FF9933;
+  --goi-green: #138808;
+  --goi-bg: #f4f6f9;
+  --goi-card-bg: #ffffff;
+  --goi-border: #dcdfe6;
+  --goi-text-dark: #1a252c;
+  --goi-text-muted: #5c6b73;
+  
+  --risk-critical: #c53030;
+  --risk-critical-bg: #fff5f5;
+  --risk-high: #dd6b20;
+  --risk-high-bg: #fffaf0;
+  --risk-medium: #d69e2e;
+  --risk-medium-bg: #fefcbf;
+  --risk-low: #276749;
+  --risk-low-bg: #f0fff4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--goi-bg);
+  color: var(--goi-text-dark);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Tricolor Top Bar */
+.tricolor-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%);
+  width: 100%;
+}
+
+/* Accessibility & Top Utility Header */
+.top-utility-bar {
+  background: #00152e;
+  color: #d1d5db;
+  font-size: 0.75rem;
+  padding: 0.35rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.utility-links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.font-resizer-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Main GoI Branding Header */
+.goi-header {
+  background: #ffffff;
+  padding: 0.85rem 2rem;
+  border-bottom: 1px solid var(--goi-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.goi-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.emblem-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.goi-title-en {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--goi-navy);
+  letter-spacing: 0.2px;
+}
+
+.goi-title-hi {
+  font-family: 'Mukta', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.sub-title {
+  font-size: 0.78rem;
+  color: var(--goi-saffron);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Main Navigation Menu Bar */
+.goi-navbar {
+  background: var(--goi-navy);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.nav-tab-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-bottom-color: var(--goi-saffron);
+}
+
+/* Marquee Bar */
+.marquee-bar {
+  background: #fff8eb;
+  border-bottom: 1px solid #fee2e2;
+  color: #92400e;
+  padding: 0.4rem 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Card & Panels */
+.goi-card {
+  background: var(--goi-card-bg);
+  border: 1px solid var(--goi-border);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.goi-card-header {
+  background: #f8fafc;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--goi-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goi-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--goi-navy);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Overview Stat Cards Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: #ffffff;
+  border: 1px solid var(--goi-border);
+  border-top: 4px solid var(--goi-navy);
+  border-radius: 6px;
+  padding: 1.1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.kpi-card.critical { border-top-color: var(--risk-critical); }
+.kpi-card.warning { border-top-color: var(--goi-saffron); }
+.kpi-card.success { border-top-color: var(--goi-green); }
+
+.kpi-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--goi-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--goi-navy);
+}
+
+.kpi-sub {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Badges */
+.badge-risk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-risk.critical {
+  background: var(--risk-critical-bg);
+  border: 1px solid var(--risk-critical);
+  color: var(--risk-critical);
+}
+
+.badge-risk.high {
+  background: var(--risk-high-bg);
+  border: 1px solid var(--risk-high);
+  color: var(--risk-high);
+}
+
+.badge-risk.medium {
+  background: var(--risk-medium-bg);
+  border: 1px solid var(--risk-medium);
+  color: #975a16;
+}
+
+.badge-risk.low {
+  background: var(--risk-low-bg);
+  border: 1px solid var(--risk-low);
+  color: var(--risk-low);
+}
+
+/* Progress bar */
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.progress-fill-physical { background: #2563eb; }
+.progress-fill-financial { background: #16a34a; }
+
+/* Custom Official Data Table */
+.custom-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.825rem;
+}
+
+.custom-table th {
+  padding: 0.75rem 0.9rem;
+  background: #002147;
+  color: #ffffff;
+  font-weight: 700;
+  border-bottom: 2px solid #00152e;
+  white-space: nowrap;
+}
+
+.custom-table td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--goi-border);
+  color: var(--goi-text-dark);
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.custom-table tr:hover {
+  background-color: #e0f2fe;
+  cursor: pointer;
+}
+
+/* Official Government Buttons */
+.btn-goi-primary {
+  background: var(--goi-navy);
+  color: #ffffff;
+  border: 1px solid #00152e;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-goi-primary:hover {
+  background: var(--goi-navy-light);
+}
+
+.btn-goi-saffron {
+  background: #d97706;
+  color: #ffffff;
+  border: 1px solid #b45309;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-goi-saffron:hover {
+  background: #b45309;
+}
+
+/* Modal Drawer Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer-content {
+  width: 100%;
+  max-width: 720px;
+  height: 100%;
+  background: #ffffff;
+  border-left: 3px solid var(--goi-navy);
+  padding: 1.75rem;
+  overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+}
+
+/* Official Footer */
+.goi-footer {
+  background: #00152e;
+  color: #9ca3af;
+  font-size: 0.78rem;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-top: 3px solid var(--goi-saffron);
+  margin-top: 3rem;
+}
