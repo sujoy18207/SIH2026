@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ShieldAlert, CheckCircle2, AlertOctagon, MapPin, Copy, Clock, FileText, UserCheck, Send, ShieldCheck, Database, Building2 } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 export default function InvestigationDrawer({ workId, onClose, onSubmitReview }) {
   const [dossier, setDossier] = useState(null);
@@ -16,7 +17,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
   useEffect(() => {
     if (!workId) return;
     setLoading(true);
-    fetch(`http://localhost:8000/api/v1/works/${workId}/investigation`)
+    fetch(`${API_BASE_URL}/api/v1/works/${workId}/investigation`)
       .then(res => res.json())
       .then(data => {
         setDossier(data);
@@ -37,7 +38,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
     setIsSubmitting(true);
     const alertId = dossier.alert.alert_id;
 
-    fetch(`http://localhost:8000/api/v1/alerts/${alertId}/review`, {
+    fetch(`${API_BASE_URL}/api/v1/alerts/${alertId}/review`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

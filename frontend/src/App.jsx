@@ -9,6 +9,7 @@ import AICopilotModal from './components/AICopilotModal';
 import CitizenRequestModal from './components/CitizenRequestModal';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
+import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [persona, setPersona] = useState('Ministry');
@@ -26,12 +27,12 @@ export default function App() {
 
   const fetchDashboardData = () => {
     setIsRefreshing(true);
-    fetch('http://localhost:8000/api/v1/overview')
+    fetch(`${API_BASE_URL}/api/v1/overview`)
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(err => console.error("Failed to fetch overview stats", err));
 
-    fetch('http://localhost:8000/api/v1/alerts?limit=100')
+    fetch(`${API_BASE_URL}/api/v1/alerts?limit=100`)
       .then(res => res.json())
       .then(data => {
         setAlerts(data.alerts || []);
@@ -49,7 +50,7 @@ export default function App() {
 
   const handleTriggerAnalytics = () => {
     setIsRefreshing(true);
-    fetch('http://localhost:8000/api/v1/analytics/run', { method: 'POST' })
+    fetch(`${API_BASE_URL}/api/v1/analytics/run`, { method: 'POST' })
       .then(res => res.json())
       .then(() => fetchDashboardData())
       .catch(err => {

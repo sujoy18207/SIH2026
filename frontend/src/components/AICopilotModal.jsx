@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Cpu, X, Send, Sparkles, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 export default function AICopilotModal({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
@@ -23,7 +24,7 @@ export default function AICopilotModal({ isOpen, onClose }) {
     setQuery('');
     setLoading(true);
 
-    fetch('http://localhost:8000/api/v1/copilot/query', {
+    fetch(`${API_BASE_URL}/api/v1/copilot/query`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: userText })

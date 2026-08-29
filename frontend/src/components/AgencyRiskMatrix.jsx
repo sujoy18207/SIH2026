@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Building2, AlertTriangle, CheckCircle, ShieldAlert } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 export default function AgencyRiskMatrix() {
   const [agencies, setAgencies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/agencies')
+    fetch(`${API_BASE_URL}/api/v1/agencies`)
       .then(res => res.json())
       .then(data => {
         setAgencies(data);
