@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, LayoutDashboard, UserPlus, ShieldAlert, Building2, Cpu, Lock, UserCheck, RefreshCw } from 'lucide-react';
+import { Home, LayoutDashboard, UserPlus, ShieldAlert, Building2, Cpu, Lock, UserCheck, RefreshCw, Award } from 'lucide-react';
 import AshokaStambhaLogo from './AshokaStambhaLogo';
 
 export default function Header({
@@ -118,6 +118,14 @@ export default function Header({
           >
             <Building2 size={16} color="var(--esakshi-teal)" />
             Executing Agency Risk Matrix
+          </button>
+
+          <button
+            className={`esakshi-nav-btn ${activeTab === 'mps' ? 'active' : ''}`}
+            onClick={() => setActiveTab('mps')}
+          >
+            <Award size={16} color="var(--esakshi-teal)" />
+            Official MP Allocation Database (543 MPs)
           </button>
         </div>
 

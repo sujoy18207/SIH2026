@@ -282,3 +282,27 @@ async def copilot_query(req: CopilotQueryReq):
 @app.get("/api/v1/audit-logs")
 def get_audit_logs():
     return AUDIT_LOGS
+
+
+@app.get("/api/v1/mps/allocated-limits")
+def get_official_mp_allocated_limits():
+    excel_path = "Allocated Limit for Honble MPs.xlsx"
+    if os.path.exists(excel_path):
+        try:
+            import pandas as pd
+            df = pd.read_excel(excel_path, engine='calamine', skiprows=1, names=['sr_no', 'state', 'mp_name', 'constituency', 'allocated_amount'])
+            records = []
+            for _, row in df.iterrows():
+                if pd.notna(row['mp_name']) and pd.notna(row['state']):
+                    records.append({
+                        "sr_no": int(row['sr_no']) if pd.notna(row['sr_no']) and str(row['sr_no']).isdigit() else len(records) + 1,
+                        "state": str(row['state']).strip(),
+                        "mp_name": str(row['mp_name']).strip(),
+                        "constituency": str(row['constituency']).strip() if pd.notna(row['constituency']) else "General",
+                        "allocated_amount": float(row['allocated_amount']) if pd.notna(row['allocated_amount']) and str(row['allocated_amount']).replace('.','').isdigit() else 147000000.0
+                    })
+            return {"total": len(records), "source": "Allocated Limit for Honble MPs.xlsx", "mp_allocations": records}
+        except Exception as e:
+            print(f"[WARN] Error reading Excel database ({e})")
+    return {"total": 0, "source": "Not Found", "mp_allocations": []}
+

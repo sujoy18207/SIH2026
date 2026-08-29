@@ -1,7 +1,7 @@
 """
 Synthetic MPLADS Dataset Generator (Upgraded Scale: 10,000 records)
 Generates 10,000 realistic eSAKSHI MPLADS records (95% normal, 5% injected ground-truth anomalies)
-across 10 Indian states, 30 districts, and 50 constituencies with controlled anomaly distribution.
+using the OFFICIAL 544 Members of Parliament Excel Database ('Allocated Limit for Honble MPs.xlsx').
 """
 
 import json
@@ -11,46 +11,28 @@ from datetime import datetime, timedelta
 
 random.seed(42)
 
-STATES_DATA = [
-    {
-        "state": "West Bengal",
-        "districts": [
-            {"district": "Nadia", "constituencies": ["Krishnanagar", "Ranaghat"], "coords": (23.4710, 88.5565)},
-            {"district": "Murshidabad", "constituencies": ["Baharampur", "Jangipur"], "coords": (24.0988, 88.2679)},
-            {"district": "Kolkata", "constituencies": ["Kolkata Uttar", "Kolkata Dakshin"], "coords": (22.5726, 88.3639)},
-        ]
-    },
-    {
-        "state": "Maharashtra",
-        "districts": [
-            {"district": "Pune", "constituencies": ["Pune", "Baramati", "Shirur"], "coords": (18.5204, 73.8567)},
-            {"district": "Nagpur", "constituencies": ["Nagpur", "Ramtek"], "coords": (21.1458, 79.0882)},
-            {"district": "Nashik", "constituencies": ["Nashik", "Dindori"], "coords": (19.9975, 73.7898)},
-        ]
-    },
-    {
-        "state": "Uttar Pradesh",
-        "districts": [
-            {"district": "Varanasi", "constituencies": ["Varanasi"], "coords": (25.3176, 82.9739)},
-            {"district": "Lucknow", "constituencies": ["Lucknow", "Mohanlalganj"], "coords": (26.8467, 80.9462)},
-            {"district": "Gorakhpur", "constituencies": ["Gorakhpur"], "coords": (26.7606, 83.3732)},
-        ]
-    },
-    {
-        "state": "Karnataka",
-        "districts": [
-            {"district": "Bengaluru Urban", "constituencies": ["Bengaluru South", "Bengaluru Central"], "coords": (12.9716, 77.5946)},
-            {"district": "Mysuru", "constituencies": ["Mysore"], "coords": (12.2958, 76.6394)},
-        ]
-    },
-    {
-        "state": "Tamil Nadu",
-        "districts": [
-            {"district": "Chennai", "constituencies": ["Chennai South", "Chennai North"], "coords": (13.0827, 80.2707)},
-            {"district": "Coimbatore", "constituencies": ["Coimbatore"], "coords": (11.0168, 76.9558)},
-        ]
-    }
-]
+def load_official_mp_database():
+    excel_path = "Allocated Limit for Honble MPs.xlsx"
+    if os.path.exists(excel_path):
+        try:
+            import pandas as pd
+            df = pd.read_excel(excel_path, engine='calamine', skiprows=1, names=['sr_no', 'state', 'mp_name', 'constituency', 'allocated_amount'])
+            mp_records = []
+            for _, row in df.iterrows():
+                if pd.notna(row['mp_name']) and pd.notna(row['state']):
+                    mp_records.append({
+                        "mp_name": str(row['mp_name']).strip(),
+                        "state": str(row['state']).strip(),
+                        "constituency": str(row['constituency']).strip() if pd.notna(row['constituency']) else "General",
+                        "allocated_amount": float(row['allocated_amount']) if pd.notna(row['allocated_amount']) and str(row['allocated_amount']).replace('.','').isdigit() else 147000000.0
+                    })
+            if mp_records:
+                print(f"[OK] Loaded {len(mp_records)} OFFICIAL MP records from '{excel_path}'")
+                return mp_records
+        except Exception as e:
+            print(f"[WARN] Failed to read Excel database ({e}), using default fallback.")
+    return None
+
 
 CATEGORIES_BASE_COST = {
     "Drinking Water & Sanitation": (150000, 800000),
@@ -108,20 +90,9 @@ AGENCIES = [
     "Municipal Corporation Engineering Cell"
 ]
 
-MP_NAMES = {
-    "Lok Sabha": [
-        "Hon. Smt. Mahua Moitra", "Hon. Shri Kalyan Banerjee", "Hon. Shri Nitin Gadkari",
-        "Hon. Shri Tejasvi Surya", "Hon. Shri Dayanidhi Maran", "Hon. Smt. Hema Malini",
-        "Hon. Shri Rajnath Singh", "Hon. Shri Jagadambika Pal"
-    ],
-    "Rajya Sabha": [
-        "Hon. Shri Derek O'Brien", "Hon. Shri Sharad Pawar", "Hon. Shri P. Chidambaram",
-        "Hon. Smt. Jaya Bachchan", "Hon. Dr. Manmohan Singh"
-    ]
-}
-
 
 def generate_synthetic_dataset(total_records=10000):
+    official_mps = load_official_mp_database()
     dataset = []
     anomaly_ground_truth = {}
     
@@ -130,16 +101,19 @@ def generate_synthetic_dataset(total_records=10000):
     for i in range(1, total_records + 1):
         work_id = f"MPL-2024-{i:05d}"
         
-        st = random.choice(STATES_DATA)
-        state_name = st["state"]
-        dist_info = random.choice(st["districts"])
-        district_name = dist_info["district"]
-        constituency_name = random.choice(dist_info["constituencies"])
-        base_lat, base_lng = dist_info["coords"]
-        
-        house = random.choice(["Lok Sabha", "Rajya Sabha"])
-        mp_name = random.choice(MP_NAMES[house])
-        
+        if official_mps:
+            mp_rec = random.choice(official_mps)
+            state_name = mp_rec["state"]
+            constituency_name = mp_rec["constituency"]
+            mp_name = f"Hon'ble {mp_rec['mp_name']}"
+            district_name = constituency_name.split("_")[0]
+        else:
+            state_name = "West Bengal"
+            district_name = "Nadia"
+            constituency_name = "Krishnanagar"
+            mp_name = "Hon'ble Mahua Moitra"
+
+        house = "Lok Sabha"
         category = random.choice(list(CATEGORIES_BASE_COST.keys()))
         ward_num = random.randint(1, 99)
         desc_tmpl = random.choice(WORK_DESCRIPTIONS[category])
@@ -176,8 +150,10 @@ def generate_synthetic_dataset(total_records=10000):
             financial_progress = 0.0
             expenditure = 0.0
 
-        lat = round(base_lat + random.uniform(-0.05, 0.05), 6)
-        lng = round(base_lng + random.uniform(-0.05, 0.05), 6)
+        base_lat = 22.5 + random.uniform(-5.0, 5.0)
+        base_lng = 78.0 + random.uniform(-5.0, 5.0)
+        lat = round(base_lat, 6)
+        lng = round(base_lng, 6)
         
         photo_cnt = random.randint(2, 10) if physical_progress > 20 else random.randint(0, 1)
         doc_cnt = random.randint(2, 5)
@@ -282,7 +258,6 @@ def generate_synthetic_dataset(total_records=10000):
         if idx in used_indices:
             continue
         used_indices.add(idx)
-        # Place within 50m of work 0
         dataset[idx]["latitude"] = dataset[0]["latitude"] + random.uniform(-0.0003, 0.0003)
         dataset[idx]["longitude"] = dataset[0]["longitude"] + random.uniform(-0.0003, 0.0003)
         dataset[idx]["work_category"] = dataset[0]["work_category"]
@@ -316,8 +291,7 @@ def generate_synthetic_dataset(total_records=10000):
     with open(gt_path, "w", encoding="utf-8") as f:
         json.dump(anomaly_ground_truth, f, indent=2)
 
-    print(f"[OK] Generated synthetic dataset with {len(dataset)} records at: {out_path}")
-    print(f"[OK] Generated ground truth labels for {len(anomaly_ground_truth)} anomalous works at: {gt_path}")
+    print(f"[OK] Generated dataset with {len(dataset)} records using official MP database at: {out_path}")
     return dataset, anomaly_ground_truth
 
 

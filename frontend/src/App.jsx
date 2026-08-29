@@ -4,6 +4,7 @@ import HeroLanding from './components/HeroLanding';
 import OverviewCards from './components/OverviewCards';
 import RiskAlertsFeed from './components/RiskAlertsFeed';
 import AgencyRiskMatrix from './components/AgencyRiskMatrix';
+import MPAllocatedLimitsTable from './components/MPAllocatedLimitsTable';
 import InvestigationDrawer from './components/InvestigationDrawer';
 import AICopilotModal from './components/AICopilotModal';
 import CitizenRequestModal from './components/CitizenRequestModal';
@@ -13,7 +14,7 @@ import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [persona, setPersona] = useState('Ministry');
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'agencies'
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'agencies' | 'mps'
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
@@ -97,6 +98,10 @@ export default function App() {
 
           {activeTab === 'agencies' && (
             <AgencyRiskMatrix />
+          )}
+
+          {activeTab === 'mps' && (
+            <MPAllocatedLimitsTable />
           )}
         </main>
       )}
