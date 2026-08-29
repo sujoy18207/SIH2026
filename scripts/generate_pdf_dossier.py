@@ -1,7 +1,8 @@
 """
-ReportLab Master PDF Technical Proposal Generator for SIH 2026 PS-102
-Generates a complete, publication-quality technical dossier featuring embedded vector system architecture diagrams,
-high-density data tables, gap analysis, multi-signal AI specs, and empirical validation metrics.
+Academic Research Paper PDF Generator for SIH 2026 PS-102
+Formatted as a formal IEEE / Springer style academic research paper titled:
+"AI-Powered Anomaly, Fraud, and Inefficiency Detection in Public Expenditure:
+A Multi-Signal Decision-Support Framework for the MPLAD Scheme"
 """
 
 import os
@@ -11,11 +12,11 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
 )
-from reportlab.graphics.shapes import Drawing, Rect, String, Line, Group, Polygon
+from reportlab.graphics.shapes import Drawing, Rect, String, Line
 from reportlab.pdfgen import canvas
 
 
-class NumberedCanvas(canvas.Canvas):
+class AcademicPageCanvas(canvas.Canvas):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._saved_page_states = []
@@ -28,79 +29,72 @@ class NumberedCanvas(canvas.Canvas):
         num_pages = len(self._saved_page_states)
         for state in self._saved_page_states:
             self.__dict__.update(state)
-            self.draw_page_decorations(num_pages)
+            self.draw_academic_decorations(num_pages)
             super().showPage()
         super().save()
 
-    def draw_page_decorations(self, page_count):
+    def draw_academic_decorations(self, page_count):
         self.saveState()
-        self.setFont("Helvetica-Bold", 8)
-        self.setFillColor(colors.HexColor("#475569"))
+        self.setFont("Times-Italic", 8)
+        self.setFillColor(colors.HexColor("#334155"))
 
-        # Running Header & Footer for Pages > 1
+        # Running Header for Page > 1 (IEEE Style)
         if self._pageNumber > 1:
-            # Top Tricolor Line
-            self.setFillColor(colors.HexColor("#FF9933"))
-            self.rect(54, letter[1] - 32, (letter[0] - 108) * 0.33, 2.5, fill=True, stroke=False)
-            self.setFillColor(colors.HexColor("#002147"))
-            self.rect(54 + (letter[0] - 108) * 0.33, letter[1] - 32, (letter[0] - 108) * 0.33, 2.5, fill=True, stroke=False)
-            self.setFillColor(colors.HexColor("#138808"))
-            self.rect(54 + (letter[0] - 108) * 0.66, letter[1] - 32, (letter[0] - 108) * 0.34, 2.5, fill=True, stroke=False)
-
-            self.drawString(54, letter[1] - 44, "SIH 2026 PS-102 — AI-Powered MPLADS Monitoring & Risk Intelligence Platform")
-            self.drawRightString(letter[0] - 54, letter[1] - 44, "Technical Architecture Dossier")
-            self.setStrokeColor(colors.HexColor("#CBD5E1"))
+            self.drawString(54, letter[1] - 36, "SIH 2026 PS-102: MULTI-SIGNAL AI FRAMEWORK FOR MPLADS PUBLIC EXPENDITURE MONITORING")
+            self.drawRightString(letter[0] - 54, letter[1] - 36, f"IEEE / SIH RESEARCH PROPOSAL")
+            self.setStrokeColor(colors.HexColor("#94A3B8"))
             self.setLineWidth(0.5)
-            self.line(54, letter[1] - 48, letter[0] - 54, letter[1] - 48)
+            self.line(54, letter[1] - 40, letter[0] - 54, letter[1] - 40)
 
-            # Footer Line & Text
+            # Footer
             self.line(54, 45, letter[0] - 54, 45)
-            self.drawString(54, 32, "Ministry of Statistics and Programme Implementation (MoSPI) • eSAKSHI Decision Support")
-            page_text = f"Page {self._pageNumber} of {page_count}"
+            self.setFont("Times-Roman", 8)
+            self.drawString(54, 32, "Ministry of Statistics & Programme Implementation (MoSPI) • eSAKSHI Decision-Support Layer")
+            page_text = f"{self._pageNumber}"
             self.drawRightString(letter[0] - 54, 32, page_text)
 
         self.restoreState()
 
 
-def create_system_architecture_diagram():
+def create_architecture_diagram():
     """
-    Renders a vector system architecture workflow diagram directly into ReportLab canvas.
+    Renders vector architecture diagram with crisp IEEE styling.
     """
-    d = Drawing(504, 210)
+    d = Drawing(504, 180)
     
-    # Background Canvas Box
-    d.add(Rect(0, 0, 504, 210, fillColor=colors.HexColor("#F8FAFC"), strokeColor=colors.HexColor("#002147"), strokeWidth=1, rx=6, ry=6))
+    # Outer Frame
+    d.add(Rect(0, 0, 504, 180, fillColor=colors.HexColor("#F8FAFC"), strokeColor=colors.HexColor("#1E293B"), strokeWidth=1, rx=4, ry=4))
     
-    # Stage Boxes & Labels
+    # Diagram Title
+    d.add(String(252, 163, "Fig. 1. End-to-End Multi-Signal AI Anomaly & Decision-Support Pipeline Architecture", fontName="Times-Bold", fontSize=9, textAnchor="middle", fillColor=colors.HexColor("#0F172A")))
+    
     boxes = [
-        ("1. Data Ingestion", "eSAKSHI 10K Dataset", 15, 145, 105, 45, "#002147"),
-        ("2. Data Quality", "Missing GPS / Dates", 140, 145, 105, 45, "#0284C7"),
-        ("3. Feature Engg.", "Cost Ratio / Progress Gap", 265, 145, 110, 45, "#002147"),
-        ("4. AI Engines", "Rules + Isolation Forest", 390, 145, 100, 45, "#D97706"),
+        ("Data Ingestion", "eSAKSHI 10K Dataset", 12, 105, 105, 42, "#1E293B"),
+        ("Data Quality", "Completeness 0-100%", 135, 105, 105, 42, "#0284C7"),
+        ("Feature Vector", "Cost Ratio / Progress Gap", 258, 105, 115, 42, "#1E293B"),
+        ("AI Signal Engines", "Rules + Isolation Forest", 388, 105, 104, 42, "#D97706"),
         
-        ("7. Audit Log", "Officer Action Record", 390, 20, 100, 45, "#15803D"),
-        ("6. Explainable Alert", "Priority Review Rec.", 265, 20, 110, 45, "#C53030"),
-        ("5. Risk Engine", "Score & Confidence", 140, 20, 105, 45, "#002147"),
+        ("Audit Logging", "Immutable Action Log", 388, 20, 104, 42, "#15803D"),
+        ("Evidence Dossier", "Explainable Alerts", 258, 20, 115, 42, "#C53030"),
+        ("Policy Risk Engine", "Composite Score 0-100", 135, 20, 105, 42, "#1E293B"),
     ]
 
     for title, desc, x, y, w, h, bg_color in boxes:
-        d.add(Rect(x, y, w, h, fillColor=colors.HexColor(bg_color), strokeColor=colors.HexColor("#0f172a"), strokeWidth=1, rx=4, ry=4))
-        d.add(String(x + w/2, y + h - 16, title, fontName="Helvetica-Bold", fontSize=8.5, textAnchor="middle", fillColor=colors.white))
-        d.add(String(x + w/2, y + 10, desc, fontName="Helvetica", fontSize=7.5, textAnchor="middle", fillColor=colors.HexColor("#F1F5F9")))
+        d.add(Rect(x, y, w, h, fillColor=colors.HexColor(bg_color), strokeColor=colors.HexColor("#0f172a"), strokeWidth=1, rx=3, ry=3))
+        d.add(String(x + w/2, y + h - 14, title, fontName="Helvetica-Bold", fontSize=8, textAnchor="middle", fillColor=colors.white))
+        d.add(String(x + w/2, y + 8, desc, fontName="Helvetica", fontSize=7, textAnchor="middle", fillColor=colors.HexColor("#E2E8F0")))
 
-    # Connector Arrows (Top Row: left to right)
-    d.add(Line(120, 167, 140, 167, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
-    d.add(Line(245, 167, 265, 167, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
-    d.add(Line(375, 167, 390, 167, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
+    # Connectors
+    d.add(Line(117, 126, 135, 126, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
+    d.add(Line(240, 126, 258, 126, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
+    d.add(Line(373, 126, 388, 126, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
 
-    # Connector Arrow (Vertical: Top Right to Bottom Left flow)
-    d.add(Line(440, 145, 440, 105, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
-    d.add(Line(440, 105, 192, 105, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
-    d.add(Line(192, 105, 192, 65, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
+    d.add(Line(440, 105, 440, 72, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
+    d.add(Line(440, 72, 187, 72, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
+    d.add(Line(187, 72, 187, 62, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
 
-    # Connector Arrows (Bottom Row: left to right)
-    d.add(Line(245, 42, 265, 42, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
-    d.add(Line(375, 42, 390, 42, strokeColor=colors.HexColor("#002147"), strokeWidth=2))
+    d.add(Line(240, 41, 258, 41, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
+    d.add(Line(373, 41, 388, 41, strokeColor=colors.HexColor("#1E293B"), strokeWidth=1.5))
 
     return d
 
@@ -118,280 +112,382 @@ def build_pdf_dossier(output_filename="MPLADS_AI_RiskIntel_SIH2026_PS102_Dossier
 
     styles = getSampleStyleSheet()
 
-    PRIMARY_NAVY = colors.HexColor("#002147")
-    SAFFRON = colors.HexColor("#D97706")
-    GREEN = colors.HexColor("#15803D")
-    TEXT_DARK = colors.HexColor("#0F172A")
-    MUTED_GRAY = colors.HexColor("#475569")
-    LIGHT_BG = colors.HexColor("#F8FAFC")
-    BORDER_COLOR = colors.HexColor("#CBD5E1")
-
+    # Academic Typography Styles (Times-Roman / Helvetica)
     title_style = ParagraphStyle(
-        'CoverTitle',
+        'PaperTitle',
         parent=styles['Heading1'],
-        fontName='Helvetica-Bold',
-        fontSize=22,
-        leading=26,
-        textColor=PRIMARY_NAVY,
-        spaceAfter=8
+        fontName='Times-Bold',
+        fontSize=18,
+        leading=22,
+        alignment=1, # Center
+        textColor=colors.HexColor("#0F172A"),
+        spaceAfter=10
     )
 
-    subtitle_style = ParagraphStyle(
-        'CoverSubTitle',
+    author_style = ParagraphStyle(
+        'PaperAuthor',
         parent=styles['Normal'],
-        fontName='Helvetica-Bold',
-        fontSize=11,
-        leading=15,
-        textColor=SAFFRON,
+        fontName='Times-Roman',
+        fontSize=10,
+        leading=13,
+        alignment=1, # Center
+        textColor=colors.HexColor("#334155"),
         spaceAfter=15
     )
 
-    h1_style = ParagraphStyle(
-        'Heading1_Custom',
+    abstract_title_style = ParagraphStyle(
+        'AbstractTitle',
+        parent=styles['Normal'],
+        fontName='Times-BoldItalic',
+        fontSize=9.5,
+        leading=13,
+        textColor=colors.HexColor("#0F172A"),
+        spaceAfter=4
+    )
+
+    abstract_body_style = ParagraphStyle(
+        'AbstractBody',
+        parent=styles['Normal'],
+        fontName='Times-Italic',
+        fontSize=9,
+        leading=13,
+        textColor=colors.HexColor("#1E293B"),
+        spaceAfter=10
+    )
+
+    sec_heading_style = ParagraphStyle(
+        'SecHeading',
         parent=styles['Heading1'],
-        fontName='Helvetica-Bold',
-        fontSize=14,
-        leading=17,
-        textColor=PRIMARY_NAVY,
+        fontName='Times-Bold',
+        fontSize=12,
+        leading=15,
+        textColor=colors.HexColor("#0F172A"),
         spaceBefore=14,
         spaceAfter=6,
         keepWithNext=True
     )
 
-    h2_style = ParagraphStyle(
-        'Heading2_Custom',
+    subsec_heading_style = ParagraphStyle(
+        'SubSecHeading',
         parent=styles['Heading2'],
-        fontName='Helvetica-Bold',
-        fontSize=10.5,
+        fontName='Times-BoldItalic',
+        fontSize=10,
         leading=13,
-        textColor=SAFFRON,
+        textColor=colors.HexColor("#1E293B"),
         spaceBefore=8,
         spaceAfter=4,
         keepWithNext=True
     )
 
     body_style = ParagraphStyle(
-        'Body_Custom',
+        'AcademicBody',
         parent=styles['Normal'],
-        fontName='Helvetica',
-        fontSize=9,
+        fontName='Times-Roman',
+        fontSize=9.5,
         leading=13.5,
-        textColor=TEXT_DARK,
-        spaceAfter=6
+        textColor=colors.HexColor("#0F172A"),
+        spaceAfter=6,
+        firstLineIndent=14
     )
 
     bullet_style = ParagraphStyle(
-        'Bullet_Custom',
+        'AcademicBullet',
         parent=body_style,
-        leftIndent=12,
+        firstLineIndent=0,
+        leftIndent=14,
         spaceAfter=3
+    )
+
+    # CRITICAL FIX: PURE WHITE TEXT FOR TABLE HEADERS
+    table_header_style = ParagraphStyle(
+        'TableHeaderPureWhite',
+        parent=styles['Normal'],
+        fontName='Helvetica-Bold',
+        fontSize=8.5,
+        leading=11,
+        textColor=colors.white, # PURE WHITE COLOR
+        alignment=0
+    )
+
+    table_cell_style = ParagraphStyle(
+        'TableCellDark',
+        parent=styles['Normal'],
+        fontName='Times-Roman',
+        fontSize=8.5,
+        leading=11.5,
+        textColor=colors.HexColor("#0F172A"),
+        alignment=0
     )
 
     story = []
 
     # -------------------------------------------------------------
-    # PAGE 1: TITLE & EXECUTIVE METADATA
+    # RESEARCH PAPER TITLE & AUTHORS
     # -------------------------------------------------------------
     story.append(Spacer(1, 10))
-    story.append(Paragraph("SMART INDIA HACKATHON 2026 — PROBLEM STATEMENT 102", subtitle_style))
-    story.append(Paragraph("AI-Powered MPLADS Anomaly, Fraud & Inefficiency Detection Platform", title_style))
-    story.append(Paragraph("Technical Proposal, Operational Architecture & Multi-Signal AI Engine Specification", ParagraphStyle('Sub', fontName='Helvetica-Bold', fontSize=10, textColor=MUTED_GRAY)))
-    story.append(Spacer(1, 10))
+    story.append(Paragraph("AI-Powered Anomaly, Fraud, and Inefficiency Detection in Public Expenditure: A Multi-Signal Decision-Support Framework for the MPLAD Scheme", title_style))
+    story.append(Paragraph("Smart India Hackathon 2026 Team Proposal • Problem Statement 102<br/>Target Ecosystem: eSAKSHI Portal (Ministry of Statistics and Programme Implementation)", author_style))
 
-    story.append(HRFlowable(width="100%", thickness=2.5, color=SAFFRON, spaceBefore=4, spaceAfter=12))
-
-    meta_data = [
-        [Paragraph("<b>Problem Statement:</b> PS-102", body_style), Paragraph("<b>Target Ministry:</b> MoSPI (Ministry of Statistics)", body_style)],
-        [Paragraph("<b>Domain:</b> Public Expenditure & Risk Analytics", body_style), Paragraph("<b>Benchmark Ecosystem:</b> eSAKSHI (mplads.mospi.gov.in)", body_style)],
-        [Paragraph("<b>Primary Engine:</b> Multi-Signal Risk Engine", body_style), Paragraph("<b>ML Model Precision:</b> 76.07% True Positive Precision", body_style)],
-        [Paragraph("<b>Core Stack:</b> Python FastAPI + React + Scikit-Learn", body_style), Paragraph("<b>Dataset Scale:</b> 10,000 Monitored Works", body_style)]
-    ]
-    t_meta = Table(meta_data, colWidths=[250, 254])
-    t_meta.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), LIGHT_BG),
-        ('BOX', (0, 0), (-1, -1), 1, PRIMARY_NAVY),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('PADDING', (0, 0), (-1, -1), 5),
-    ]))
-    story.append(t_meta)
-    story.append(Spacer(1, 10))
-
-    exec_summary = (
-        "<b>Executive Summary:</b> The Members of Parliament Local Area Development Scheme (MPLADS) is a Central Sector "
-        "Scheme allocating ₹5 Crore annually to each Member of Parliament to recommend durable community asset creation. "
-        "While the Ministry of Statistics and Programme Implementation (MoSPI) launched the eSAKSHI digital portal in April 2023 "
-        "to digitize recommendations, sanctions, and fund flow, the current system operates primarily as a passive administrative database. "
-        "It lacks proactive intelligence to detect inflated cost estimates, physical-vs-financial progress mismatches, spatial duplicate "
-        "works, and systemic contractor delays prior to fund disbursement.<br/><br/>"
-        "Our platform acts as a <b>proactive, multi-signal AI decision-support layer</b> integrated on top of the eSAKSHI ecosystem. "
-        "By fusing Rule-Based Compliance Verification, Unsupervised Machine Learning (Isolation Forest), Natural Language Vector Similarity, "
-        "Haversine GIS Spatial Clustering, Data Quality Scoring, and Implementing Agency Risk Profiling, the platform computes transparent "
-        "Risk Scores (0–100) and Evidence Confidence Scores (0–100%). It triggers actionable <i>'Priority Review Recommended'</i> alerts, "
-        "enabling government authorities to target field audits efficiently without issuing premature administrative accusations."
+    # Abstract & Keywords Box
+    abstract_text = (
+        "<b><i>Abstract</i>—The Members of Parliament Local Area Development Scheme (MPLADS) allocates ₹5 Crore annually per MP for grassroots community asset creation in India. "
+        "While the MoSPI eSAKSHI digital ecosystem digitized recommendation and sanction workflows, current portals function primarily as passive administrative databases lacking proactive analytics prior to fund disbursement. "
+        "This paper presents a novel multi-signal decision-support framework that combines Rule-Based Compliance Verification, Unsupervised Machine Learning (Isolation Forest), N-gram TF-IDF Vector Similarity, Haversine Geospatial Radius Clustering, Data Quality Scoring, and Implementing Agency Portfolio Profiling. "
+        "Tested on a 10,000-record synthetic dataset benchmarked against official eSAKSHI schema, the system achieves 76.07% true-positive precision in isolating cost overruns, physical-vs-financial progress mismatches, and spatial duplicate works while preserving administrative due process.</b>"
     )
-    t_exec = Table([[Paragraph(exec_summary, body_style)]], colWidths=[504])
-    t_exec.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#F0F9FF")),
-        ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#0284C7")),
-        ('PADDING', (0, 0), (-1, -1), 8),
-    ]))
-    story.append(t_exec)
-    story.append(Spacer(1, 10))
-
-    # -------------------------------------------------------------
-    # SECTION 1: SYSTEM ARCHITECTURE WORKFLOW DIAGRAM
-    # -------------------------------------------------------------
-    story.append(Paragraph("1. System Architecture & Workflow Diagram", h1_style))
-    story.append(Paragraph("The visual vector flowchart below illustrates the 7-stage analytical data processing pipeline:", body_style))
-    story.append(Spacer(1, 4))
+    keywords_text = "<b><i>Keywords</i>—Public Expenditure Analytics, MPLADS, eSAKSHI, Isolation Forest, Anomaly Detection, Spatial Proximity, Natural Language Processing, Decision Support.</b>"
     
-    # Embedded Vector Diagram
-    story.append(create_system_architecture_diagram())
-    story.append(Spacer(1, 10))
-
-    story.append(PageBreak())
+    t_abs = Table([
+        [Paragraph(abstract_text, abstract_body_style)],
+        [Paragraph(keywords_text, ParagraphStyle('KW', parent=abstract_body_style, fontName='Times-BoldItalic', fontSize=8.5))]
+    ], colWidths=[504])
+    t_abs.setStyle(TableStyle([
+        ('LINEABOVE', (0, 0), (-1, 0), 1, colors.HexColor("#0F172A")),
+        ('LINEBELOW', (0, -1), (-1, -1), 1, colors.HexColor("#0F172A")),
+        ('PADDING', (0, 0), (-1, -1), 6),
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#F8FAFC"))
+    ]))
+    story.append(t_abs)
+    story.append(Spacer(1, 12))
 
     # -------------------------------------------------------------
-    # SECTION 2: GAP ANALYSIS & COMPARISON TABLE
+    # SECTION I: INTRODUCTION
     # -------------------------------------------------------------
-    story.append(Paragraph("2. Deep Gap Analysis: eSAKSHI Dashboard vs. Proposed AI Layer", h1_style))
+    story.append(Paragraph("I. INTRODUCTION AND DOMAIN BACKGROUND", sec_heading_style))
     story.append(Paragraph(
-        "Our empirical analysis of the live eSAKSHI portal (<code>mplads.mospi.gov.in</code>) established the operational gaps between raw government dashboards and a proactive decision-support intelligence platform:",
+        "Public expenditure monitoring in decentralized infrastructure schemes presents complex analytical challenges. "
+        "Under the MPLAD Scheme, over 800 Members of Parliament recommend thousands of localized development projects annually. "
+        "The primary objective of Problem Statement 102 is to engineer an AI-powered system capable of analyzing work recommendations, "
+        "financial sanctions, expenditure tranches, cost estimates, vendor payments, physical completion milestones, and geographic asset creation.",
+        body_style
+    ))
+    story.append(Paragraph(
+        "Operational bottlenecks in existing implementation frameworks stem from four key vulnerabilities: "
+        "(1) <i>Duplicate Asset Recommendations</i> where identical work descriptions are sanctioned in close geographic proximity; "
+        "(2) <i>Financial vs. Physical Disconnects</i> where vendor tranches are released up to 90% while physical ground progress remains below 20%; "
+        "(3) <i>Cost Estimation Overruns</i> exceeding regional category medians; and "
+        "(4) <i>Agency Risk Concentration</i> where single executing agencies accumulate severe project backlogs.",
         body_style
     ))
 
+    # -------------------------------------------------------------
+    # SECTION II: RELATED WORK AND GAP ANALYSIS
+    # -------------------------------------------------------------
+    story.append(Paragraph("II. RELATED WORK AND GAP ANALYSIS", sec_heading_style))
+    story.append(Paragraph(
+        "Existing public expenditure dashboards, including the current public eSAKSHI dashboard (<code>mplads.mospi.gov.in</code>), "
+        "rely on aggregate statistical reporting. As summarized in Table I, traditional portals lack granular pre-sanction verification capabilities.",
+        body_style
+    ))
+
+    # TABLE I: GAP ANALYSIS TABLE WITH PURE WHITE TEXT HEADERS
     gap_table_data = [
-        [Paragraph("<b>Evaluation Dimension</b>", body_style), Paragraph("<b>Existing eSAKSHI Public Dashboard</b>", body_style), Paragraph("<b>Proposed AI RiskIntel Platform</b>", body_style)],
         [
-            Paragraph("<b>Data Access Scope</b>", body_style),
-            Paragraph("Public aggregate totals (State, MP, Recommended, Sanctioned, Completed amounts).", body_style),
-            Paragraph("Granular work-level analysis, itemized payment tranches, text descriptions, GPS coordinates.", body_style)
+            Paragraph("Evaluation Dimension", table_header_style),
+            Paragraph("Existing eSAKSHI Public Dashboard", table_header_style),
+            Paragraph("Proposed AI RiskIntel Platform", table_header_style)
         ],
         [
-            Paragraph("<b>Monitoring Paradigm</b>", body_style),
-            Paragraph("Reactive record-keeping displaying stats after funds are released.", body_style),
-            Paragraph("Proactive risk intelligence flagging anomalies pre-sanction and pre-disbursement.", body_style)
+            Paragraph("<b>Data Access Scope</b>", table_cell_style),
+            Paragraph("Public aggregate totals (State, MP, Recommended, Sanctioned amounts).", table_cell_style),
+            Paragraph("Granular work-level records, itemized payment tranches, GPS coordinates.", table_cell_style)
         ],
         [
-            Paragraph("<b>Duplicate Work Detection</b>", body_style),
-            Paragraph("None. Relies on manual, physical inspection by district staff.", body_style),
-            Paragraph("Automated N-gram TF-IDF NLP text similarity matched with Haversine GIS radius.", body_style)
+            Paragraph("<b>Monitoring Paradigm</b>", table_cell_style),
+            Paragraph("Reactive record-keeping displaying stats after funds are disbursed.", table_cell_style),
+            Paragraph("Proactive risk intelligence flagging anomalies pre-sanction and pre-disbursement.", table_cell_style)
         ],
         [
-            Paragraph("<b>Cost Benchmarking</b>", body_style),
-            Paragraph("Static administrative estimates without automated peer comparisons.", body_style),
-            Paragraph("Isolation Forest ML benchmarking actual cost against category district medians.", body_style)
+            Paragraph("<b>Duplicate Detection</b>", table_cell_style),
+            Paragraph("None. Relies on manual, physical inspection by district staff.", table_cell_style),
+            Paragraph("Automated N-gram TF-IDF text similarity matched with Haversine GIS radius.", table_cell_style)
         ],
         [
-            Paragraph("<b>Agency Pattern Analysis</b>", body_style),
-            Paragraph("Isolated project processing without cross-project profiling.", body_style),
-            Paragraph("Headline Agency Risk Profiler aggregating delay rates & anomaly frequencies.", body_style)
+            Paragraph("<b>Cost Benchmarking</b>", table_cell_style),
+            Paragraph("Static administrative estimates without automated peer comparisons.", table_cell_style),
+            Paragraph("Isolation Forest ML benchmarking actual cost against category district medians.", table_cell_style)
         ],
         [
-            Paragraph("<b>Data Quality Validation</b>", body_style),
-            Paragraph("Assumes input data is valid without checking missing coordinates or dates.", body_style),
-            Paragraph("Dual scoring: Data Quality Score (0–100%) & Evidence Confidence Score (0–100%).", body_style)
+            Paragraph("<b>Agency Profiling</b>", table_cell_style),
+            Paragraph("Isolated project processing without cross-project profiling.", table_cell_style),
+            Paragraph("Headline Agency Profiler aggregating delay rates & anomaly frequencies.", table_cell_style)
         ],
         [
-            Paragraph("<b>Administrative Audit</b>", body_style),
-            Paragraph("Manual paper filing without structured decision tracking.", body_style),
-            Paragraph("Human-in-the-Loop verification form backed by an append-only audit log.", body_style)
+            Paragraph("<b>Data Quality Scoring</b>", table_cell_style),
+            Paragraph("Assumes input data is valid without checking missing coordinates or dates.", table_cell_style),
+            Paragraph("Dual scoring: Data Quality Score (0–100%) & Evidence Confidence Score (0–100%).", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Audit Trail</b>", table_cell_style),
+            Paragraph("Manual paper filing without structured decision tracking.", table_cell_style),
+            Paragraph("Human-in-the-Loop verification form backed by an append-only audit log.", table_cell_style)
         ]
     ]
 
-    t_gap = Table(gap_table_data, colWidths=[100, 202, 202])
+    t_gap = Table(gap_table_data, colWidths=[110, 197, 197])
     t_gap.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY_NAVY),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('GRID', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#002147")), # DARK NAVY HEADER
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('PADDING', (0, 0), (-1, -1), 5),
-        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, LIGHT_BG])
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor("#F8FAFC")])
     ]))
+    
+    story.append(Paragraph("TABLE I. COMPARATIVE GAP ANALYSIS: eSAKSHI vs. PROPOSED SYSTEM", ParagraphStyle('TabCap', fontName='Times-Bold', fontSize=8.5, alignment=1, spaceAfter=4)))
     story.append(t_gap)
-    story.append(Spacer(1, 12))
-
-    # -------------------------------------------------------------
-    # SECTION 3: WHY OUR SOLUTION IS SUPERIOR
-    # -------------------------------------------------------------
-    story.append(Paragraph("3. Why Our Solution is Superior to Traditional Approaches", h1_style))
-    story.append(Paragraph("1. <b>Multi-Signal Risk Fusion (Not a 'Black-Box' Model):</b> Fuses 5 independent signals (Rules + Isolation Forest ML + NLP Similarity + GIS Spatial Radius + Agency History) into a normalized 0–100 Risk Score.", bullet_style))
-    story.append(Paragraph("2. <b>Defensive Decision Support ('Priority Review Recommended'):</b> Formats outputs as administrative guidance, shielding officials from false positive legal liabilities.", bullet_style))
-    story.append(Paragraph("3. <b>Headline Feature — Agency Risk Profiling:</b> Aggregates delay rates, cost variance, and anomaly counts across an agency's portfolio, uncovering systemic execution bottlenecks.", bullet_style))
-    story.append(Paragraph("4. <b>Dual Metric System (Risk Score vs Evidence Confidence):</b> Distinguishes between <i>'How suspicious is this project?'</i> (Risk Score) and <i>'How reliable is the data?'</i> (Evidence Confidence Score).", bullet_style))
-    story.append(Paragraph("5. <b>100% Local Self-Contained AI Execution:</b> Runs locally on open-source Python libraries without mandatory paid cloud API keys.", bullet_style))
+    story.append(Spacer(1, 10))
 
     story.append(PageBreak())
 
     # -------------------------------------------------------------
-    # SECTION 4: EMPIRICAL EVALUATION METRICS & RESULTS
+    # SECTION III: SYSTEM ARCHITECTURE
     # -------------------------------------------------------------
-    story.append(Paragraph("4. Empirical Evaluation Metrics & Ground Truth Validation", h1_style))
-    story.append(Paragraph("Tested on a 10,000-record dataset containing 500 ground-truth labeled anomaly cases (5% anomaly rate across 7 categories):", body_style))
-
-    eval_metrics_data = [
-        [Paragraph("<b>Evaluation Metric</b>", body_style), Paragraph("<b>Empirical Test Result</b>", body_style), Paragraph("<b>Operational Significance</b>", body_style)],
-        [
-            Paragraph("<b>Precision</b>", body_style),
-            Paragraph("<b>0.7607 (76.07%)</b>", body_style),
-            Paragraph("High precision ensures 76% of flagged alerts represent true anomalies, minimizing officer audit fatigue.", body_style)
-        ],
-        [
-            Paragraph("<b>Recall</b>", body_style),
-            Paragraph("<b>0.4837 (48.37%)</b>", body_style),
-            Paragraph("Captures nearly half of complex multi-vector anomalies in high-stringency policy mode.", body_style)
-        ],
-        [
-            Paragraph("<b>F1 Score</b>", body_style),
-            Paragraph("<b>0.5914 (59.14%)</b>", body_style),
-            Paragraph("Balanced statistical metric for unsupervised multi-signal anomaly detection.", body_style)
-        ],
-        [
-            Paragraph("<b>Dataset Volume</b>", body_style),
-            Paragraph("<b>10,000 Monitored Works</b>", body_style),
-            Paragraph("Evaluated at full state-wide scale (9,500 normal works, 500 ground-truth anomalies).", body_style)
-        ],
-        [
-            Paragraph("<b>Pipeline Execution Speed</b>", body_style),
-            Paragraph("<b>2.74 Seconds</b>", body_style),
-            Paragraph("Analyzes 1,000 works and generates 450+ explainable alerts in under 3 seconds.", body_style)
-        ]
-    ]
-
-    t_eval = Table(eval_metrics_data, colWidths=[120, 140, 244])
-    t_eval.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), PRIMARY_NAVY),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('GRID', (0, 0), (-1, -1), 0.5, BORDER_COLOR),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('PADDING', (0, 0), (-1, -1), 5),
-        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, LIGHT_BG])
-    ]))
-    story.append(t_eval)
-    story.append(Spacer(1, 12))
-
-    # -------------------------------------------------------------
-    # SECTION 5: OFFICIAL GOVERNMENT UX DESIGN
-    # -------------------------------------------------------------
-    story.append(Paragraph("5. Official Government Usability & Design Guidelines", h1_style))
-    story.append(Paragraph("The frontend UI was specifically built following National Informatics Centre (NIC) and Digital India portal guidelines:", body_style))
-    story.append(Paragraph("• <b>Official Color Palette:</b> Deep Navy (<code>#002147</code>), Saffron (<code>#FF9933</code>), India Green (<code>#138808</code>), Off-White (<code>#F1F5F9</code>).", bullet_style))
-    story.append(Paragraph("• <b>Official Header:</b> Features Ashoka Stambh National Emblem SVG, bilingual title <i>('सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय / Ministry of Statistics')</i>, accessibility resizers (A-, A, A+), and language indicator.", bullet_style))
-    story.append(Paragraph("• <b>Information-Dense Layout:</b> High-contrast data tables, crisp risk badges, and official case investigation dossiers over unnecessary flashy animations.", bullet_style))
-
-    story.append(Spacer(1, 12))
-    story.append(HRFlowable(width="100%", thickness=1, color=PRIMARY_NAVY, spaceBefore=8, spaceAfter=12))
-
-    story.append(Paragraph("<b>Conclusion & Pitch Readiness:</b>", h2_style))
+    story.append(Paragraph("III. PROPOSED MULTI-SIGNAL AI SYSTEM ARCHITECTURE", sec_heading_style))
     story.append(Paragraph(
-        "The MPLADS AI RiskIntel Platform provides a production-inspired, prototype-ready decision-support layer for SIH 2026 Problem Statement 102. "
-        "By delivering verified multi-signal risk scoring, transparent evidence explanations, data quality scores, and agency pattern analysis, "
-        "the platform empowers government officials to safeguard public expenditure while maintaining administrative due process.",
+        "The proposed system architecture is designed as a multi-stage analytical pipeline. Fig. 1 illustrates the end-to-end data flow from initial ingestion to administrative audit logging.",
+        body_style
+    ))
+    story.append(Spacer(1, 4))
+    story.append(create_architecture_diagram())
+    story.append(Spacer(1, 10))
+
+    story.append(Paragraph("A. Data Quality Engine & Evidence Confidence Scoring", subsec_heading_style))
+    story.append(Paragraph(
+        "Input records undergo pre-validation by the Data Quality Engine, evaluating missing GPS coordinates, non-standard dates, and incomplete descriptions to produce a Data Quality Score (0–100%). "
+        "The Evidence Confidence Engine further evaluates photo proof count, coordinate precision, and multi-signal consensus to indicate evidence reliability.",
         body_style
     ))
 
-    doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"[OK] Generated Master Proposal PDF Dossier with Embedded Diagram at: {output_filename}")
+    # -------------------------------------------------------------
+    # SECTION IV: METHODOLOGY & ALGORITHM SPECIFICATIONS
+    # -------------------------------------------------------------
+    story.append(Paragraph("IV. METHODOLOGY AND ALGORITHM SPECIFICATIONS", sec_heading_style))
+    
+    story.append(Paragraph("A. Deterministic Rule Engine", subsec_heading_style))
+    story.append(Paragraph(
+        r"Evaluates five compliance rules: (1) Expenditure exceeding sanctioned amount ($E > S$); "
+        r"(2) Financial progress exceeding physical progress by over 30% ($F_{pct} - P_{pct} > 30\%$); "
+        r"(3) Sanction date preceding recommendation date; "
+        r"(4) Severe timeline overdue (>180 days past completion with $<50\%$ physical progress); and "
+        r"(5) Absence of mandatory geo-tagged photographs.",
+        body_style
+    ))
+
+    story.append(Paragraph("B. Unsupervised Machine Learning (Isolation Forest)", subsec_heading_style))
+    story.append(Paragraph(
+        r"An Isolation Forest model (contamination = 0.05) is trained on extracted feature vectors comprising cost deviation ratio ($C / \mu_{cat}$), progress gap ($F_{pct} - P_{pct}$), unit cost per photo, and spending velocity. "
+        r"Isolation Forest constructs decision trees that partition numerical feature space, isolating multivariate statistical outliers efficiently.",
+        body_style
+    ))
+
+    story.append(Paragraph("C. NLP Duplicate Work Detection & GIS Spatial Proximity", subsec_heading_style))
+    story.append(Paragraph(
+        "Work descriptions are vectorized using N-gram TF-IDF representations. Cosine similarity between work pairs is combined with Haversine great-circle spatial distance ($d < 1.0\\text{ km}$):",
+        body_style
+    ))
+    
+    # Equation Box
+    eq_text = "<i>Duplicate_Risk_Score</i> = 0.65 × <i>Cosine_Sim</i>(<i>T_i</i>, <i>T_j</i>) + 0.35 × (1 - <i>d</i> / <i>d_max</i>)"
+    story.append(Paragraph(eq_text, ParagraphStyle('Eq', fontName='Times-Italic', fontSize=9, alignment=1, spaceBefore=4, spaceAfter=6)))
+
+    story.append(Paragraph("D. Headline Feature: Implementing Agency Risk Profiler", subsec_heading_style))
+    story.append(Paragraph(
+        "Rather than evaluating works solely in isolation, the Agency Profiler aggregates historical performance across all projects assigned to an executing agency. "
+        "It computes an Agency Risk Score based on portfolio delay rate, average cost escalation, and historical anomaly frequency.",
+        body_style
+    ))
+
+    # -------------------------------------------------------------
+    # SECTION V: EXPERIMENTAL RESULTS & EVALUATION
+    # -------------------------------------------------------------
+    story.append(Paragraph("V. EXPERIMENTAL RESULTS AND EVALUATION", sec_heading_style))
+    story.append(Paragraph(
+        "The framework was evaluated on a 10,000-record synthetic dataset containing 500 ground-truth labeled anomaly cases (5% anomaly rate across 7 risk categories). "
+        "As detailed in Table II, the multi-signal engine achieved strong empirical precision.",
+        body_style
+    ))
+
+    # TABLE II: EVALUATION METRICS TABLE WITH PURE WHITE HEADERS
+    eval_table_data = [
+        [
+            Paragraph("Evaluation Metric", table_header_style),
+            Paragraph("Empirical Result", table_header_style),
+            Paragraph("Operational Benchmark / Significance", table_header_style)
+        ],
+        [
+            Paragraph("<b>Precision</b>", table_cell_style),
+            Paragraph("<b>0.7607 (76.07%)</b>", table_cell_style),
+            Paragraph("76.07% of flagged alerts represent true anomalies, minimizing officer fatigue.", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Recall</b>", table_cell_style),
+            Paragraph("<b>0.4837 (48.37%)</b>", table_cell_style),
+            Paragraph("Captures nearly half of complex multi-vector anomalies under strict policy mode.", table_cell_style)
+        ],
+        [
+            Paragraph("<b>F1 Score</b>", table_cell_style),
+            Paragraph("<b>0.5914 (59.14%)</b>", table_cell_style),
+            Paragraph("Balanced statistical performance for unsupervised anomaly detection.", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Dataset Scale</b>", table_cell_style),
+            Paragraph("<b>10,000 Works</b>", table_cell_style),
+            Paragraph("Evaluated at full state-wide volume (9,500 normal works, 500 ground-truth anomalies).", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Execution Time</b>", table_cell_style),
+            Paragraph("<b>2.74 Seconds</b>", table_cell_style),
+            Paragraph("Processes 1,000 works and generates 450+ explainable alerts in under 3 seconds.", table_cell_style)
+        ]
+    ]
+
+    t_eval = Table(eval_table_data, colWidths=[110, 140, 254])
+    t_eval.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#002147")), # DARK NAVY HEADER
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#CBD5E1")),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('PADDING', (0, 0), (-1, -1), 5),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor("#F8FAFC")])
+    ]))
+
+    story.append(Paragraph("TABLE II. EMPIRICAL EVALUATION METRICS ON 10,000-WORK BENCHMARK DATASET", ParagraphStyle('TabCap2', fontName='Times-Bold', fontSize=8.5, alignment=1, spaceAfter=4)))
+    story.append(t_eval)
+    story.append(Spacer(1, 10))
+
+    # -------------------------------------------------------------
+    # SECTION VI: GOVERNMENT UX & DECISION SUPPORT
+    # -------------------------------------------------------------
+    story.append(Paragraph("VI. GOVERNMENT UX AND DECISION SUPPORT IMPLEMENTATION", sec_heading_style))
+    story.append(Paragraph(
+        "The user interface was developed in React 19 following National Informatics Centre (NIC) design standards. "
+        "To protect administrative due process, all automated outputs trigger <i>'Priority Review Recommended'</i> alerts rather than autonomous accusations. "
+        "An append-only audit trail records officer verification actions (*Escalated for Site Inspection*, *Verified Valid*, *False Positive*, *Closed with Notice*).",
+        body_style
+    ))
+
+    # -------------------------------------------------------------
+    # SECTION VII: CONCLUSION & REFERENCES
+    # -------------------------------------------------------------
+    story.append(Paragraph("VII. CONCLUSION", sec_heading_style))
+    story.append(Paragraph(
+        "This paper presented an integrated multi-signal AI decision-support platform for SIH 2026 Problem Statement 102. "
+        "By fusing deterministic compliance rules, Isolation Forest statistical models, NLP text similarity, GIS spatial clustering, and agency risk profiling, "
+        "the platform enables proactive risk intelligence while safeguarding public expenditure integrity.",
+        body_style
+    ))
+
+    story.append(Spacer(1, 8))
+    story.append(Paragraph("REFERENCES", ParagraphStyle('RefHeading', fontName='Times-Bold', fontSize=9.5, spaceAfter=4)))
+    refs = [
+        "[1] Ministry of Statistics and Programme Implementation (MoSPI), 'eSAKSHI Portal Guidelines for MPLAD Scheme Implementation,' Government of India, 2023.",
+        "[2] F. T. Liu, K. M. Ting, and Z. H. Zhou, 'Isolation Forest,' in IEEE International Conference on Data Mining (ICDM), pp. 413-422, 2008.",
+        "[3] Smart India Hackathon 2026, 'Problem Statement 102: AI-Powered MPLADS Anomaly, Fraud & Inefficiency Detection System,' MoSPI, 2026."
+    ]
+    for r in refs:
+        story.append(Paragraph(r, ParagraphStyle('RefItem', fontName='Times-Roman', fontSize=8, leading=11, spaceAfter=2)))
+
+    doc.build(story, canvasmaker=AcademicPageCanvas)
+    print(f"[OK] Generated IEEE Academic Research Paper PDF at: {output_filename}")
 
 
 if __name__ == "__main__":
