@@ -5,7 +5,7 @@ and computes Data Quality Score (0-100%) and Evidence Confidence Score (0-100%).
 """
 
 from typing import Dict, Any, List, Tuple
-from backend.app.schemas.mplads import AnomalySignal
+from app.schemas.mplads import AnomalySignal
 
 
 class DataQualityEngine:

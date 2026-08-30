@@ -9,11 +9,11 @@ from fastapi import FastAPI, Query, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.app.schemas.mplads import (
+from app.schemas.mplads import (
     OverviewStats, WorkBase, ExplainableAlert, OfficerReview, AgencyProfile, ReviewAction
 )
-from backend.app.engine.risk_engine import RiskEngine
-from backend.app.services.llm_service import LLMCopilotService
+from app.engine.risk_engine import RiskEngine
+from app.services.llm_service import LLMCopilotService
 
 app = FastAPI(
     title="MPLADS AI Anomaly & Risk Detection Platform API",
@@ -29,7 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_FILE = os.path.join("data", "mplads_synthetic_dataset.json")
+DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "mplads_synthetic_dataset.json")
 RAW_WORKS: List[Dict[str, Any]] = []
 ANALYZED_WORKS: List[Dict[str, Any]] = []
 ALERTS_MAP: Dict[str, ExplainableAlert] = {}
@@ -47,8 +47,12 @@ def load_and_analyze_dataset():
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             RAW_WORKS = json.load(f)
     else:
-        from scripts.generate_synthetic_data import generate_synthetic_dataset
-        RAW_WORKS, _ = generate_synthetic_dataset(10000)
+        from app.engine.synthetic_data import generate_synthetic_dataset
+        RAW_WORKS = generate_synthetic_dataset(5000)
+        # Save for next time
+        os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(RAW_WORKS, f)
 
     alerts, agency_profiles, analyzed_works = risk_engine.analyze_all_works(RAW_WORKS)
     

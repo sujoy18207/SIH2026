@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
 
-from backend.app.schemas.mplads import AnomalySignal, RiskLevel
+from app.schemas.mplads import AnomalySignal, RiskLevel
 
 
 class MLAnomalyEngine:

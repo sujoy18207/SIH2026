@@ -5,7 +5,7 @@ to identify systemic execution delays, cost variance, and anomaly patterns.
 """
 
 from typing import List, Dict, Any
-from backend.app.schemas.mplads import AgencyProfile, RiskLevel, AnomalySignal
+from app.schemas.mplads import AgencyProfile, RiskLevel, AnomalySignal
 
 
 class AgencyRiskProfiler:

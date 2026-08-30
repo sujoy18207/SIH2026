@@ -1,0 +1,181 @@
+[16:12:09] ======================================================================
+[16:12:09] MPLADS e-SAKSHI dashboard scraper starting
+[16:12:09] session cookies: JSESSIONID=gBuVBRPipIWPl9PvtbR8EbNO_1TIUIbbhBdU4BRt.jboss_80...
+[16:12:09] -> getTenureData
+[16:12:10]    tenures: 2 -> [{'ID': 5, 'CAPTION': '17th Lok Sabha'}, {'ID': 7, 'CAPTION': '18th Lok Sabha'}]
+[16:12:10] -> getStateData
+[16:12:10]    states: 36
+[16:12:10] -> per-state MP names + constituencies
+[16:12:46]    total MP-name rows across states (both houses): 778
+[16:12:46] -> getPieChartLabels
+[16:12:47] -> getTilesData (summary tiles) LokSabha
+[16:12:48] -> getTilesData (summary tiles) RajyaSabha
+[16:12:50] -> getTilesReportData LokSabha_alltenures key='Works Recommended'
+[16:20:28]    saved 103,331 rows (90.5 MB) field='Total Works Recommended'
+[16:20:28] -> getTilesReportData LokSabha_alltenures key='Works Sanctioned'
+[16:26:07]    saved 78,233 rows (66.5 MB) field='Total Sanction Work'
+[16:26:07] -> getTilesReportData LokSabha_alltenures key='Works Completed'
+[16:27:40]    saved 33,956 rows (23.1 MB) field='Total Works Completed'
+[16:27:40] -> getTilesReportData LokSabha_alltenures key="Allocated Limit for Hon'ble MPs"
+[16:27:41]    saved 544 rows (0.2 MB) field='Allocated Limit'
+[16:27:41] -> getTilesReportData LokSabha_alltenures key='Expenditure on Completed and On-going Works as on Date'
+[16:31:58]    saved 82,886 rows (61.7 MB) field='Total Expenditure'
+[16:31:58] -> getTilesReportData LokSabha_alltenures key='Amount consented for Calamity'
+[16:31:58]    saved 13 rows (0.0 MB) field='Total Calimity Consent'
+[16:31:58] -> getTilesReportData RajyaSabha_alltenures key='Works Recommended'
+[16:33:39]    saved 24,934 rows (22.6 MB) field='Total Works Recommended'
+[16:33:39] -> getTilesReportData RajyaSabha_alltenures key='Works Sanctioned'
+[16:34:50]    saved 19,275 rows (17.1 MB) field='Total Sanction Work'
+[16:34:50] -> getTilesReportData RajyaSabha_alltenures key='Works Completed'
+[16:35:17]    saved 9,888 rows (7.1 MB) field='Total Works Completed'
+[16:35:17] -> getTilesReportData RajyaSabha_alltenures key="Allocated Limit for Hon'ble MPs"
+[16:35:18]    saved 232 rows (0.1 MB) field='Allocated Limit'
+[16:35:18] -> getTilesReportData RajyaSabha_alltenures key='Expenditure on Completed and On-going Works as on Date'
+[16:36:32]    saved 24,942 rows (19.1 MB) field='Total Expenditure'
+[16:36:32] -> getTilesReportData RajyaSabha_alltenures key='Amount consented for Calamity'
+[16:36:33]    saved 21 rows (0.0 MB) field='Total Calimity Consent'
+[16:36:33] scrape complete
+[16:36:33] ----------------------------------------------------------------------
+[16:36:33] SUMMARY of downloaded data:
+[16:36:33]   c:\DATASET\mplads_data\raw/
+[16:36:33]      calamity_LokSabha_alltenures.json                              4.1 KB
+[16:36:33]      calamity_RajyaSabha_alltenures.json                            6.8 KB
+[16:36:33]      constituencies_state_1.json                                    0.4 KB
+[16:36:33]      constituencies_state_10.json                                   0.1 KB
+[16:36:33]      constituencies_state_11.json                                   0.3 KB
+[16:36:33]      constituencies_state_12.json                                   0.1 KB
+[16:36:33]      constituencies_state_129.json                                  0.6 KB
+[16:36:33]      constituencies_state_13.json                                   0.0 KB
+[16:36:33]      constituencies_state_130.json                                  0.0 KB
+[16:36:33]      constituencies_state_14.json                                   0.3 KB
+[16:36:33]      constituencies_state_15.json                                   0.1 KB
+[16:36:33]      constituencies_state_16.json                                   0.2 KB
+[16:36:33]      constituencies_state_17.json                                   0.5 KB
+[16:36:33]      constituencies_state_18.json                                   0.9 KB
+[16:36:33]      constituencies_state_19.json                                   0.0 KB
+[16:36:33]      constituencies_state_2.json                                    0.8 KB
+[16:36:33]      constituencies_state_20.json                                   0.9 KB
+[16:36:33]      constituencies_state_21.json                                   1.6 KB
+[16:36:33]      constituencies_state_22.json                                   0.1 KB
+[16:36:33]      constituencies_state_23.json                                   0.1 KB
+[16:36:33]      constituencies_state_24.json                                   0.0 KB
+[16:36:33]      constituencies_state_25.json                                   0.7 KB
+[16:36:33]      constituencies_state_26.json                                   0.0 KB
+[16:36:33]      constituencies_state_27.json                                   0.8 KB
+[16:36:33]      constituencies_state_28.json                                   0.8 KB
+[16:36:33]      constituencies_state_29.json                                   0.0 KB
+[16:36:33]      constituencies_state_3.json                                    0.1 KB
+[16:36:33]      constituencies_state_30.json                                   1.3 KB
+[16:36:33]      constituencies_state_31.json                                   0.1 KB
+[16:36:33]      constituencies_state_32.json                                   0.2 KB
+[16:36:33]      constituencies_state_33.json                                   2.6 KB
+[16:36:33]      constituencies_state_34.json                                   1.4 KB
+[16:36:33]      constituencies_state_35.json                                   0.0 KB
+[16:36:33]      constituencies_state_36.json                                   0.7 KB
+[16:36:33]      constituencies_state_5.json                                    0.4 KB
+[16:36:33]      constituencies_state_6.json                                    1.3 KB
+[16:36:33]      constituencies_state_7.json                                    0.0 KB
+[16:36:33]      constituencies_state_8.json                                    0.3 KB
+[16:36:33]      expenditure_LokSabha_alltenures.json                       60234.6 KB
+[16:36:33]      expenditure_RajyaSabha_alltenures.json                     18691.7 KB
+[16:36:33]      mp_allocation_LokSabha_alltenures.json                       172.3 KB
+[16:36:33]      mp_allocation_RajyaSabha_alltenures.json                      78.4 KB
+[16:36:33]      mp_names_state_10_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_10_RajyaSabha.json                              0.0 KB
+[16:36:33]      mp_names_state_11_LokSabha.json                                0.3 KB
+[16:36:33]      mp_names_state_11_RajyaSabha.json                              0.2 KB
+[16:36:33]      mp_names_state_129_LokSabha.json                               0.8 KB
+[16:36:33]      mp_names_state_129_RajyaSabha.json                             0.4 KB
+[16:36:33]      mp_names_state_12_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_12_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_130_LokSabha.json                               0.0 KB
+[16:36:33]      mp_names_state_130_RajyaSabha.json                             0.0 KB
+[16:36:33]      mp_names_state_13_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_13_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_14_LokSabha.json                                0.4 KB
+[16:36:33]      mp_names_state_14_RajyaSabha.json                              0.3 KB
+[16:36:33]      mp_names_state_15_LokSabha.json                                0.2 KB
+[16:36:33]      mp_names_state_15_RajyaSabha.json                              0.2 KB
+[16:36:33]      mp_names_state_16_LokSabha.json                                0.2 KB
+[16:36:33]      mp_names_state_16_RajyaSabha.json                              0.3 KB
+[16:36:33]      mp_names_state_17_LokSabha.json                                0.6 KB
+[16:36:33]      mp_names_state_17_RajyaSabha.json                              0.3 KB
+[16:36:33]      mp_names_state_18_LokSabha.json                                1.3 KB
+[16:36:33]      mp_names_state_18_RajyaSabha.json                              0.8 KB
+[16:36:33]      mp_names_state_19_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_19_RajyaSabha.json                              0.0 KB
+[16:36:33]      mp_names_state_1_LokSabha.json                                 0.6 KB
+[16:36:33]      mp_names_state_1_RajyaSabha.json                               0.4 KB
+[16:36:33]      mp_names_state_20_LokSabha.json                                1.3 KB
+[16:36:33]      mp_names_state_20_RajyaSabha.json                              0.6 KB
+[16:36:33]      mp_names_state_21_LokSabha.json                                2.5 KB
+[16:36:33]      mp_names_state_21_RajyaSabha.json                              1.1 KB
+[16:36:33]      mp_names_state_22_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_22_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_23_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_23_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_24_LokSabha.json                                0.0 KB
+[16:36:33]      mp_names_state_24_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_25_LokSabha.json                                1.0 KB
+[16:36:33]      mp_names_state_25_RajyaSabha.json                              0.6 KB
+[16:36:33]      mp_names_state_26_LokSabha.json                                0.0 KB
+[16:36:33]      mp_names_state_26_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_27_LokSabha.json                                1.3 KB
+[16:36:33]      mp_names_state_27_RajyaSabha.json                              0.6 KB
+[16:36:33]      mp_names_state_28_LokSabha.json                                1.1 KB
+[16:36:33]      mp_names_state_28_RajyaSabha.json                              0.6 KB
+[16:36:33]      mp_names_state_29_LokSabha.json                                0.0 KB
+[16:36:33]      mp_names_state_29_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_2_LokSabha.json                                 1.2 KB
+[16:36:33]      mp_names_state_2_RajyaSabha.json                               0.7 KB
+[16:36:33]      mp_names_state_30_LokSabha.json                                1.7 KB
+[16:36:33]      mp_names_state_30_RajyaSabha.json                              1.1 KB
+[16:36:33]      mp_names_state_31_LokSabha.json                                0.1 KB
+[16:36:33]      mp_names_state_31_RajyaSabha.json                              0.1 KB
+[16:36:33]      mp_names_state_32_LokSabha.json                                0.2 KB
+[16:36:33]      mp_names_state_32_RajyaSabha.json                              0.2 KB
+[16:36:33]      mp_names_state_33_LokSabha.json                                3.5 KB
+[16:36:33]      mp_names_state_33_RajyaSabha.json                              1.7 KB
+[16:36:33]      mp_names_state_34_LokSabha.json                                1.8 KB
+[16:36:33]      mp_names_state_34_RajyaSabha.json                              0.7 KB
+[16:36:33]      mp_names_state_35_LokSabha.json                                0.0 KB
+[16:36:33]      mp_names_state_35_RajyaSabha.json                              0.0 KB
+[16:36:33]      mp_names_state_36_LokSabha.json                                0.9 KB
+[16:36:33]      mp_names_state_36_RajyaSabha.json                              0.6 KB
+[16:36:33]      mp_names_state_3_LokSabha.json                                 0.1 KB
+[16:36:33]      mp_names_state_3_RajyaSabha.json                               0.1 KB
+[16:36:33]      mp_names_state_5_LokSabha.json                                 0.6 KB
+[16:36:33]      mp_names_state_5_RajyaSabha.json                               0.4 KB
+[16:36:33]      mp_names_state_6_LokSabha.json                                 1.7 KB
+[16:36:33]      mp_names_state_6_RajyaSabha.json                               0.8 KB
+[16:36:33]      mp_names_state_7_LokSabha.json                                 0.0 KB
+[16:36:33]      mp_names_state_7_RajyaSabha.json                               0.1 KB
+[16:36:33]      mp_names_state_8_LokSabha.json                                 0.5 KB
+[16:36:33]      mp_names_state_8_RajyaSabha.json                               0.3 KB
+[16:36:33]      pie_labels.json                                                0.2 KB
+[16:36:33]      states.json                                                    1.5 KB
+[16:36:33]      tenures.json                                                   0.1 KB
+[16:36:33]      tiles_summary_LokSabha.json                                    0.5 KB
+[16:36:33]      tiles_summary_RajyaSabha.json                                  0.5 KB
+[16:36:33]      works_completed_LokSabha_alltenures.json                   22575.6 KB
+[16:36:33]      works_completed_RajyaSabha_alltenures.json                  6888.2 KB
+[16:36:33]      works_recommended_LokSabha_alltenures.json                 88342.4 KB
+[16:36:33]      works_recommended_RajyaSabha_alltenures.json               22116.1 KB
+[16:36:33]      works_sanctioned_LokSabha_alltenures.json                  64953.9 KB
+[16:36:33]      works_sanctioned_RajyaSabha_alltenures.json                16672.6 KB
+[16:36:33]   c:\DATASET\mplads_data\csv/
+[16:36:33]      calamity_LokSabha_alltenures.csv                               2.0 KB
+[16:36:33]      calamity_RajyaSabha_alltenures.csv                             3.3 KB
+[16:36:33]      expenditure_LokSabha_alltenures.csv                        30178.2 KB
+[16:36:33]      expenditure_RajyaSabha_alltenures.csv                       9656.4 KB
+[16:36:33]      mp_allocation_LokSabha_alltenures.csv                         73.3 KB
+[16:36:33]      mp_allocation_RajyaSabha_alltenures.csv                       36.0 KB
+[16:36:33]      mp_names_all_states.csv                                       28.1 KB
+[16:36:33]      states.csv                                                     0.6 KB
+[16:36:33]      works_completed_LokSabha_alltenures.csv                    11713.1 KB
+[16:36:33]      works_completed_RajyaSabha_alltenures.csv                   3749.6 KB
+[16:36:33]      works_recommended_LokSabha_alltenures.csv                  44776.1 KB
+[16:36:33]      works_recommended_RajyaSabha_alltenures.csv                11597.1 KB
+[16:36:33]      works_sanctioned_LokSabha_alltenures.csv                   33605.2 KB
+[16:36:33]      works_sanctioned_RajyaSabha_alltenures.csv                  8940.6 KB
+[16:36:33]   total: 466.1 MB

@@ -5,7 +5,7 @@ Evaluates deterministic financial, progress, timeline, and document compliance r
 
 from typing import List, Dict, Any
 from datetime import datetime
-from backend.app.schemas.mplads import AnomalySignal, RiskLevel
+from app.schemas.mplads import AnomalySignal, RiskLevel
 
 
 class RuleEngine:

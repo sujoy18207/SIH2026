@@ -9,8 +9,8 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from backend.app.schemas.mplads import AnomalySignal, RiskLevel
-from backend.app.engine.gis_proximity import calculate_haversine_distance
+from app.schemas.mplads import AnomalySignal, RiskLevel
+from app.engine.gis_proximity import calculate_haversine_distance
 
 
 class NLPDuplicateEngine:

@@ -5,7 +5,7 @@ Computes Haversine distances between asset GPS coordinates to detect geographic 
 
 import math
 from typing import List, Dict, Any, Tuple
-from backend.app.schemas.mplads import AnomalySignal, RiskLevel
+from app.schemas.mplads import AnomalySignal, RiskLevel
 
 
 def calculate_haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:

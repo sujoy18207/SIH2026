@@ -4,7 +4,7 @@ Converts structured risk signals, Data Quality Scores, and Evidence Confidence S
 """
 
 from typing import List, Dict, Any, Optional
-from backend.app.schemas.mplads import RiskScoreBreakdown, AnomalySignal
+from app.schemas.mplads import RiskScoreBreakdown, AnomalySignal
 
 
 def generate_narrative_explanation(

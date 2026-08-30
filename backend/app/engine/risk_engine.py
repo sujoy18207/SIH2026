@@ -7,16 +7,16 @@ computes Data Quality Score & Evidence Confidence Score, and triggers Priority R
 from typing import List, Dict, Any, Tuple
 from datetime import datetime
 
-from backend.app.schemas.mplads import (
+from app.schemas.mplads import (
     ExplainableAlert, RiskScoreBreakdown, RiskLevel, AnomalySignal, AgencyProfile
 )
-from backend.app.engine.data_quality import DataQualityEngine, EvidenceConfidenceEngine
-from backend.app.engine.rule_engine import RuleEngine
-from backend.app.engine.ml_anomaly import MLAnomalyEngine
-from backend.app.engine.nlp_duplicate import NLPDuplicateEngine
-from backend.app.engine.gis_proximity import GISProximityEngine
-from backend.app.engine.agency_risk import AgencyRiskProfiler
-from backend.app.engine.explainability import generate_narrative_explanation
+from app.engine.data_quality import DataQualityEngine, EvidenceConfidenceEngine
+from app.engine.rule_engine import RuleEngine
+from app.engine.ml_anomaly import MLAnomalyEngine
+from app.engine.nlp_duplicate import NLPDuplicateEngine
+from app.engine.gis_proximity import GISProximityEngine
+from app.engine.agency_risk import AgencyRiskProfiler
+from app.engine.explainability import generate_narrative_explanation
 
 
 class RiskEngine:
