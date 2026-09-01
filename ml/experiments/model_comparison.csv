@@ -1,0 +1,11 @@
+model,contamination,n_estimators,n_anomalies,anomaly_pct,mean_anomaly_score,std_anomaly_score,runtime_seconds,notes
+IsolationForest,0.01,100,1280,1.0,12.2,14.8,0.81,
+IsolationForest,0.01,200,1281,1.0,12.5,14.9,1.21,
+IsolationForest,0.02,100,2562,2.0,12.2,14.8,0.63,
+IsolationForest,0.02,200,2562,2.0,12.5,14.9,1.36,
+IsolationForest,0.05,100,6273,4.9,12.2,14.8,0.79,
+IsolationForest,0.05,200,6404,5.0,12.5,14.9,1.6,
+IsolationForest,0.1,100,12808,10.0,12.2,14.8,0.68,
+IsolationForest,0.1,200,12808,10.0,12.5,14.9,1.3,
+LocalOutlierFactor,0.02,-,2557,2.0,0.1,0.8,25.12,n_neighbors=20
+LocalOutlierFactor,0.05,-,6404,5.0,0.1,0.8,23.88,n_neighbors=20

@@ -3,6 +3,7 @@ import Header from './components/Header';
 import HeroLanding from './components/HeroLanding';
 import OverviewCards from './components/OverviewCards';
 import RiskAlertsFeed from './components/RiskAlertsFeed';
+import GeoRiskMap from './components/GeoRiskMap';
 import AgencyRiskMatrix from './components/AgencyRiskMatrix';
 import MPAllocatedLimitsTable from './components/MPAllocatedLimitsTable';
 import InvestigationDrawer from './components/InvestigationDrawer';
@@ -14,7 +15,7 @@ import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [persona, setPersona] = useState('Ministry');
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'agencies' | 'mps'
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'map' | 'agencies' | 'mps'
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
@@ -87,13 +88,17 @@ export default function App() {
 
       {/* Dashboard & Analytics View */}
       {activeTab !== 'home' && (
-        <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem 1.5rem', flex: 1 }}>
+        <main style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 1.5rem', flex: 1 }}>
           {/* KPI Overview Summary Cards */}
           <OverviewCards stats={stats} />
 
           {/* Tab Content */}
           {activeTab === 'alerts' && (
             <RiskAlertsFeed alerts={alerts} onSelectAlert={(wid) => setSelectedWorkId(wid)} />
+          )}
+
+          {activeTab === 'map' && (
+            <GeoRiskMap onSelectAlert={(wid) => setSelectedWorkId(wid)} />
           )}
 
           {activeTab === 'agencies' && (

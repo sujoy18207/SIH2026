@@ -132,7 +132,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
                   </div>
                   <div style={{ background: '#ffffff', padding: '0.4rem 0.6rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
                     <div style={{ fontSize: '0.68rem', color: '#64748b' }}>DUPLICATE RISK</div>
-                    <div style={{ fontWeight: 800, color: '#0284c7' }}>{dossier.alert.risk_breakdown.duplicate_risk_score}%</div>
+                    <div style={{ fontWeight: 800, color: '#0284c7' }}>{dossier.alert.risk_breakdown?.duplicate_risk_score ?? dossier.alert.duplicate_risk_score ?? 0}%</div>
                   </div>
                 </div>
               </div>
@@ -154,16 +154,15 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
                 <div><span style={{ color: '#64748b' }}>Released Payment:</span> <strong>₹{(dossier.work.expenditure / 100000).toFixed(2)} Lakhs</strong></div>
               </div>
 
-              {/* Progress gap */}
+              {/* Financial Fund Utilization */}
               <div style={{ marginTop: '0.8rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.2rem' }}>
-                  <span>Physical Completion: <strong>{dossier.work.physical_progress_pct}%</strong></span>
-                  <span>Financial Progress: <strong>{dossier.work.financial_progress_pct}%</strong></span>
+                  <span>Fund Disbursement Status: <strong>{dossier.work.work_status || 'In Progress'}</strong></span>
+                  <span>Budget Utilization: <strong>{dossier.work.financial_progress_pct || 100}%</strong></span>
                 </div>
 
                 <div className="progress-bar-container" style={{ height: '8px', marginBottom: '0.3rem' }}>
-                  <div className="progress-bar-fill progress-fill-physical" style={{ width: `${dossier.work.physical_progress_pct}%`, position: 'absolute' }} />
-                  <div className="progress-bar-fill progress-fill-financial" style={{ width: `${dossier.work.financial_progress_pct}%`, opacity: 0.6 }} />
+                  <div className="progress-bar-fill progress-fill-financial" style={{ width: `${Math.min(100, dossier.work.financial_progress_pct || 100)}%` }} />
                 </div>
               </div>
             </div>

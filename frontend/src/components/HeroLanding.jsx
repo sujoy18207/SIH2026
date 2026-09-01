@@ -1,256 +1,280 @@
 import React from 'react';
-import { Home, Info, LayoutDashboard, UserPlus, ShieldAlert, FileText, Video, ArrowRight, Lock } from 'lucide-react';
-import AshokaStambhaLogo from './AshokaStambhaLogo';
+import { LayoutDashboard, UserPlus, ShieldAlert, Lock, ArrowRight, Sparkles, CheckCircle2, Search, Database, MapPin } from 'lucide-react';
 
 export default function HeroLanding({ onNavigateTab, onOpenCitizenRequest, onOpenLogin, onOpenCopilot }) {
   return (
-    <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: '#f8fafc' }}>
-      {/* Parliament Aerial Hero Section */}
+    <div style={{ position: 'relative', width: '100%', background: '#f8fafc' }}>
+      
+      {/* High-Impact Hero Banner */}
       <div
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: '520px',
-          backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.75)), url(/parliament_hero_bg.png)`,
+          minHeight: '420px',
+          backgroundImage: `linear-gradient(135deg, rgba(15, 39, 68, 0.92), rgba(10, 25, 47, 0.96)), url(/parliament_hero_bg.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           color: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
-          justify: 'space-between'
+          justifyContent: 'center',
+          padding: '3.5rem 2.5rem 5rem 2.5rem'
         }}
       >
-        {/* Top Floating Glassmorphic Header */}
-        <div style={{
-          padding: '1.25rem 2.5rem',
-          display: 'flex',
-          justify: 'space-between',
-          alignItems: 'center',
-          background: 'rgba(0, 0, 0, 0.35)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
-        }}>
-          {/* Left Ashoka Stambha Emblem Branding */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <AshokaStambhaLogo size={52} color="#ffffff" showMotto={true} />
-            <div style={{ borderLeft: '1px solid rgba(255,255,255,0.3)', paddingLeft: '1rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#f1f5f9', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Government of India
-              </div>
-              <div style={{ fontSize: '1rem', fontWeight: 800, color: '#ffffff' }}>
-                Ministry of Statistics and Programme Implementation
-              </div>
-              <div style={{ fontSize: '0.8rem', color: '#38bdf8', fontWeight: 700 }}>
-                Members of Parliament Local Area Development Scheme (MPLADS)
-              </div>
-            </div>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
+          
+          {/* Subtle Top Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.35rem 0.85rem',
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '20px',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            color: '#38bdf8',
+            marginBottom: '1.25rem'
+          }}>
+            <Sparkles size={14} />
+            Smart India Hackathon 2026 • Problem Statement PS-102
           </div>
 
-          {/* Right Navigation Pills */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <button
-              onClick={() => onNavigateTab('home')}
-              style={{
-                padding: '0.45rem 1rem',
-                background: 'rgba(255, 255, 255, 0.2)',
-                border: 'none',
-                borderRadius: '20px',
-                color: '#ffffff',
-                fontSize: '0.85rem',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              Home
-            </button>
+          {/* Main Title */}
+          <h1 style={{
+            fontSize: '2.75rem',
+            fontWeight: 800,
+            lineHeight: 1.15,
+            marginBottom: '1rem',
+            letterSpacing: '-0.5px'
+          }}>
+            AI-Powered <span style={{ color: '#38bdf8' }}>MPLADS</span> Anomaly & Risk Intelligence
+          </h1>
 
+          <p style={{
+            fontSize: '1.1rem',
+            color: '#cbd5e1',
+            fontWeight: 400,
+            maxWidth: '720px',
+            lineHeight: 1.6,
+            marginBottom: '2rem'
+          }}>
+            Real-time multi-signal monitoring, explainable 0–100 risk prioritization, expenditure anomaly detection, and duplicate work prevention for the eSAKSHI ecosystem.
+          </p>
+
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <button
               onClick={() => onNavigateTab('alerts')}
               style={{
-                padding: '0.45rem 1rem',
-                background: 'rgba(255, 255, 255, 0.12)',
-                border: 'none',
-                borderRadius: '20px',
+                background: '#0d9488',
                 color: '#ffffff',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                cursor: 'pointer'
+                border: 'none',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                boxShadow: '0 4px 14px rgba(13, 148, 136, 0.35)',
+                transition: 'all 0.15s ease'
               }}
             >
-              Dashboard
+              <LayoutDashboard size={18} />
+              Open Risk Dashboard
+            </button>
+
+            <button
+              onClick={() => onNavigateTab('map')}
+              style={{
+                background: '#dc2626',
+                color: '#ffffff',
+                border: 'none',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                boxShadow: '0 4px 14px rgba(220, 38, 38, 0.35)'
+              }}
+            >
+              <MapPin size={18} />
+              Geographic Risk Map
+            </button>
+
+            <button
+              onClick={onOpenCopilot}
+              style={{
+                background: 'rgba(255, 255, 255, 0.12)',
+                color: '#ffffff',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.75rem 1.3rem',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <Sparkles size={18} color="#38bdf8" />
+              Ask AI Copilot
             </button>
 
             <button
               onClick={onOpenCitizenRequest}
               style={{
-                padding: '0.45rem 1rem',
-                background: 'rgba(255, 255, 255, 0.12)',
-                border: 'none',
-                borderRadius: '20px',
-                color: '#ffffff',
-                fontSize: '0.85rem',
+                background: 'transparent',
+                color: '#e2e8f0',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                padding: '0.75rem 1.2rem',
+                borderRadius: '8px',
+                fontSize: '0.9rem',
                 fontWeight: 600,
-                cursor: 'pointer'
-              }}
-            >
-              Citizen Request
-            </button>
-
-            <button
-              onClick={() => onNavigateTab('alerts')}
-              style={{
-                padding: '0.45rem 1rem',
-                background: '#0284c7',
-                border: 'none',
-                borderRadius: '20px',
-                color: '#ffffff',
-                fontSize: '0.85rem',
-                fontWeight: 700,
                 cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}
             >
-              🛡️ AI Risk Platform (PS-102)
-            </button>
-
-            <button
-              onClick={onOpenLogin}
-              style={{
-                padding: '0.45rem 1.4rem',
-                background: '#ffffff',
-                border: 'none',
-                borderRadius: '20px',
-                color: '#002147',
-                fontSize: '0.85rem',
-                fontWeight: 800,
-                cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-              }}
-            >
-              Login
+              <UserPlus size={16} />
+              Citizen Portal
             </button>
           </div>
-        </div>
 
-        {/* Center Hero Banner Title */}
-        <div style={{ padding: '4rem 3rem 2rem 3rem', maxWidth: '850px' }}>
-          <h1 style={{ fontSize: '2.8rem', fontWeight: 800, leading: 1.1, marginBottom: '0.8rem', color: '#ffffff', textShadow: '0 2px 10px rgba(0,0,0,0.6)' }}>
-            <span style={{ color: '#38bdf8' }}>MPLADS:</span> From Local Priorities to National Development
-          </h1>
-          <p style={{ fontSize: '1.15rem', color: '#f1f5f9', fontWeight: 500, textShadow: '0 1px 4px rgba(0,0,0,0.6)', maxWidth: '680px' }}>
-            eSAKSHI — SAnsad sadasya sthaniya KSHetra vIkas yojana.<br />
-            AI-Powered Anomaly, Fraud & Inefficiency Monitoring Ecosystem.
-          </p>
-          <div style={{ width: '60px', height: '4px', background: '#38bdf8', marginTop: '1.2rem', borderRadius: '2px' }} />
-        </div>
-
-        {/* Tricolor Wave Bottom Graphic Overlay */}
-        <div style={{ width: '100%', overflow: 'hidden', lineHeight: 0, marginTop: 'auto' }}>
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ position: 'relative', display: 'block', width: 'calc(100% + 1.3px)', height: '80px' }}>
-            <path d="M0,0 C150,90 350,-40 500,40 C650,120 900,10 1200,60 L1200,120 L0,120 Z" fill="#FF9933" opacity="0.6"></path>
-            <path d="M0,20 C200,100 450,0 700,70 C950,140 1100,20 1200,80 L1200,120 L0,120 Z" fill="#138808" opacity="0.4"></path>
-            <path d="M0,40 C300,110 600,10 900,90 C1050,130 1150,50 1200,100 L1200,120 L0,120 Z" fill="#ffffff"></path>
-          </svg>
         </div>
       </div>
 
-      {/* Quick Action Navigation Grid */}
-      <div style={{ maxWidth: '1200px', margin: '-2.5rem auto 3rem auto', padding: '0 1.5rem', position: 'relative', zIndex: 10 }}>
+      {/* Modern Floating Action Cards */}
+      <div style={{ maxWidth: '1100px', margin: '-2.5rem auto 3.5rem auto', padding: '0 1.5rem', position: 'relative', zIndex: 10 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
           
+          {/* Card 1: Risk Monitoring */}
           <div
             onClick={() => onNavigateTab('alerts')}
             style={{
               background: '#ffffff',
               border: '1px solid #e2e8f0',
-              borderTop: '4px solid #0091ff',
-              borderRadius: '8px',
+              borderRadius: '12px',
               padding: '1.5rem',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
               display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}
           >
-            <div style={{ background: '#e0f2fe', width: '54px', height: '54px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <LayoutDashboard size={26} color="#0091ff" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              <div style={{ background: '#fef2f2', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <ShieldAlert size={24} color="#dc2626" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Anomaly Intelligence</div>
+                <div style={{ fontSize: '0.78rem', color: '#dc2626', fontWeight: 600 }}>128,081 Projects Monitored</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: '#002147' }}>Public Dashboard</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Sanctions & Expenditure Stats</div>
+            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
+              Unsupervised Isolation Forest + Deterministic Compliance Rule checks with explainable scores.
             </div>
           </div>
 
+          {/* Card 2: Agency Risk */}
           <div
-            onClick={() => onNavigateTab('alerts')}
+            onClick={() => onNavigateTab('agencies')}
             style={{
               background: '#ffffff',
               border: '1px solid #e2e8f0',
-              borderTop: '4px solid #c53030',
-              borderRadius: '8px',
+              borderRadius: '12px',
               padding: '1.5rem',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
               display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}
           >
-            <div style={{ background: '#fff5f5', width: '54px', height: '54px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <ShieldAlert size={26} color="#c53030" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              <div style={{ background: '#f0fdfa', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Database size={24} color="#0d9488" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Agency Risk Matrix</div>
+                <div style={{ fontSize: '0.78rem', color: '#0d9488', fontWeight: 600 }}>21,367 Contractors Profiled</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: '#002147' }}>AI Anomaly Platform</div>
-              <div style={{ fontSize: '0.78rem', color: '#9b2c2c', fontWeight: 600 }}>PS-102 Risk Intelligence</div>
+            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
+              Track stall rates, cost overruns, and historical anomaly concentration by implementing agency.
             </div>
           </div>
 
+          {/* Card 3: MP Allocations */}
           <div
-            onClick={onOpenCitizenRequest}
+            onClick={() => onNavigateTab('mps')}
             style={{
               background: '#ffffff',
               border: '1px solid #e2e8f0',
-              borderTop: '4px solid #16a34a',
-              borderRadius: '8px',
+              borderRadius: '12px',
               padding: '1.5rem',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
               display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}
           >
-            <div style={{ background: '#f0fdf4', width: '54px', height: '54px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <UserPlus size={26} color="#16a34a" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              <div style={{ background: '#f0f9ff', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <LayoutDashboard size={24} color="#0284c7" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>MP Allocation Limits</div>
+                <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: 600 }}>544 Parliamentary Limits</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: '#002147' }}>Citizen Request</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Propose Local Need to MP</div>
+            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
+              Monitor sanctioned vs recommended limits, constituency expenditure trends, and fund utilization.
             </div>
           </div>
 
+          {/* Card 4: Officer Login */}
           <div
             onClick={onOpenLogin}
             style={{
               background: '#ffffff',
               border: '1px solid #e2e8f0',
-              borderTop: '4px solid #d97706',
-              borderRadius: '8px',
+              borderRadius: '12px',
               padding: '1.5rem',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
               display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
+              flexDirection: 'column',
+              justifyContent: 'space-between'
             }}
           >
-            <div style={{ background: '#fffbebfb', width: '54px', height: '54px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Lock size={26} color="#d97706" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              <div style={{ background: '#fffbeb', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Lock size={24} color="#d97706" />
+              </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Authorized Review</div>
+                <div style={{ fontSize: '0.78rem', color: '#d97706', fontWeight: 600 }}>MoSPI / District Portal</div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '1rem', color: '#002147' }}>Officer Login</div>
-              <div style={{ fontSize: '0.78rem', color: '#64748b' }}>MoSPI / District Portal</div>
+            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
+              Submit official officer verification remarks, desk audit feedback, and field inspection requests.
             </div>
           </div>
 

@@ -1,0 +1,4952 @@
+{
+  "summary": {
+    "audit_timestamp": "2026-09-01T19:11:42.856911",
+    "data_directory": "C:\\SIH 2026\\mplads_data\\csv",
+    "total_csv_files": 14,
+    "total_rows_all_files": 379069,
+    "total_size_mb": 150.74,
+    "total_duplicate_rows": 0
+  },
+  "join_key_analysis": {
+    "join_key": "WORK_RECOMMENDATION_DTL_ID",
+    "datasets_with_key": {
+      "expenditure_LokSabha_alltenures.csv": 55773,
+      "expenditure_RajyaSabha_alltenures.csv": 15190,
+      "works_completed_LokSabha_alltenures.csv": 33955,
+      "works_completed_RajyaSabha_alltenures.csv": 9887,
+      "works_recommended_LokSabha_alltenures.csv": 103330,
+      "works_recommended_RajyaSabha_alltenures.csv": 24887,
+      "works_sanctioned_LokSabha_alltenures.csv": 78232,
+      "works_sanctioned_RajyaSabha_alltenures.csv": 19274
+    },
+    "pairwise_overlap": {
+      "expenditure_LokSabha_alltenures.csv ∩ expenditure_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 55773,
+        "b_total": 15190,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_completed_LokSabha_alltenures.csv": {
+        "common_ids": 33875,
+        "a_total": 55773,
+        "b_total": 33955,
+        "a_pct": 60.7,
+        "b_pct": 99.8
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_completed_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 55773,
+        "b_total": 9887,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_recommended_LokSabha_alltenures.csv": {
+        "common_ids": 55532,
+        "a_total": 55773,
+        "b_total": 103330,
+        "a_pct": 99.6,
+        "b_pct": 53.7
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_recommended_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 55773,
+        "b_total": 24887,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 55773,
+        "a_total": 55773,
+        "b_total": 78232,
+        "a_pct": 100.0,
+        "b_pct": 71.3
+      },
+      "expenditure_LokSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 55773,
+        "b_total": 19274,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_completed_LokSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 15190,
+        "b_total": 33955,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_completed_RajyaSabha_alltenures.csv": {
+        "common_ids": 9867,
+        "a_total": 15190,
+        "b_total": 9887,
+        "a_pct": 65.0,
+        "b_pct": 99.8
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_recommended_LokSabha_alltenures.csv": {
+        "common_ids": 133,
+        "a_total": 15190,
+        "b_total": 103330,
+        "a_pct": 0.9,
+        "b_pct": 0.1
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_recommended_RajyaSabha_alltenures.csv": {
+        "common_ids": 15062,
+        "a_total": 15190,
+        "b_total": 24887,
+        "a_pct": 99.2,
+        "b_pct": 60.5
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 15190,
+        "b_total": 78232,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "expenditure_RajyaSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 15190,
+        "a_total": 15190,
+        "b_total": 19274,
+        "a_pct": 100.0,
+        "b_pct": 78.8
+      },
+      "works_completed_LokSabha_alltenures.csv ∩ works_completed_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 33955,
+        "b_total": 9887,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "works_completed_LokSabha_alltenures.csv ∩ works_recommended_LokSabha_alltenures.csv": {
+        "common_ids": 33827,
+        "a_total": 33955,
+        "b_total": 103330,
+        "a_pct": 99.6,
+        "b_pct": 32.7
+      },
+      "works_completed_LokSabha_alltenures.csv ∩ works_recommended_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 33955,
+        "b_total": 24887,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "works_completed_LokSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 33955,
+        "a_total": 33955,
+        "b_total": 78232,
+        "a_pct": 100.0,
+        "b_pct": 43.4
+      },
+      "works_completed_LokSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 33955,
+        "b_total": 19274,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "works_completed_RajyaSabha_alltenures.csv ∩ works_recommended_LokSabha_alltenures.csv": {
+        "common_ids": 128,
+        "a_total": 9887,
+        "b_total": 103330,
+        "a_pct": 1.3,
+        "b_pct": 0.1
+      },
+      "works_completed_RajyaSabha_alltenures.csv ∩ works_recommended_RajyaSabha_alltenures.csv": {
+        "common_ids": 9817,
+        "a_total": 9887,
+        "b_total": 24887,
+        "a_pct": 99.3,
+        "b_pct": 39.4
+      },
+      "works_completed_RajyaSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 9887,
+        "b_total": 78232,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "works_completed_RajyaSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 9887,
+        "a_total": 9887,
+        "b_total": 19274,
+        "a_pct": 100.0,
+        "b_pct": 51.3
+      },
+      "works_recommended_LokSabha_alltenures.csv ∩ works_recommended_RajyaSabha_alltenures.csv": {
+        "common_ids": 137,
+        "a_total": 103330,
+        "b_total": 24887,
+        "a_pct": 0.1,
+        "b_pct": 0.6
+      },
+      "works_recommended_LokSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 77871,
+        "a_total": 103330,
+        "b_total": 78232,
+        "a_pct": 75.4,
+        "b_pct": 99.5
+      },
+      "works_recommended_LokSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 136,
+        "a_total": 103330,
+        "b_total": 19274,
+        "a_pct": 0.1,
+        "b_pct": 0.7
+      },
+      "works_recommended_RajyaSabha_alltenures.csv ∩ works_sanctioned_LokSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 24887,
+        "b_total": 78232,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "works_recommended_RajyaSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 19045,
+        "a_total": 24887,
+        "b_total": 19274,
+        "a_pct": 76.5,
+        "b_pct": 98.8
+      },
+      "works_sanctioned_LokSabha_alltenures.csv ∩ works_sanctioned_RajyaSabha_alltenures.csv": {
+        "common_ids": 0,
+        "a_total": 78232,
+        "b_total": 19274,
+        "a_pct": 0.0,
+        "b_pct": 0.0
+      },
+      "ALL_DATASETS_INTERSECTION": {
+        "common_ids": 0,
+        "datasets_count": 8
+      }
+    }
+  },
+  "file_reports": [
+    {
+      "file_name": "calamity_LokSabha_alltenures.csv",
+      "file_size_bytes": 2040,
+      "file_size_mb": 0.0,
+      "num_rows": 13,
+      "num_columns": 11,
+      "column_names": [
+        "HOUSE_OF_PARLIAMENT",
+        "CALAMITY_NAME",
+        "TENURE",
+        "MP_NAME",
+        "CRT_DT",
+        "Sno",
+        "CONSENTED_AMOUNT",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "TYPE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "CALAMITY_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "CRT_DT": "object",
+        "Sno": "float64",
+        "CONSENTED_AMOUNT": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "TYPE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "MP_NAME",
+        "CRT_DT",
+        "Sno"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 1,
+          "sample_values": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ],
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        {
+          "column_name": "CALAMITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 6,
+          "sample_values": [
+            "Flood 2025 in Punjab",
+            "Flood 2025 in Punjab",
+            "Flood 2025 in Punjab"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 1,
+          "sample_values": [
+            "18th Lok Sabha",
+            "18th Lok Sabha",
+            "18th Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 10,
+          "sample_values": [
+            "Shri Gurjeet Singh Aujla",
+            "GURMEET SINGH MEET HAYER",
+            "Shri Jual Oram"
+          ]
+        },
+        {
+          "column_name": "CRT_DT",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 11,
+          "sample_values": [
+            "07-Dec-2025",
+            "03-Nov-2025",
+            "10-Oct-2025"
+          ],
+          "date_range": {
+            "min": "2024-09-03 00:00:00",
+            "max": "2025-12-07 00:00:00",
+            "parsed_count": 12,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 12,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 12.0,
+          "mean": 6.5
+        },
+        {
+          "column_name": "CONSENTED_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 6,
+          "sample_values": [
+            "7067400.0",
+            "7500000.0",
+            "10000000.0"
+          ],
+          "min": 500000.0,
+          "max": 10000000.0,
+          "mean": 3380616.67
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 2,
+          "sample_values": [
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2024-06-04 00:00:00",
+            "max": "2024-06-05 00:00:00",
+            "parsed_count": 12,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 1,
+          "sample_values": [
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2029-06-03 23:59:59",
+            "max": "2029-06-03 23:59:59",
+            "parsed_count": 12,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TYPE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 7.69,
+          "unique_count": 2,
+          "sample_values": [
+            "National Calamity",
+            "National Calamity",
+            "National Calamity"
+          ]
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 12,
+          "missing_pct": 92.31,
+          "unique_count": 1,
+          "sample_values": [
+            "40567400.0"
+          ],
+          "min": 40567400.0,
+          "max": 40567400.0,
+          "mean": 40567400.0
+        }
+      ],
+      "example_records": [
+        {
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Shri Gurjeet Singh Aujla",
+          "CRT_DT": "07-Dec-2025",
+          "Sno": 1.0,
+          "CONSENTED_AMOUNT": 7067400.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        },
+        {
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "GURMEET SINGH MEET HAYER",
+          "CRT_DT": "03-Nov-2025",
+          "Sno": 2.0,
+          "CONSENTED_AMOUNT": 7500000.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        },
+        {
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Shri Jual Oram",
+          "CRT_DT": "10-Oct-2025",
+          "Sno": 3.0,
+          "CONSENTED_AMOUNT": 10000000.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "calamity_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 3430,
+      "file_size_mb": 0.0,
+      "num_rows": 21,
+      "num_columns": 11,
+      "column_names": [
+        "HOUSE_OF_PARLIAMENT",
+        "CALAMITY_NAME",
+        "TENURE",
+        "MP_NAME",
+        "CRT_DT",
+        "Sno",
+        "CONSENTED_AMOUNT",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "TYPE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "CALAMITY_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "CRT_DT": "object",
+        "Sno": "float64",
+        "CONSENTED_AMOUNT": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "TYPE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "MP_NAME",
+        "CRT_DT",
+        "Sno"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "CALAMITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 4,
+          "sample_values": [
+            "Flood 2025 in Punjab",
+            "Flood 2025 in Punjab",
+            "Flood 2025 in Punjab"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting MP",
+            "Sitting MP",
+            "Sitting MP"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 16,
+          "sample_values": [
+            "Shri Hardeep Singh Puri (2020-26)",
+            "Dr. Ashok Kumar Mittal (2022-28)",
+            "Shri Narain Dass Gupta (2024-30)"
+          ]
+        },
+        {
+          "column_name": "CRT_DT",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 16,
+          "sample_values": [
+            "17-Nov-2025",
+            "04-Nov-2025",
+            "03-Nov-2025"
+          ],
+          "date_range": {
+            "min": "2024-09-10 00:00:00",
+            "max": "2025-11-17 00:00:00",
+            "parsed_count": 20,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 20,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 20.0,
+          "mean": 10.5
+        },
+        {
+          "column_name": "CONSENTED_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 5,
+          "sample_values": [
+            "10000000.0",
+            "10000000.0",
+            "7500000.0"
+          ],
+          "min": 500000.0,
+          "max": 10000000.0,
+          "mean": 5225000.0
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 9,
+          "sample_values": [
+            "Nov 26, 2020 12:00:00 AM",
+            "Apr 10, 2022 12:00:00 AM",
+            "Jan 28, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2020-11-26 00:00:00",
+            "max": "2024-07-02 00:00:00",
+            "parsed_count": 20,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 9,
+          "sample_values": [
+            "Nov 25, 2026 11:59:59 PM",
+            "Apr 9, 2028 11:59:59 PM",
+            "Jan 27, 2030 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2026-11-25 23:59:59",
+            "max": "2030-07-01 23:59:59",
+            "parsed_count": 20,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TYPE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 4.76,
+          "unique_count": 2,
+          "sample_values": [
+            "National Calamity",
+            "National Calamity",
+            "National Calamity"
+          ]
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 20,
+          "missing_pct": 95.24,
+          "unique_count": 1,
+          "sample_values": [
+            "104500000.0"
+          ],
+          "min": 104500000.0,
+          "max": 104500000.0,
+          "mean": 104500000.0
+        }
+      ],
+      "example_records": [
+        {
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Hardeep Singh Puri (2020-26)",
+          "CRT_DT": "17-Nov-2025",
+          "Sno": 1.0,
+          "CONSENTED_AMOUNT": 10000000.0,
+          "TENURE_START_DATE": "Nov 26, 2020 12:00:00 AM",
+          "TENURE_END_DATE": "Nov 25, 2026 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        },
+        {
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Dr. Ashok Kumar Mittal (2022-28)",
+          "CRT_DT": "04-Nov-2025",
+          "Sno": 2.0,
+          "CONSENTED_AMOUNT": 10000000.0,
+          "TENURE_START_DATE": "Apr 10, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Apr 9, 2028 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        },
+        {
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "CALAMITY_NAME": "Flood 2025 in Punjab",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Narain Dass Gupta (2024-30)",
+          "CRT_DT": "03-Nov-2025",
+          "Sno": 3.0,
+          "CONSENTED_AMOUNT": 7500000.0,
+          "TENURE_START_DATE": "Jan 28, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jan 27, 2030 11:59:59 PM",
+          "TYPE": "National Calamity",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "expenditure_LokSabha_alltenures.csv",
+      "file_size_bytes": 30902513,
+      "file_size_mb": 29.47,
+      "num_rows": 82886,
+      "num_columns": 20,
+      "column_names": [
+        "STATE_NAME",
+        "ACTIVITY_NAME",
+        "VENDOR_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "IA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "LETTER_NO",
+        "VENDOR_ID",
+        "EXPENDITURE_DATE",
+        "FUND_DISBURSED_AMT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_STATUS",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "WORK_ID",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "STATE_NAME": "object",
+        "ACTIVITY_NAME": "object",
+        "VENDOR_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "IA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "LETTER_NO": "object",
+        "VENDOR_ID": "float64",
+        "EXPENDITURE_DATE": "object",
+        "FUND_DISBURSED_AMT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_STATUS": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "WORK_ID": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "VENDOR_NAME",
+        "IDA_NAME",
+        "IA_NAME",
+        "VENDOR_ID"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 35,
+          "sample_values": [
+            "Karnataka",
+            "Uttar Pradesh",
+            "Odisha"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 110,
+          "sample_values": [
+            "Construction of roads, link roads, pathways or any other road with or without drainage system",
+            "Construction of roads, link roads, pathways or any other road with or without drainage system",
+            "Construction of community centers and community halls"
+          ]
+        },
+        {
+          "column_name": "VENDOR_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 23258,
+          "sample_values": [
+            "KRIDL BHUSIRI ACCOUNT WORKS",
+            "DARSH BUILDCON",
+            "MEMBER SECY OB AND OC WWB BBSR"
+          ],
+          "date_range": {
+            "min": null,
+            "max": null,
+            "parsed_count": 0,
+            "format_detected": null
+          }
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ],
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 738,
+          "sample_values": [
+            "CHIKKAMAGALURU(DEPUTY COMMISSIONER CHIKMAGALUR)",
+            "GHAZIABAD(DISTRICT MAGISTRAE GHAZIABAD_IDA)",
+            "PURI(DISTRICT COLLECTOR PURI_IDA)"
+          ]
+        },
+        {
+          "column_name": "IA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6067,
+          "sample_values": [
+            "KARNATAKA RURAL INFRASTRUCTURE DEVELOPMENT LIMITED",
+            "RED_Gzb",
+            "Panchayat Samiti, Nimapada"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "18th Lok Sabha",
+            "18th Lok Sabha",
+            "18th Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 531,
+          "sample_values": [
+            "KOTA SRINIVAS POOJARY",
+            "ATUL GARG",
+            "BIBHU PRASAD TARAI"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 24599,
+          "sample_values": [
+            "LN/MP18263/2024-2025/44",
+            "LN/MP18218/2025-2026/15",
+            "LN/MP18142/2024-2025/11"
+          ]
+        },
+        {
+          "column_name": "VENDOR_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 24481,
+          "sample_values": [
+            "3693.0",
+            "3562.0",
+            "3671.0"
+          ],
+          "min": 3558.0,
+          "max": 96163.0,
+          "mean": 49621.33
+        },
+        {
+          "column_name": "EXPENDITURE_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 685,
+          "sample_values": [
+            "18-Aug-2026",
+            "04-Aug-2026",
+            "28-Aug-2026"
+          ],
+          "date_range": {
+            "min": "2025-09-25 00:00:00",
+            "max": "2026-08-30 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FUND_DISBURSED_AMT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 30420,
+          "sample_values": [
+            "75000.0",
+            "832080.0",
+            "2000.0"
+          ],
+          "min": 1.0,
+          "max": 32562250.0,
+          "mean": 330114.1
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 82885,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 82885.0,
+          "mean": 41443.0
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 531,
+          "sample_values": [
+            "UDUPI CHIKMAGALUR",
+            "GHAZIABAD",
+            "JAGATSINGHPUR(SC)"
+          ]
+        },
+        {
+          "column_name": "WORK_STATUS",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Payment In-Progress",
+            "Payment In-Progress",
+            "Payment In-Progress"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 55773,
+          "sample_values": [
+            "173840.0",
+            "233878.0",
+            "185341.0"
+          ],
+          "min": 133166.0,
+          "max": 305132.0,
+          "mean": 197408.26
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6,
+          "sample_values": [
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2024-06-04 00:00:00",
+            "max": "2024-06-04 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2029-06-03 00:00:00",
+            "max": "2029-06-03 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "WORK_ID",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 55773,
+          "sample_values": [
+            "WS/MP18263/2025-2026/173840",
+            "WS/MP18218/2025-2026/233878",
+            "WS/MP18142/2025-2026/185341"
+          ]
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 82885,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "27361507267.449966"
+          ],
+          "min": 27361507267.449966,
+          "max": 27361507267.449966,
+          "mean": 27361507267.45
+        }
+      ],
+      "example_records": [
+        {
+          "STATE_NAME": "Karnataka",
+          "ACTIVITY_NAME": "Construction of roads, link roads, pathways or any other road with or without drainage system",
+          "VENDOR_NAME": "KRIDL BHUSIRI ACCOUNT WORKS",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "CHIKKAMAGALURU(DEPUTY COMMISSIONER CHIKMAGALUR)",
+          "IA_NAME": "KARNATAKA RURAL INFRASTRUCTURE DEVELOPMENT LIMITED",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "KOTA SRINIVAS POOJARY",
+          "LETTER_NO": "LN/MP18263/2024-2025/44",
+          "VENDOR_ID": 3693.0,
+          "EXPENDITURE_DATE": "18-Aug-2026",
+          "FUND_DISBURSED_AMT": 75000.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "UDUPI CHIKMAGALUR",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 173840.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "WORK_ID": "WS/MP18263/2025-2026/173840",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Uttar Pradesh",
+          "ACTIVITY_NAME": "Construction of roads, link roads, pathways or any other road with or without drainage system",
+          "VENDOR_NAME": "DARSH BUILDCON",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "GHAZIABAD(DISTRICT MAGISTRAE GHAZIABAD_IDA)",
+          "IA_NAME": "RED_Gzb",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "ATUL GARG",
+          "LETTER_NO": "LN/MP18218/2025-2026/15",
+          "VENDOR_ID": 3562.0,
+          "EXPENDITURE_DATE": "04-Aug-2026",
+          "FUND_DISBURSED_AMT": 832080.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "GHAZIABAD",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 233878.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "WORK_ID": "WS/MP18218/2025-2026/233878",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Odisha",
+          "ACTIVITY_NAME": "Construction of community centers and community halls",
+          "VENDOR_NAME": "MEMBER SECY OB AND OC WWB BBSR",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "PURI(DISTRICT COLLECTOR PURI_IDA)",
+          "IA_NAME": "Panchayat Samiti, Nimapada",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "BIBHU PRASAD TARAI",
+          "LETTER_NO": "LN/MP18142/2024-2025/11",
+          "VENDOR_ID": 3671.0,
+          "EXPENDITURE_DATE": "28-Aug-2026",
+          "FUND_DISBURSED_AMT": 2000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "JAGATSINGHPUR(SC)",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 185341.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "WORK_ID": "WS/MP18142/2025-2026/185341",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "expenditure_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 9888142,
+      "file_size_mb": 9.43,
+      "num_rows": 24942,
+      "num_columns": 20,
+      "column_names": [
+        "STATE_NAME",
+        "ACTIVITY_NAME",
+        "VENDOR_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "IA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "LETTER_NO",
+        "VENDOR_ID",
+        "EXPENDITURE_DATE",
+        "FUND_DISBURSED_AMT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_STATUS",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "WORK_ID",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "STATE_NAME": "object",
+        "ACTIVITY_NAME": "object",
+        "VENDOR_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "IA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "LETTER_NO": "object",
+        "VENDOR_ID": "float64",
+        "EXPENDITURE_DATE": "object",
+        "FUND_DISBURSED_AMT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_STATUS": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "WORK_ID": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "VENDOR_NAME",
+        "IDA_NAME",
+        "IA_NAME",
+        "VENDOR_ID"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 28,
+          "sample_values": [
+            "Uttar Pradesh",
+            "Chhattisgarh",
+            "Uttar Pradesh"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 99,
+          "sample_values": [
+            "Purchase of ambulances (Four, three and two wheelers)",
+            "Construction of roads, link roads, pathways or any other road with or without drainage system",
+            "Installation of multi-gym equipment"
+          ]
+        },
+        {
+          "column_name": "VENDOR_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6054,
+          "sample_values": [
+            "FORCE MOTORS LIMITED",
+            "SARPANCH GRAM PANCHYAT Manikchauri",
+            "BALAJI SUPPLIER"
+          ],
+          "date_range": {
+            "min": null,
+            "max": null,
+            "parsed_count": 0,
+            "format_detected": null
+          }
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 528,
+          "sample_values": [
+            "LUCKNOW(DISTRICT MAGISTRAE LUCKNOW_IDA)",
+            "DURG(DISTRICT COLLECTOR DURG_IDA)",
+            "MUZAFFARNAGAR(DISTRICT MAGISTRATE MUZAFFARNAGAR_IDA)"
+          ]
+        },
+        {
+          "column_name": "IA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2234,
+          "sample_values": [
+            "LUCKNOW UNIVERCITY LUCKNOW",
+            "CEO JP PATAN",
+            "UPSMALL INDUSTRIES CORPORATION LTD"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting MP",
+            "Sitting MP",
+            "Sitting MP"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 168,
+          "sample_values": [
+            "Dr. Dinesh Sharma (2023-26)",
+            "Shri Rajeev Shukla (2022-28)",
+            "Shri Surendra Singh Nagar (2022-28)"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 7298,
+          "sample_values": [
+            "LN/MP887/2025-2026/53",
+            "LN/MP176/2025-2026/13",
+            "LN/MP192/2024-2025/27"
+          ]
+        },
+        {
+          "column_name": "VENDOR_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6181,
+          "sample_values": [
+            "3764.0",
+            "3993.0",
+            "4150.0"
+          ],
+          "min": 3556.0,
+          "max": 96217.0,
+          "mean": 39585.93
+        },
+        {
+          "column_name": "EXPENDITURE_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 953,
+          "sample_values": [
+            "20-Aug-2026",
+            "14-Aug-2026",
+            "01-Apr-2026"
+          ],
+          "date_range": {
+            "min": "2025-02-14 00:00:00",
+            "max": "2026-08-30 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FUND_DISBURSED_AMT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 10686,
+          "sample_values": [
+            "4282950.0",
+            "259974.0",
+            "489765.0"
+          ],
+          "min": 0.01,
+          "max": 31900000.0,
+          "mean": 494337.93
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 24941,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 24941.0,
+          "mean": 12471.0
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "WORK_STATUS",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Payment In-Progress",
+            "Payment In-Progress",
+            "Payment In-Progress"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 15190,
+          "sample_values": [
+            "207251.0",
+            "243305.0",
+            "138282.0"
+          ],
+          "min": 1199.0,
+          "max": 305016.0,
+          "mean": 160199.04
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 32,
+          "sample_values": [
+            "Sep 11, 2023 12:00:00 AM",
+            "Jun 30, 2022 12:00:00 AM",
+            "Jul 5, 2022 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2020-11-26 00:00:00",
+            "max": "2026-04-10 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 28,
+          "sample_values": [
+            "Nov 25, 2026 11:59:59 PM",
+            "Jun 29, 2028 11:59:59 PM",
+            "Jul 4, 2028 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2026-11-25 23:59:59",
+            "max": "2032-04-09 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "WORK_ID",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 15190,
+          "sample_values": [
+            "WS/MP887/2025-2026/207251",
+            "WS/MP176/2025-2026/243305",
+            "WS/MP192/2025-2026/138282"
+          ]
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 24941,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "12329282321.689993"
+          ],
+          "min": 12329282321.689993,
+          "max": 12329282321.689993,
+          "mean": 12329282321.69
+        }
+      ],
+      "example_records": [
+        {
+          "STATE_NAME": "Uttar Pradesh",
+          "ACTIVITY_NAME": "Purchase of ambulances (Four, three and two wheelers)",
+          "VENDOR_NAME": "FORCE MOTORS LIMITED",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "LUCKNOW(DISTRICT MAGISTRAE LUCKNOW_IDA)",
+          "IA_NAME": "LUCKNOW UNIVERCITY LUCKNOW",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Dr. Dinesh Sharma (2023-26)",
+          "LETTER_NO": "LN/MP887/2025-2026/53",
+          "VENDOR_ID": 3764.0,
+          "EXPENDITURE_DATE": "20-Aug-2026",
+          "FUND_DISBURSED_AMT": 4282950.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 207251.0,
+          "TENURE_START_DATE": "Sep 11, 2023 12:00:00 AM",
+          "TENURE_END_DATE": "Nov 25, 2026 11:59:59 PM",
+          "WORK_ID": "WS/MP887/2025-2026/207251",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Chhattisgarh",
+          "ACTIVITY_NAME": "Construction of roads, link roads, pathways or any other road with or without drainage system",
+          "VENDOR_NAME": "SARPANCH GRAM PANCHYAT Manikchauri",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "DURG(DISTRICT COLLECTOR DURG_IDA)",
+          "IA_NAME": "CEO JP PATAN",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Rajeev Shukla (2022-28)",
+          "LETTER_NO": "LN/MP176/2025-2026/13",
+          "VENDOR_ID": 3993.0,
+          "EXPENDITURE_DATE": "14-Aug-2026",
+          "FUND_DISBURSED_AMT": 259974.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 243305.0,
+          "TENURE_START_DATE": "Jun 30, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 29, 2028 11:59:59 PM",
+          "WORK_ID": "WS/MP176/2025-2026/243305",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Uttar Pradesh",
+          "ACTIVITY_NAME": "Installation of multi-gym equipment",
+          "VENDOR_NAME": "BALAJI SUPPLIER",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "MUZAFFARNAGAR(DISTRICT MAGISTRATE MUZAFFARNAGAR_IDA)",
+          "IA_NAME": "UPSMALL INDUSTRIES CORPORATION LTD",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Surendra Singh Nagar (2022-28)",
+          "LETTER_NO": "LN/MP192/2024-2025/27",
+          "VENDOR_ID": 4150.0,
+          "EXPENDITURE_DATE": "01-Apr-2026",
+          "FUND_DISBURSED_AMT": 489765.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_STATUS": "Payment In-Progress",
+          "WORK_RECOMMENDATION_DTL_ID": 138282.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "WORK_ID": "WS/MP192/2025-2026/138282",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "mp_allocation_LokSabha_alltenures.csv",
+      "file_size_bytes": 75051,
+      "file_size_mb": 0.07,
+      "num_rows": 544,
+      "num_columns": 11,
+      "column_names": [
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "TENURE",
+        "Sno",
+        "MP_NAME",
+        "HOUSE_NAME",
+        "CONSTITUENCY",
+        "ALLOCATED_AMT",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "TENURE": "object",
+        "Sno": "float64",
+        "MP_NAME": "object",
+        "HOUSE_NAME": "object",
+        "CONSTITUENCY": "object",
+        "ALLOCATED_AMT": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "Sno",
+        "MP_NAME",
+        "CONSTITUENCY"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 36,
+          "sample_values": [
+            "Maharashtra",
+            "Jammu And Kashmir",
+            "Bihar"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 1,
+          "sample_values": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ],
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 1,
+          "sample_values": [
+            "18th Lok Sabha",
+            "18th Lok Sabha",
+            "18th Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 543,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 543.0,
+          "mean": 272.0
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 543,
+          "sample_values": [
+            "AASHTIKAR PATIL NAGESH BAPURAO",
+            "ABDUL RASHID SHEIKH",
+            "ABHAY KUMAR SINHA"
+          ]
+        },
+        {
+          "column_name": "HOUSE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 1,
+          "sample_values": [
+            "Lok Sabha",
+            "Lok Sabha",
+            "Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 542,
+          "sample_values": [
+            "HINGOLI",
+            "BARAMULLAH",
+            "AURANGABAD_BR"
+          ]
+        },
+        {
+          "column_name": "ALLOCATED_AMT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 153,
+          "sample_values": [
+            "190289442.0",
+            "154773472.11",
+            "147000000.0"
+          ],
+          "min": 0.0,
+          "max": 327477390.86,
+          "mean": 153187022.7
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 6,
+          "sample_values": [
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2024-04-06 00:00:00",
+            "max": "2024-11-28 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.18,
+          "unique_count": 5,
+          "sample_values": [
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2024-08-26 23:59:59",
+            "max": "2029-06-04 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 543,
+          "missing_pct": 99.82,
+          "unique_count": 1,
+          "sample_values": [
+            "83180553325.71004"
+          ],
+          "min": 83180553325.71004,
+          "max": 83180553325.71004,
+          "mean": 83180553325.71
+        }
+      ],
+      "example_records": [
+        {
+          "STATE_NAME": "Maharashtra",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "TENURE": "18th Lok Sabha",
+          "Sno": 1.0,
+          "MP_NAME": "AASHTIKAR PATIL NAGESH BAPURAO",
+          "HOUSE_NAME": "Lok Sabha",
+          "CONSTITUENCY": "HINGOLI",
+          "ALLOCATED_AMT": 190289442.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Jammu And Kashmir",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "TENURE": "18th Lok Sabha",
+          "Sno": 2.0,
+          "MP_NAME": "ABDUL RASHID SHEIKH",
+          "HOUSE_NAME": "Lok Sabha",
+          "CONSTITUENCY": "BARAMULLAH",
+          "ALLOCATED_AMT": 154773472.11,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Bihar",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "TENURE": "18th Lok Sabha",
+          "Sno": 3.0,
+          "MP_NAME": "ABHAY KUMAR SINHA",
+          "HOUSE_NAME": "Lok Sabha",
+          "CONSTITUENCY": "AURANGABAD_BR",
+          "ALLOCATED_AMT": 147000000.0,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "mp_allocation_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 36905,
+      "file_size_mb": 0.04,
+      "num_rows": 232,
+      "num_columns": 11,
+      "column_names": [
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "TENURE",
+        "Sno",
+        "MP_NAME",
+        "HOUSE_NAME",
+        "CONSTITUENCY",
+        "ALLOCATED_AMT",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "TENURE": "object",
+        "Sno": "float64",
+        "MP_NAME": "object",
+        "HOUSE_NAME": "object",
+        "CONSTITUENCY": "object",
+        "ALLOCATED_AMT": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "Sno",
+        "MP_NAME"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 32,
+          "sample_values": [
+            "Telangana",
+            "Maharashtra",
+            "Rajasthan"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting MP",
+            "Sitting MP",
+            "Sitting MP"
+          ]
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 231,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 231.0,
+          "mean": 116.0
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 231,
+          "sample_values": [
+            "Dr. Abhishek Manu Singhvi (2026-32)",
+            "Dr. Ajeet Madhavrao Gopchade (2024-30)",
+            "Dr. Alka Singh (2026-32)"
+          ]
+        },
+        {
+          "column_name": "HOUSE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 1,
+          "sample_values": [
+            "Rajya Sabha",
+            "Rajya Sabha",
+            "Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "ALLOCATED_AMT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 73,
+          "sample_values": [
+            "73421449.0",
+            "147000000.0",
+            "49000000.0"
+          ],
+          "min": 23800006.0,
+          "max": 310898953.29,
+          "mean": 145621135.51
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 42,
+          "sample_values": [
+            "Apr 10, 2026 12:00:00 AM",
+            "Apr 3, 2024 12:00:00 AM",
+            "Jun 22, 2026 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2020-11-26 00:00:00",
+            "max": "2026-07-20 00:00:00",
+            "parsed_count": 231,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.43,
+          "unique_count": 35,
+          "sample_values": [
+            "Apr 9, 2032 11:59:59 PM",
+            "Apr 2, 2030 11:59:59 PM",
+            "Jun 21, 2032 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2026-11-25 23:59:59",
+            "max": "2032-07-19 23:59:59",
+            "parsed_count": 231,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 231,
+          "missing_pct": 99.57,
+          "unique_count": 1,
+          "sample_values": [
+            "33638482301.820023"
+          ],
+          "min": 33638482301.820023,
+          "max": 33638482301.820023,
+          "mean": 33638482301.82
+        }
+      ],
+      "example_records": [
+        {
+          "STATE_NAME": "Telangana",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "TENURE": "Sitting MP",
+          "Sno": 1.0,
+          "MP_NAME": "Dr. Abhishek Manu Singhvi (2026-32)",
+          "HOUSE_NAME": "Rajya Sabha",
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ALLOCATED_AMT": 73421449.0,
+          "TENURE_START_DATE": "Apr 10, 2026 12:00:00 AM",
+          "TENURE_END_DATE": "Apr 9, 2032 11:59:59 PM",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Maharashtra",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "TENURE": "Sitting MP",
+          "Sno": 2.0,
+          "MP_NAME": "Dr. Ajeet Madhavrao Gopchade (2024-30)",
+          "HOUSE_NAME": "Rajya Sabha",
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ALLOCATED_AMT": 147000000.0,
+          "TENURE_START_DATE": "Apr 3, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Apr 2, 2030 11:59:59 PM",
+          "Total_Amt": NaN
+        },
+        {
+          "STATE_NAME": "Rajasthan",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "TENURE": "Sitting MP",
+          "Sno": 3.0,
+          "MP_NAME": "Dr. Alka Singh (2026-32)",
+          "HOUSE_NAME": "Rajya Sabha",
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ALLOCATED_AMT": 49000000.0,
+          "TENURE_START_DATE": "Jun 22, 2026 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 21, 2032 11:59:59 PM",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "mp_names_all_states.csv",
+      "file_size_bytes": 28782,
+      "file_size_mb": 0.03,
+      "num_rows": 778,
+      "num_columns": 4,
+      "column_names": [
+        "ID",
+        "CAPTION",
+        "_STATE_ID",
+        "_HOUSE"
+      ],
+      "dtypes": {
+        "ID": "int64",
+        "CAPTION": "object",
+        "_STATE_ID": "int64",
+        "_HOUSE": "int64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ID",
+        "CAPTION"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "ID",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 778,
+          "sample_values": [
+            "3042276",
+            "3042277",
+            "3042278"
+          ],
+          "min": 3017167.0,
+          "max": 3066667.0,
+          "mean": 3035005.28
+        },
+        {
+          "column_name": "CAPTION",
+          "dtype": "object",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 778,
+          "sample_values": [
+            "BISHNU PADA RAY",
+            "GM Harish Balayogi",
+            "C.M.RAMESH"
+          ]
+        },
+        {
+          "column_name": "_STATE_ID",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 36,
+          "sample_values": [
+            "35",
+            "2",
+            "2"
+          ],
+          "min": 1.0,
+          "max": 130.0,
+          "mean": 25.15
+        },
+        {
+          "column_name": "_HOUSE",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "2",
+            "2",
+            "2"
+          ],
+          "min": 1.0,
+          "max": 2.0,
+          "mean": 1.7
+        }
+      ],
+      "example_records": [
+        {
+          "ID": 3042276,
+          "CAPTION": "BISHNU PADA RAY",
+          "_STATE_ID": 35,
+          "_HOUSE": 2
+        },
+        {
+          "ID": 3042277,
+          "CAPTION": "GM Harish Balayogi",
+          "_STATE_ID": 2,
+          "_HOUSE": 2
+        },
+        {
+          "ID": 3042278,
+          "CAPTION": "C.M.RAMESH",
+          "_STATE_ID": 2,
+          "_HOUSE": 2
+        }
+      ]
+    },
+    {
+      "file_name": "states.csv",
+      "file_size_bytes": 583,
+      "file_size_mb": 0.0,
+      "num_rows": 36,
+      "num_columns": 2,
+      "column_names": [
+        "STATE_NAME",
+        "STATE_ID"
+      ],
+      "dtypes": {
+        "STATE_NAME": "object",
+        "STATE_ID": "int64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "STATE_NAME",
+        "STATE_ID"
+      ],
+      "work_identifier_columns": [],
+      "mp_identifier_columns": [],
+      "agency_identifier_columns": [],
+      "columns_detail": [
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 36,
+          "sample_values": [
+            "Andaman And Nicobar Islands",
+            "Andhra Pradesh",
+            "Arunachal Pradesh"
+          ]
+        },
+        {
+          "column_name": "STATE_ID",
+          "dtype": "int64",
+          "missing_count": 0,
+          "missing_pct": 0.0,
+          "unique_count": 36,
+          "sample_values": [
+            "35",
+            "2",
+            "3"
+          ],
+          "min": 1.0,
+          "max": 130.0,
+          "mean": 25.33
+        }
+      ],
+      "example_records": [
+        {
+          "STATE_NAME": "Andaman And Nicobar Islands",
+          "STATE_ID": 35
+        },
+        {
+          "STATE_NAME": "Andhra Pradesh",
+          "STATE_ID": 2
+        },
+        {
+          "STATE_NAME": "Arunachal Pradesh",
+          "STATE_ID": 3
+        }
+      ]
+    },
+    {
+      "file_name": "works_completed_LokSabha_alltenures.csv",
+      "file_size_bytes": 11994231,
+      "file_size_mb": 11.44,
+      "num_rows": 33956,
+      "num_columns": 19,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "IDA_NAME",
+        "WORK_DESCRIPTION",
+        "MP_NAME",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "LETTER_NO",
+        "ACTUAL_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "ACTUAL_END_DATE",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID",
+        "AVERAGE_RATING",
+        "FILE_STATUS",
+        "ATTACH_ID",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "IDA_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "MP_NAME": "object",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "LETTER_NO": "object",
+        "ACTUAL_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "ACTUAL_END_DATE": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "WORK_ID": "float64",
+        "AVERAGE_RATING": "float64",
+        "FILE_STATUS": "object",
+        "ATTACH_ID": "float64",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID",
+        "ATTACH_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "Normal/Others",
+            "Normal/Others",
+            "Normal/Others"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33955,
+          "sample_values": [
+            "WS/MP418/2024-2025/133409-Construction of roads, link roads, pathways or any other road with or without drainage system",
+            "WS/MP18152/2024-2025/133691-Construction of rooms and halls in school and colleges",
+            "WS/MP345/2024-2025/134140-Construction of roads, link roads, pathways or any other road with or without drainage system"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33,
+          "sample_values": [
+            "Bihar",
+            "Punjab",
+            "Kerala"
+          ]
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 668,
+          "sample_values": [
+            "ARARIA(DISTRICT PLANNING OFFICER ARARIA_IDA)",
+            "FARIDKOT(DEPUTY COMMISSIONER FARIDKOT_IDA)",
+            "KOLLAM(DISTRICT COLLECTOR KOLLAM_IDA)"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 80,
+          "missing_pct": 0.24,
+          "unique_count": 30677,
+          "sample_values": [
+            "PCC Road from Permeshwar Bhagat house to Ramdev Master house at ward no 15, uder Forbesganj Block.",
+            "Construction of MID DAY Meal Shed in Govt Primary school Bajakhana (Bus adda)",
+            "Concreting of road from Janathavayanasala -  Panthaplavil, ward no.6  Thrikkaruva GP, in  Kollam Constituency"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 501,
+          "sample_values": [
+            "Pradeep Kumar Singh",
+            "SARABJEET SINGH KHALSA",
+            "Shri NK Premachandran"
+          ]
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "3.0",
+            "3.0",
+            "3.0"
+          ],
+          "min": 3.0,
+          "max": 3.0,
+          "mean": 3.0
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 501,
+          "sample_values": [
+            "44.0",
+            "330.0",
+            "209.0"
+          ],
+          "min": 2.0,
+          "max": 547.0,
+          "mean": 293.74
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 14758,
+          "sample_values": [
+            "LN/MP418/2024-2025/26",
+            "LN/MP18152/2024-2025/1",
+            "LN/MP345/2024-2025/21"
+          ]
+        },
+        {
+          "column_name": "ACTUAL_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 12688,
+          "sample_values": [
+            "448127.0",
+            "300000.0",
+            "293492.0"
+          ],
+          "min": 0.0,
+          "max": 46470400.0,
+          "mean": 480635.42
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33955,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 33955.0,
+          "mean": 16978.0
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 501,
+          "sample_values": [
+            "ARARIA",
+            "FARIDKOT(SC)",
+            "KOLLAM"
+          ]
+        },
+        {
+          "column_name": "ACTUAL_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 593,
+          "sample_values": [
+            "05-Sep-2024",
+            "07-Apr-2025",
+            "12-Aug-2024"
+          ],
+          "date_range": {
+            "min": "2024-08-12 00:00:00",
+            "max": "2026-08-21 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33955,
+          "sample_values": [
+            "133409.0",
+            "133691.0",
+            "134140.0"
+          ],
+          "min": 133166.0,
+          "max": 292762.0,
+          "mean": 187544.23
+        },
+        {
+          "column_name": "WORK_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33955,
+          "sample_values": [
+            "52372.0",
+            "54969.0",
+            "55883.0"
+          ],
+          "min": 52372.0,
+          "max": 197469.0,
+          "mean": 132958.67
+        },
+        {
+          "column_name": "AVERAGE_RATING",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 3,
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "min": 0.0,
+          "max": 5.0,
+          "mean": 0.0
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 9304,
+          "missing_pct": 27.4,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 9304,
+          "missing_pct": 27.4,
+          "unique_count": 24652,
+          "sample_values": [
+            "822763.0",
+            "922338.0",
+            "767632.0"
+          ],
+          "min": 667113.0,
+          "max": 2406693.0,
+          "mean": 1907880.59
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 33955,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "16319975812.400003"
+          ],
+          "min": 16319975812.400003,
+          "max": 16319975812.400003,
+          "mean": 16319975812.4
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP418/2024-2025/133409-Construction of roads, link roads, pathways or any other road with or without drainage system",
+          "STATE_NAME": "Bihar",
+          "IDA_NAME": "ARARIA(DISTRICT PLANNING OFFICER ARARIA_IDA)",
+          "WORK_DESCRIPTION": "PCC Road from Permeshwar Bhagat house to Ramdev Master house at ward no 15, uder Forbesganj Block.",
+          "MP_NAME": "Pradeep Kumar Singh",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 44.0,
+          "LETTER_NO": "LN/MP418/2024-2025/26",
+          "ACTUAL_AMOUNT": 448127.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "ARARIA",
+          "ACTUAL_END_DATE": "05-Sep-2024",
+          "WORK_RECOMMENDATION_DTL_ID": 133409.0,
+          "WORK_ID": 52372.0,
+          "AVERAGE_RATING": 0.0,
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP18152/2024-2025/133691-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Punjab",
+          "IDA_NAME": "FARIDKOT(DEPUTY COMMISSIONER FARIDKOT_IDA)",
+          "WORK_DESCRIPTION": "Construction of MID DAY Meal Shed in Govt Primary school Bajakhana (Bus adda)",
+          "MP_NAME": "SARABJEET SINGH KHALSA",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 330.0,
+          "LETTER_NO": "LN/MP18152/2024-2025/1",
+          "ACTUAL_AMOUNT": 300000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "FARIDKOT(SC)",
+          "ACTUAL_END_DATE": "07-Apr-2025",
+          "WORK_RECOMMENDATION_DTL_ID": 133691.0,
+          "WORK_ID": 54969.0,
+          "AVERAGE_RATING": 0.0,
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP345/2024-2025/134140-Construction of roads, link roads, pathways or any other road with or without drainage system",
+          "STATE_NAME": "Kerala",
+          "IDA_NAME": "KOLLAM(DISTRICT COLLECTOR KOLLAM_IDA)",
+          "WORK_DESCRIPTION": "Concreting of road from Janathavayanasala -  Panthaplavil, ward no.6  Thrikkaruva GP, in  Kollam Constituency",
+          "MP_NAME": "Shri NK Premachandran",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 209.0,
+          "LETTER_NO": "LN/MP345/2024-2025/21",
+          "ACTUAL_AMOUNT": 293492.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "KOLLAM",
+          "ACTUAL_END_DATE": "12-Aug-2024",
+          "WORK_RECOMMENDATION_DTL_ID": 134140.0,
+          "WORK_ID": 55883.0,
+          "AVERAGE_RATING": 0.0,
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "works_completed_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 3839542,
+      "file_size_mb": 3.66,
+      "num_rows": 9888,
+      "num_columns": 19,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "IDA_NAME",
+        "WORK_DESCRIPTION",
+        "MP_NAME",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "LETTER_NO",
+        "ACTUAL_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "ACTUAL_END_DATE",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "FILE_STATUS",
+        "WORK_ID",
+        "ATTACH_ID",
+        "AVERAGE_RATING",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "IDA_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "MP_NAME": "object",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "LETTER_NO": "object",
+        "ACTUAL_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "ACTUAL_END_DATE": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "FILE_STATUS": "object",
+        "WORK_ID": "float64",
+        "ATTACH_ID": "float64",
+        "AVERAGE_RATING": "float64",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID",
+        "ATTACH_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID",
+        "WORK_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 6,
+          "missing_pct": 0.06,
+          "unique_count": 4,
+          "sample_values": [
+            "Normal/Others",
+            "Normal/Others",
+            "Normal/Others"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 9887,
+          "sample_values": [
+            "WS/MP187/2023-2024/1362-Street lights",
+            "WS/MP187/2023-2024/1363-Street lights",
+            "WS/MP187/2023-2024/1364-Street lights"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 28,
+          "sample_values": [
+            "Uttar Pradesh",
+            "Uttar Pradesh",
+            "Uttar Pradesh"
+          ]
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 429,
+          "sample_values": [
+            "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)",
+            "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)",
+            "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 7,
+          "missing_pct": 0.07,
+          "unique_count": 8067,
+          "sample_values": [
+            "High Mask LED Light ( 6 lights) ",
+            "High Mask Street Light ( 6 lights) ",
+            "High Mask Street Lights ( 6 Lights)"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 155,
+          "sample_values": [
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)"
+          ]
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 1,
+          "sample_values": [
+            "3.0",
+            "3.0",
+            "3.0"
+          ],
+          "min": 3.0,
+          "max": 3.0,
+          "mean": 3.0
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 2,
+          "sample_values": [
+            "545.0",
+            "545.0",
+            "545.0"
+          ],
+          "min": 545.0,
+          "max": 546.0,
+          "mean": 545.06
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 4526,
+          "sample_values": [
+            "LN/MP187/2023-2024/4",
+            "LN/MP187/2023-2024/4",
+            "LN/MP187/2023-2024/4"
+          ]
+        },
+        {
+          "column_name": "ACTUAL_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 4256,
+          "sample_values": [
+            "283000.0",
+            "283000.0",
+            "283000.0"
+          ],
+          "min": 0.0,
+          "max": 39955654.0,
+          "mean": 764052.57
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 9887,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 9887.0,
+          "mean": 4944.0
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "ACTUAL_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 754,
+          "sample_values": [
+            "02-Aug-2023",
+            "22-Feb-2024",
+            "22-Feb-2024"
+          ],
+          "date_range": {
+            "min": "2023-08-02 00:00:00",
+            "max": "2025-12-18 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 9887,
+          "sample_values": [
+            "1362.0",
+            "1363.0",
+            "1364.0"
+          ],
+          "min": 1211.0,
+          "max": 288249.0,
+          "mean": 139765.52
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 3459,
+          "missing_pct": 34.98,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "WORK_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 9887,
+          "sample_values": [
+            "262.0",
+            "263.0",
+            "264.0"
+          ],
+          "min": 262.0,
+          "max": 197883.0,
+          "mean": 96392.72
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 3459,
+          "missing_pct": 34.98,
+          "unique_count": 6429,
+          "sample_values": [
+            "17939.0",
+            "2053314.0",
+            "2053313.0"
+          ],
+          "min": 17939.0,
+          "max": 2406717.0,
+          "mean": 1664421.24
+        },
+        {
+          "column_name": "AVERAGE_RATING",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 1,
+          "sample_values": [
+            "0.0",
+            "0.0",
+            "0.0"
+          ],
+          "min": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 9887,
+          "missing_pct": 99.99,
+          "unique_count": 1,
+          "sample_values": [
+            "7554187766.209995"
+          ],
+          "min": 7554187766.209995,
+          "max": 7554187766.209995,
+          "mean": 7554187766.21
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1362-Street lights",
+          "STATE_NAME": "Uttar Pradesh",
+          "IDA_NAME": "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)",
+          "WORK_DESCRIPTION": "High Mask LED Light ( 6 lights) ",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 545.0,
+          "LETTER_NO": "LN/MP187/2023-2024/4",
+          "ACTUAL_AMOUNT": 283000.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ACTUAL_END_DATE": "02-Aug-2023",
+          "WORK_RECOMMENDATION_DTL_ID": 1362.0,
+          "FILE_STATUS": true,
+          "WORK_ID": 262.0,
+          "ATTACH_ID": 17939.0,
+          "AVERAGE_RATING": 0.0,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1363-Street lights",
+          "STATE_NAME": "Uttar Pradesh",
+          "IDA_NAME": "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)",
+          "WORK_DESCRIPTION": "High Mask Street Light ( 6 lights) ",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 545.0,
+          "LETTER_NO": "LN/MP187/2023-2024/4",
+          "ACTUAL_AMOUNT": 283000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ACTUAL_END_DATE": "22-Feb-2024",
+          "WORK_RECOMMENDATION_DTL_ID": 1363.0,
+          "FILE_STATUS": NaN,
+          "WORK_ID": 263.0,
+          "ATTACH_ID": NaN,
+          "AVERAGE_RATING": 0.0,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1364-Street lights",
+          "STATE_NAME": "Uttar Pradesh",
+          "IDA_NAME": "PILIBHIT(DISTRICT MAGISTRAE PILIBHIT_IDA)",
+          "WORK_DESCRIPTION": "High Mask Street Lights ( 6 Lights)",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "FLAG": 3.0,
+          "CONSTITUENCY_ID": 545.0,
+          "LETTER_NO": "LN/MP187/2023-2024/4",
+          "ACTUAL_AMOUNT": 283000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "ACTUAL_END_DATE": "22-Feb-2024",
+          "WORK_RECOMMENDATION_DTL_ID": 1364.0,
+          "FILE_STATUS": NaN,
+          "WORK_ID": 264.0,
+          "ATTACH_ID": NaN,
+          "AVERAGE_RATING": 0.0,
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "works_recommended_LokSabha_alltenures.csv",
+      "file_size_bytes": 45850715,
+      "file_size_mb": 43.73,
+      "num_rows": 103331,
+      "num_columns": 24,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "WORK_DESCRIPTION",
+        "RECOMMENDATION_DATE",
+        "RECOMMENDED_AMOUNT",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "WORK_STAGE",
+        "LETTER_NO",
+        "SANCTION_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "FILE_STATUS",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "ATTACH_ID",
+        "SANCTION_DATE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "RECOMMENDATION_DATE": "object",
+        "RECOMMENDED_AMOUNT": "float64",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "WORK_STAGE": "object",
+        "LETTER_NO": "object",
+        "SANCTION_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "FILE_STATUS": "object",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "ATTACH_ID": "float64",
+        "SANCTION_DATE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "Normal/Others",
+            "Trust and Society",
+            "Trust and Society"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 77975,
+          "sample_values": [
+            "WS/\t MP620/2024-2025/133166-Construction of buildings for community cultural activities",
+            "WS/\t MP620/2025-2026/133167-Construction of rooms and halls in school and colleges",
+            "WS/\t MP620/2024-2025/133190-Construction of buildings for community cultural activities"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 36,
+          "sample_values": [
+            "Karnataka",
+            "Karnataka",
+            "Karnataka"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ],
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 763,
+          "sample_values": [
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "18th Lok Sabha",
+            "18th Lok Sabha",
+            "18th Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 538,
+          "sample_values": [
+            "Pralhad Venkatesh Joshi",
+            "Pralhad Venkatesh Joshi",
+            "Pralhad Venkatesh Joshi"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 112,
+          "missing_pct": 0.11,
+          "unique_count": 94762,
+          "sample_values": [
+            "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+            "Construction of College room of  CBS Charitable Foudation at Nulvi Vilage Pry No 817/3 Continued work",
+            "Construction of Community Bhavan of Veerashaiv Jangam Society (R) at Ward No 21 Chidamarnagar Dharwad"
+          ]
+        },
+        {
+          "column_name": "RECOMMENDATION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 758,
+          "sample_values": [
+            "08-Jul-2024",
+            "08-Jul-2024",
+            "08-Jul-2024"
+          ],
+          "date_range": {
+            "min": "2024-07-08 00:00:00",
+            "max": "2025-03-15 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "RECOMMENDED_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 14787,
+          "sample_values": [
+            "497185.0",
+            "500000.0",
+            "450000.0"
+          ],
+          "min": 1.0,
+          "max": 99965000.0,
+          "mean": 545694.36
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 2.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 538,
+          "sample_values": [
+            "187.0",
+            "187.0",
+            "187.0"
+          ],
+          "min": 1.0,
+          "max": 548.0,
+          "mean": 276.04
+        },
+        {
+          "column_name": "WORK_STAGE",
+          "dtype": "object",
+          "missing_count": 500,
+          "missing_pct": 0.48,
+          "unique_count": 6,
+          "sample_values": [
+            "Physical Inspection",
+            "Pending for Sanction",
+            "Pending for Sanction"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 45965,
+          "sample_values": [
+            "LN/\t MP620/2024-2025/162",
+            "LN/\t MP620/2024-2025/163",
+            "LN/\t MP620/2024-2025/164"
+          ]
+        },
+        {
+          "column_name": "SANCTION_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 500,
+          "missing_pct": 0.48,
+          "unique_count": 14736,
+          "sample_values": [
+            "497185.0",
+            "500000.0",
+            "450000.0"
+          ],
+          "min": 1.0,
+          "max": 99965000.0,
+          "mean": 544632.41
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 103330,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 103330.0,
+          "mean": 51665.5
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 538,
+          "sample_values": [
+            "DHARWAD",
+            "DHARWAD",
+            "DHARWAD"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 103330,
+          "sample_values": [
+            "133166.0",
+            "133167.0",
+            "133190.0"
+          ],
+          "min": 817.0,
+          "max": 309877.0,
+          "mean": 223886.19
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 78679,
+          "missing_pct": 76.14,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6,
+          "sample_values": [
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2024-06-04 00:00:00",
+            "max": "2024-06-04 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2029-06-03 23:59:59",
+            "max": "2029-06-03 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 78679,
+          "missing_pct": 76.14,
+          "unique_count": 24652,
+          "sample_values": [
+            "782562.0",
+            "1090765.0",
+            "1126952.0"
+          ],
+          "min": 667113.0,
+          "max": 2406693.0,
+          "mean": 1907880.59
+        },
+        {
+          "column_name": "SANCTION_DATE",
+          "dtype": "object",
+          "missing_count": 25460,
+          "missing_pct": 24.64,
+          "unique_count": 659,
+          "sample_values": [
+            "09-Jul-2024",
+            "18-Sep-2025",
+            "23-Sep-2024"
+          ],
+          "date_range": {
+            "min": "2024-07-09 00:00:00",
+            "max": "2026-08-18 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 103330,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "56386598274.27"
+          ],
+          "min": 56386598274.27,
+          "max": 56386598274.27,
+          "mean": 56386598274.27
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/\t MP620/2024-2025/133166-Construction of buildings for community cultural activities",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "RECOMMENDED_AMOUNT": 497185.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Physical Inspection",
+          "LETTER_NO": "LN/\t MP620/2024-2025/162",
+          "SANCTION_AMOUNT": 497185.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133166.0,
+          "FILE_STATUS": true,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": 782562.0,
+          "SANCTION_DATE": "09-Jul-2024",
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Trust and Society",
+          "ACTIVITY_NAME": "WS/\t MP620/2025-2026/133167-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of College room of  CBS Charitable Foudation at Nulvi Vilage Pry No 817/3 Continued work",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "RECOMMENDED_AMOUNT": 500000.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Pending for Sanction",
+          "LETTER_NO": "LN/\t MP620/2024-2025/163",
+          "SANCTION_AMOUNT": 500000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133167.0,
+          "FILE_STATUS": NaN,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": NaN,
+          "SANCTION_DATE": "18-Sep-2025",
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Trust and Society",
+          "ACTIVITY_NAME": "WS/\t MP620/2024-2025/133190-Construction of buildings for community cultural activities",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of Community Bhavan of Veerashaiv Jangam Society (R) at Ward No 21 Chidamarnagar Dharwad",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "RECOMMENDED_AMOUNT": 450000.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Pending for Sanction",
+          "LETTER_NO": "LN/\t MP620/2024-2025/164",
+          "SANCTION_AMOUNT": 450000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133190.0,
+          "FILE_STATUS": NaN,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": NaN,
+          "SANCTION_DATE": "23-Sep-2024",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "works_recommended_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 11875431,
+      "file_size_mb": 11.33,
+      "num_rows": 24934,
+      "num_columns": 24,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "WORK_DESCRIPTION",
+        "RECOMMENDATION_DATE",
+        "RECOMMENDED_AMOUNT",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "WORK_STAGE",
+        "LETTER_NO",
+        "SANCTION_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "SANCTION_DATE",
+        "FILE_STATUS",
+        "ATTACH_ID",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "RECOMMENDATION_DATE": "object",
+        "RECOMMENDED_AMOUNT": "float64",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "WORK_STAGE": "object",
+        "LETTER_NO": "object",
+        "SANCTION_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "SANCTION_DATE": "object",
+        "FILE_STATUS": "object",
+        "ATTACH_ID": "float64",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 6,
+          "missing_pct": 0.02,
+          "unique_count": 4,
+          "sample_values": [
+            "Normal/Others",
+            "Normal/Others",
+            "Normal/Others"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 19136,
+          "sample_values": [
+            "WS/MP187/2023-2024/1199-Construction of rooms and halls in school and colleges",
+            "WS/MP187/2023-2024/1200-Construction of rooms and halls in school and colleges",
+            "WS/MP187/2023-2024/1211-Construction of rooms and halls in school and colleges"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 29,
+          "sample_values": [
+            "Uttar Pradesh",
+            "Uttar Pradesh",
+            "Uttar Pradesh"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 620,
+          "sample_values": [
+            "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+            "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+            "ETAWAH(DISTRICT MAGISTRATE ETAWAH_IDA)"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting MP",
+            "Sitting MP",
+            "Sitting MP"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 189,
+          "sample_values": [
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 23,
+          "missing_pct": 0.09,
+          "unique_count": 22025,
+          "sample_values": [
+            "Construction of Class room\nSompal Singh Memorial Public School ",
+            "Construction of Class room and Hall\nSainik Veer Abdul Hamid Uchhtar madhyamik Vidyalaya",
+            "Construction of Classroom and hall\nGalaxy Public School lakhna"
+          ]
+        },
+        {
+          "column_name": "RECOMMENDATION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 968,
+          "sample_values": [
+            "14-Jun-2023",
+            "14-Jun-2023",
+            "14-Jun-2023"
+          ],
+          "date_range": {
+            "min": "2023-06-14 00:00:00",
+            "max": "2023-08-03 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "RECOMMENDED_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4965,
+          "sample_values": [
+            "1000000.0",
+            "1000000.0",
+            "1000000.0"
+          ],
+          "min": 3.89,
+          "max": 73500000.0,
+          "mean": 881169.88
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 2.0,
+          "mean": 1.01
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "545.0",
+            "545.0",
+            "545.0"
+          ],
+          "min": 545.0,
+          "max": 546.0,
+          "mean": 545.04
+        },
+        {
+          "column_name": "WORK_STAGE",
+          "dtype": "object",
+          "missing_count": 349,
+          "missing_pct": 1.4,
+          "unique_count": 6,
+          "sample_values": [
+            "Vendor Identification",
+            "Physical Inspection",
+            "Work Completed"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 12317,
+          "sample_values": [
+            "LN/MP187/2023-2024/1",
+            "LN/MP187/2023-2024/1",
+            "LN/MP187/2023-2024/3"
+          ]
+        },
+        {
+          "column_name": "SANCTION_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 349,
+          "missing_pct": 1.4,
+          "unique_count": 4903,
+          "sample_values": [
+            "1000000.0",
+            "1000000.0",
+            "1000000.0"
+          ],
+          "min": 3.89,
+          "max": 73500000.0,
+          "mean": 879900.26
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 24933,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 24933.0,
+          "mean": 12467.0
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 24887,
+          "sample_values": [
+            "1199.0",
+            "1200.0",
+            "1211.0"
+          ],
+          "min": 149.0,
+          "max": 309695.0,
+          "mean": 194565.31
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 38,
+          "sample_values": [
+            "Jul 5, 2022 12:00:00 AM",
+            "Jul 5, 2022 12:00:00 AM",
+            "Jul 5, 2022 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2020-11-26 00:00:00",
+            "max": "2022-07-08 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 33,
+          "sample_values": [
+            "Jul 4, 2028 11:59:59 PM",
+            "Jul 4, 2028 11:59:59 PM",
+            "Jul 4, 2028 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2026-11-25 23:59:59",
+            "max": "2028-07-07 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "SANCTION_DATE",
+          "dtype": "object",
+          "missing_count": 5889,
+          "missing_pct": 23.62,
+          "unique_count": 805,
+          "sample_values": [
+            "07-Nov-2023",
+            "08-Dec-2023",
+            "15-Mar-2024"
+          ],
+          "date_range": {
+            "min": "2023-07-07 00:00:00",
+            "max": "2026-05-19 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 18506,
+          "missing_pct": 74.22,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 18506,
+          "missing_pct": 74.22,
+          "unique_count": 6428,
+          "sample_values": [
+            "1695968.0",
+            "342211.0",
+            "2187290.0"
+          ],
+          "min": 17939.0,
+          "max": 2406717.0,
+          "mean": 1664227.66
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 24933,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "21970208563.210003"
+          ],
+          "min": 21970208563.210003,
+          "max": 21970208563.210003,
+          "mean": 21970208563.21
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1199-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Class room\nSompal Singh Memorial Public School ",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "RECOMMENDED_AMOUNT": 1000000.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Vendor Identification",
+          "LETTER_NO": "LN/MP187/2023-2024/1",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1199.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "07-Nov-2023",
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1200-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Class room and Hall\nSainik Veer Abdul Hamid Uchhtar madhyamik Vidyalaya",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "RECOMMENDED_AMOUNT": 1000000.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Physical Inspection",
+          "LETTER_NO": "LN/MP187/2023-2024/1",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1200.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "08-Dec-2023",
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1211-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "ETAWAH(DISTRICT MAGISTRATE ETAWAH_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Classroom and hall\nGalaxy Public School lakhna",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "RECOMMENDED_AMOUNT": 1000000.0,
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Work Completed",
+          "LETTER_NO": "LN/MP187/2023-2024/3",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1211.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "15-Mar-2024",
+          "FILE_STATUS": true,
+          "ATTACH_ID": 1695968.0,
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "works_sanctioned_LokSabha_alltenures.csv",
+      "file_size_bytes": 34411750,
+      "file_size_mb": 32.82,
+      "num_rows": 78233,
+      "num_columns": 23,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "WORK_DESCRIPTION",
+        "RECOMMENDATION_DATE",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "WORK_STAGE",
+        "LETTER_NO",
+        "SANCTION_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "FILE_STATUS",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "ATTACH_ID",
+        "SANCTION_DATE",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "RECOMMENDATION_DATE": "object",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "WORK_STAGE": "object",
+        "LETTER_NO": "object",
+        "SANCTION_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "FILE_STATUS": "object",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "ATTACH_ID": "float64",
+        "SANCTION_DATE": "object",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "Normal/Others",
+            "Trust and Society",
+            "Trust and Society"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 78232,
+          "sample_values": [
+            "WS/\t MP620/2024-2025/133166-Construction of buildings for community cultural activities",
+            "WS/\t MP620/2025-2026/133167-Construction of rooms and halls in school and colleges",
+            "WS/\t MP620/2024-2025/133190-Construction of buildings for community cultural activities"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 36,
+          "sample_values": [
+            "Karnataka",
+            "Karnataka",
+            "Karnataka"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "2.0",
+            "2.0",
+            "2.0"
+          ],
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 754,
+          "sample_values": [
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+            "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "18th Lok Sabha",
+            "18th Lok Sabha",
+            "18th Lok Sabha"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 536,
+          "sample_values": [
+            "Pralhad Venkatesh Joshi",
+            "Pralhad Venkatesh Joshi",
+            "Pralhad Venkatesh Joshi"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 97,
+          "missing_pct": 0.12,
+          "unique_count": 71392,
+          "sample_values": [
+            "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+            "Construction of College room of  CBS Charitable Foudation at Nulvi Vilage Pry No 817/3 Continued work",
+            "Construction of Community Bhavan of Veerashaiv Jangam Society (R) at Ward No 21 Chidamarnagar Dharwad"
+          ]
+        },
+        {
+          "column_name": "RECOMMENDATION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 749,
+          "sample_values": [
+            "08-Jul-2024",
+            "08-Jul-2024",
+            "08-Jul-2024"
+          ],
+          "date_range": {
+            "min": "2024-07-08 00:00:00",
+            "max": "2025-03-15 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 536,
+          "sample_values": [
+            "187.0",
+            "187.0",
+            "187.0"
+          ],
+          "min": 1.0,
+          "max": 547.0,
+          "mean": 277.52
+        },
+        {
+          "column_name": "WORK_STAGE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6,
+          "sample_values": [
+            "Physical Inspection",
+            "Sanction",
+            "Sanction"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 34550,
+          "sample_values": [
+            "LN/\t MP620/2024-2025/162",
+            "LN/\t MP620/2024-2025/163",
+            "LN/\t MP620/2024-2025/164"
+          ]
+        },
+        {
+          "column_name": "SANCTION_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 13985,
+          "sample_values": [
+            "497185.0",
+            "500000.0",
+            "450000.0"
+          ],
+          "min": 2.46,
+          "max": 49740000.0,
+          "mean": 526340.97
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 78232,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 78232.0,
+          "mean": 39116.5
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 536,
+          "sample_values": [
+            "DHARWAD",
+            "DHARWAD",
+            "DHARWAD"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 78232,
+          "sample_values": [
+            "133166.0",
+            "133167.0",
+            "133190.0"
+          ],
+          "min": 133166.0,
+          "max": 307548.0,
+          "mean": 210010.97
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 53581,
+          "missing_pct": 68.49,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 6,
+          "sample_values": [
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM",
+            "Jun 4, 2024 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2024-06-04 00:00:00",
+            "max": "2024-06-04 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 4,
+          "sample_values": [
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM",
+            "Jun 3, 2029 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2029-06-03 23:59:59",
+            "max": "2029-06-03 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 53581,
+          "missing_pct": 68.49,
+          "unique_count": 24652,
+          "sample_values": [
+            "782562.0",
+            "1090765.0",
+            "1126952.0"
+          ],
+          "min": 667113.0,
+          "max": 2406693.0,
+          "mean": 1907880.59
+        },
+        {
+          "column_name": "SANCTION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.0,
+          "unique_count": 659,
+          "sample_values": [
+            "09-Jul-2024",
+            "18-Sep-2025",
+            "23-Sep-2024"
+          ],
+          "date_range": {
+            "min": "2024-07-09 00:00:00",
+            "max": "2026-08-18 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 78232,
+          "missing_pct": 100.0,
+          "unique_count": 1,
+          "sample_values": [
+            "41176707014.08003"
+          ],
+          "min": 41176707014.08003,
+          "max": 41176707014.08003,
+          "mean": 41176707014.08
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/\t MP620/2024-2025/133166-Construction of buildings for community cultural activities",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Physical Inspection",
+          "LETTER_NO": "LN/\t MP620/2024-2025/162",
+          "SANCTION_AMOUNT": 497185.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133166.0,
+          "FILE_STATUS": true,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": 782562.0,
+          "SANCTION_DATE": "09-Jul-2024",
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Trust and Society",
+          "ACTIVITY_NAME": "WS/\t MP620/2025-2026/133167-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of College room of  CBS Charitable Foudation at Nulvi Vilage Pry No 817/3 Continued work",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Sanction",
+          "LETTER_NO": "LN/\t MP620/2024-2025/163",
+          "SANCTION_AMOUNT": 500000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133167.0,
+          "FILE_STATUS": NaN,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": NaN,
+          "SANCTION_DATE": "18-Sep-2025",
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Trust and Society",
+          "ACTIVITY_NAME": "WS/\t MP620/2024-2025/133190-Construction of buildings for community cultural activities",
+          "STATE_NAME": "Karnataka",
+          "HOUSE_OF_PARLIAMENT": 2.0,
+          "IDA_NAME": "DHARWAD(DEPUTY COMMISSIONER DHARWAR_IDA)",
+          "TENURE": "18th Lok Sabha",
+          "MP_NAME": "Pralhad Venkatesh Joshi",
+          "WORK_DESCRIPTION": "Construction of Community Bhavan of Veerashaiv Jangam Society (R) at Ward No 21 Chidamarnagar Dharwad",
+          "RECOMMENDATION_DATE": "08-Jul-2024",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 187.0,
+          "WORK_STAGE": "Sanction",
+          "LETTER_NO": "LN/\t MP620/2024-2025/164",
+          "SANCTION_AMOUNT": 450000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "DHARWAD",
+          "WORK_RECOMMENDATION_DTL_ID": 133190.0,
+          "FILE_STATUS": NaN,
+          "TENURE_START_DATE": "Jun 4, 2024 12:00:00 AM",
+          "TENURE_END_DATE": "Jun 3, 2029 11:59:59 PM",
+          "ATTACH_ID": NaN,
+          "SANCTION_DATE": "23-Sep-2024",
+          "Total_Amt": NaN
+        }
+      ]
+    },
+    {
+      "file_name": "works_sanctioned_RajyaSabha_alltenures.csv",
+      "file_size_bytes": 9155171,
+      "file_size_mb": 8.73,
+      "num_rows": 19275,
+      "num_columns": 23,
+      "column_names": [
+        "WORK_CATEGORY",
+        "ACTIVITY_NAME",
+        "STATE_NAME",
+        "HOUSE_OF_PARLIAMENT",
+        "IDA_NAME",
+        "TENURE",
+        "MP_NAME",
+        "WORK_DESCRIPTION",
+        "RECOMMENDATION_DATE",
+        "FLAG",
+        "CONSTITUENCY_ID",
+        "WORK_STAGE",
+        "LETTER_NO",
+        "SANCTION_AMOUNT",
+        "Sno",
+        "CONSTITUENCY",
+        "WORK_RECOMMENDATION_DTL_ID",
+        "TENURE_START_DATE",
+        "TENURE_END_DATE",
+        "SANCTION_DATE",
+        "FILE_STATUS",
+        "ATTACH_ID",
+        "Total_Amt"
+      ],
+      "dtypes": {
+        "WORK_CATEGORY": "object",
+        "ACTIVITY_NAME": "object",
+        "STATE_NAME": "object",
+        "HOUSE_OF_PARLIAMENT": "float64",
+        "IDA_NAME": "object",
+        "TENURE": "object",
+        "MP_NAME": "object",
+        "WORK_DESCRIPTION": "object",
+        "RECOMMENDATION_DATE": "object",
+        "FLAG": "float64",
+        "CONSTITUENCY_ID": "float64",
+        "WORK_STAGE": "object",
+        "LETTER_NO": "object",
+        "SANCTION_AMOUNT": "float64",
+        "Sno": "float64",
+        "CONSTITUENCY": "object",
+        "WORK_RECOMMENDATION_DTL_ID": "float64",
+        "TENURE_START_DATE": "object",
+        "TENURE_END_DATE": "object",
+        "SANCTION_DATE": "object",
+        "FILE_STATUS": "object",
+        "ATTACH_ID": "float64",
+        "Total_Amt": "float64"
+      },
+      "duplicate_row_count": 0,
+      "duplicate_pct": 0.0,
+      "potential_id_columns": [
+        "ACTIVITY_NAME",
+        "WORK_DESCRIPTION",
+        "Sno",
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "work_identifier_columns": [
+        "WORK_RECOMMENDATION_DTL_ID"
+      ],
+      "mp_identifier_columns": [
+        "MP_NAME"
+      ],
+      "agency_identifier_columns": [
+        "IDA_NAME"
+      ],
+      "columns_detail": [
+        {
+          "column_name": "WORK_CATEGORY",
+          "dtype": "object",
+          "missing_count": 8,
+          "missing_pct": 0.04,
+          "unique_count": 4,
+          "sample_values": [
+            "Normal/Others",
+            "Normal/Others",
+            "Normal/Others"
+          ]
+        },
+        {
+          "column_name": "ACTIVITY_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 19274,
+          "sample_values": [
+            "WS/MP187/2023-2024/1199-Construction of rooms and halls in school and colleges",
+            "WS/MP187/2023-2024/1200-Construction of rooms and halls in school and colleges",
+            "WS/MP187/2023-2024/1211-Construction of rooms and halls in school and colleges"
+          ]
+        },
+        {
+          "column_name": "STATE_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 28,
+          "sample_values": [
+            "Uttar Pradesh",
+            "Uttar Pradesh",
+            "Uttar Pradesh"
+          ]
+        },
+        {
+          "column_name": "HOUSE_OF_PARLIAMENT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "IDA_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 570,
+          "sample_values": [
+            "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+            "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+            "ETAWAH(DISTRICT MAGISTRATE ETAWAH_IDA)"
+          ]
+        },
+        {
+          "column_name": "TENURE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting MP",
+            "Sitting MP",
+            "Sitting MP"
+          ]
+        },
+        {
+          "column_name": "MP_NAME",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 176,
+          "sample_values": [
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)",
+            "Shri Javed Ali Khan (2022-28)"
+          ]
+        },
+        {
+          "column_name": "WORK_DESCRIPTION",
+          "dtype": "object",
+          "missing_count": 12,
+          "missing_pct": 0.06,
+          "unique_count": 16967,
+          "sample_values": [
+            "Construction of Class room\nSompal Singh Memorial Public School ",
+            "Construction of Class room and Hall\nSainik Veer Abdul Hamid Uchhtar madhyamik Vidyalaya",
+            "Construction of Classroom and hall\nGalaxy Public School lakhna"
+          ]
+        },
+        {
+          "column_name": "RECOMMENDATION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 931,
+          "sample_values": [
+            "14-Jun-2023",
+            "14-Jun-2023",
+            "14-Jun-2023"
+          ],
+          "date_range": {
+            "min": "2023-06-14 00:00:00",
+            "max": "2023-08-03 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FLAG",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 1,
+          "sample_values": [
+            "1.0",
+            "1.0",
+            "1.0"
+          ],
+          "min": 1.0,
+          "max": 1.0,
+          "mean": 1.0
+        },
+        {
+          "column_name": "CONSTITUENCY_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 2,
+          "sample_values": [
+            "545.0",
+            "545.0",
+            "545.0"
+          ],
+          "min": 545.0,
+          "max": 546.0,
+          "mean": 545.05
+        },
+        {
+          "column_name": "WORK_STAGE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 6,
+          "sample_values": [
+            "Vendor Identification",
+            "Physical Inspection",
+            "Work Completed"
+          ]
+        },
+        {
+          "column_name": "LETTER_NO",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 9457,
+          "sample_values": [
+            "LN/MP187/2023-2024/1",
+            "LN/MP187/2023-2024/1",
+            "LN/MP187/2023-2024/3"
+          ]
+        },
+        {
+          "column_name": "SANCTION_AMOUNT",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 4699,
+          "sample_values": [
+            "1000000.0",
+            "1000000.0",
+            "1000000.0"
+          ],
+          "min": 10000.0,
+          "max": 73500000.0,
+          "mean": 878507.98
+        },
+        {
+          "column_name": "Sno",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 19274,
+          "sample_values": [
+            "1.0",
+            "2.0",
+            "3.0"
+          ],
+          "min": 1.0,
+          "max": 19274.0,
+          "mean": 9637.5
+        },
+        {
+          "column_name": "CONSTITUENCY",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 2,
+          "sample_values": [
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha",
+            "Sitting Rajya Sabha"
+          ]
+        },
+        {
+          "column_name": "WORK_RECOMMENDATION_DTL_ID",
+          "dtype": "float64",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 19274,
+          "sample_values": [
+            "1199.0",
+            "1200.0",
+            "1211.0"
+          ],
+          "min": 1199.0,
+          "max": 307845.0,
+          "mean": 175396.15
+        },
+        {
+          "column_name": "TENURE_START_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 36,
+          "sample_values": [
+            "Jul 5, 2022 12:00:00 AM",
+            "Jul 5, 2022 12:00:00 AM",
+            "Jul 5, 2022 12:00:00 AM"
+          ],
+          "date_range": {
+            "min": "2020-11-26 00:00:00",
+            "max": "2022-07-08 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "TENURE_END_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 32,
+          "sample_values": [
+            "Jul 4, 2028 11:59:59 PM",
+            "Jul 4, 2028 11:59:59 PM",
+            "Jul 4, 2028 11:59:59 PM"
+          ],
+          "date_range": {
+            "min": "2026-11-25 23:59:59",
+            "max": "2028-07-07 23:59:59",
+            "parsed_count": 500,
+            "format_detected": "%b %d, %Y %I:%M:%S %p"
+          }
+        },
+        {
+          "column_name": "SANCTION_DATE",
+          "dtype": "object",
+          "missing_count": 1,
+          "missing_pct": 0.01,
+          "unique_count": 805,
+          "sample_values": [
+            "07-Nov-2023",
+            "08-Dec-2023",
+            "15-Mar-2024"
+          ],
+          "date_range": {
+            "min": "2023-07-07 00:00:00",
+            "max": "2026-05-19 00:00:00",
+            "parsed_count": 500,
+            "format_detected": "%d-%b-%Y"
+          }
+        },
+        {
+          "column_name": "FILE_STATUS",
+          "dtype": "object",
+          "missing_count": 12847,
+          "missing_pct": 66.65,
+          "unique_count": 1,
+          "sample_values": [
+            "True",
+            "True",
+            "True"
+          ]
+        },
+        {
+          "column_name": "ATTACH_ID",
+          "dtype": "float64",
+          "missing_count": 12847,
+          "missing_pct": 66.65,
+          "unique_count": 6428,
+          "sample_values": [
+            "1695968.0",
+            "342211.0",
+            "2187290.0"
+          ],
+          "min": 17939.0,
+          "max": 2406717.0,
+          "mean": 1664227.66
+        },
+        {
+          "column_name": "Total_Amt",
+          "dtype": "float64",
+          "missing_count": 19274,
+          "missing_pct": 99.99,
+          "unique_count": 1,
+          "sample_values": [
+            "16932362805.870008"
+          ],
+          "min": 16932362805.870008,
+          "max": 16932362805.870008,
+          "mean": 16932362805.87
+        }
+      ],
+      "example_records": [
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1199-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Class room\nSompal Singh Memorial Public School ",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Vendor Identification",
+          "LETTER_NO": "LN/MP187/2023-2024/1",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 1.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1199.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "07-Nov-2023",
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1200-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "SAMBHAL(DISTRICT MAGISTRAE BHIMNAGAR SAMBHAL_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Class room and Hall\nSainik Veer Abdul Hamid Uchhtar madhyamik Vidyalaya",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Physical Inspection",
+          "LETTER_NO": "LN/MP187/2023-2024/1",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 2.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1200.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "08-Dec-2023",
+          "FILE_STATUS": NaN,
+          "ATTACH_ID": NaN,
+          "Total_Amt": NaN
+        },
+        {
+          "WORK_CATEGORY": "Normal/Others",
+          "ACTIVITY_NAME": "WS/MP187/2023-2024/1211-Construction of rooms and halls in school and colleges",
+          "STATE_NAME": "Uttar Pradesh",
+          "HOUSE_OF_PARLIAMENT": 1.0,
+          "IDA_NAME": "ETAWAH(DISTRICT MAGISTRATE ETAWAH_IDA)",
+          "TENURE": "Sitting MP",
+          "MP_NAME": "Shri Javed Ali Khan (2022-28)",
+          "WORK_DESCRIPTION": "Construction of Classroom and hall\nGalaxy Public School lakhna",
+          "RECOMMENDATION_DATE": "14-Jun-2023",
+          "FLAG": 1.0,
+          "CONSTITUENCY_ID": 545.0,
+          "WORK_STAGE": "Work Completed",
+          "LETTER_NO": "LN/MP187/2023-2024/3",
+          "SANCTION_AMOUNT": 1000000.0,
+          "Sno": 3.0,
+          "CONSTITUENCY": "Sitting Rajya Sabha",
+          "WORK_RECOMMENDATION_DTL_ID": 1211.0,
+          "TENURE_START_DATE": "Jul 5, 2022 12:00:00 AM",
+          "TENURE_END_DATE": "Jul 4, 2028 11:59:59 PM",
+          "SANCTION_DATE": "15-Mar-2024",
+          "FILE_STATUS": true,
+          "ATTACH_ID": 1695968.0,
+          "Total_Amt": NaN
+        }
+      ]
+    }
+  ]
+}

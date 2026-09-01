@@ -11,6 +11,18 @@ __pycache__/
 venv/
 .venv/
 
+# Large Datasets & Databases (>50MB)
+*.db
+*.sqlite
+*.sqlite3
+data/mplads_data/
+mplads_data/raw/
+ml/data/*.db
+ml/data/master_projects.csv
+ml/data/cleaned/works_recommended_all.csv
+ml/data/cleaned/works_sanctioned_all.csv
+ml/data/cleaned/expenditure_all.csv
+
 # IDE / OS
 .DS_Store
 Thumbs.db

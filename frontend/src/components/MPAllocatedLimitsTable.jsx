@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IndianRupee, Search, UserCheck, Award, FileSpreadsheet, MapPin } from 'lucide-react';
+import { FileSpreadsheet, Search } from 'lucide-react';
 import { API_BASE_URL } from '../apiConfig';
 
 export default function MPAllocatedLimitsTable() {
@@ -44,51 +44,43 @@ export default function MPAllocatedLimitsTable() {
   });
 
   if (loading) {
-    return <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--goi-text-muted)' }}>Loading Official 543 MP Allocated Limit Database...</div>;
+    return (
+      <div className="goi-card" style={{ padding: '2.5rem', textAlign: 'center', color: '#64748b' }}>
+        Loading Official MP Allocation Database...
+      </div>
+    );
   }
 
   return (
     <div className="goi-card">
       <div className="goi-card-header">
-        <div className="goi-card-title">
-          <FileSpreadsheet size={22} color="var(--esakshi-teal)" />
-          Official MP Allocation Database (eSAKSHI Reference Data)
-          <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--goi-text-muted)', marginLeft: '0.5rem' }}>
-            ({filteredMps.length} Hon'ble MPs Displayed)
-          </span>
+        <div>
+          <div className="goi-card-title">
+            <FileSpreadsheet size={20} color="#0d9488" />
+            Official MP Allocation Database (eSAKSHI Reference)
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.2rem' }}>
+            Showing {filteredMps.length} Members of Parliament and constituency entitlement limits
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <div style={{ position: 'relative', width: '260px' }}>
-            <Search size={14} color="#6b7280" style={{ position: 'absolute', left: '10px', top: '10px' }} />
+            <Search size={14} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '12px' }} />
             <input
               type="text"
               placeholder="Search MP Name, Constituency..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.4rem 0.5rem 0.4rem 2.2rem',
-                background: '#ffffff',
-                border: '1px solid var(--goi-border)',
-                borderRadius: '4px',
-                color: '#1a252c',
-                fontSize: '0.825rem'
-              }}
+              className="goi-input"
+              style={{ paddingLeft: '2.2rem' }}
             />
           </div>
 
           <select
             value={stateFilter}
             onChange={(e) => setStateFilter(e.target.value)}
-            style={{
-              padding: '0.4rem 0.75rem',
-              background: '#ffffff',
-              border: '1px solid var(--goi-border)',
-              borderRadius: '4px',
-              color: '#1a252c',
-              fontSize: '0.825rem'
-            }}
+            className="goi-select"
           >
             <option value="ALL">All States / UTs ({statesList.length})</option>
             {statesList.map(st => (
@@ -98,32 +90,37 @@ export default function MPAllocatedLimitsTable() {
         </div>
       </div>
 
-      <div className="custom-table-container">
-        <table className="custom-table">
+      <div className="goi-table-container">
+        <table className="goi-table">
           <thead>
             <tr>
-              <th>Sr. No.</th>
+              <th style={{ width: '70px' }}>Sr. No.</th>
               <th>Hon'ble Member of Parliament (MP)</th>
               <th>State / Union Territory</th>
               <th>Constituency</th>
-              <th>Allocated Limit Amount (₹)</th>
+              <th style={{ textAlign: 'right' }}>Allocated Limit Amount</th>
             </tr>
           </thead>
           <tbody>
-            {filteredMps.slice(0, 100).map((m) => (
-              <tr key={m.sr_no}>
-                <td style={{ fontWeight: 700, color: '#64748b', width: '60px' }}>{m.sr_no}</td>
-                <td style={{ fontWeight: 700, color: '#002147' }}>{m.mp_name}</td>
-                <td>{m.state}</td>
-                <td style={{ fontWeight: 600, color: '#0284c7' }}>{m.constituency}</td>
-                <td style={{ fontWeight: 800, color: '#15803d' }}>
-                  {formatCrores(m.allocated_amount)}
-                  <span style={{ fontSize: '0.72rem', color: '#64748b', marginLeft: '0.4rem', fontWeight: 500 }}>
-                    (₹{m.allocated_amount.toLocaleString('en-IN')})
-                  </span>
+            {filteredMps.length === 0 ? (
+              <tr>
+                <td colSpan={5} style={{ textAlign: 'center', padding: '2.5rem', color: '#94a3b8' }}>
+                  No MP allocation records matching the filter.
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredMps.slice(0, 100).map((m) => (
+                <tr key={m.sr_no}>
+                  <td style={{ fontWeight: 600, color: '#94a3b8' }}>#{m.sr_no}</td>
+                  <td style={{ fontWeight: 700, color: '#0f2744' }}>{m.mp_name}</td>
+                  <td>{m.state}</td>
+                  <td style={{ fontWeight: 600, color: '#0284c7' }}>{m.constituency}</td>
+                  <td style={{ textAlign: 'right', fontWeight: 700, color: '#16a34a' }}>
+                    {formatCrores(m.allocated_amount)}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

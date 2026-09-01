@@ -1,0 +1,297 @@
+{
+  "evaluation_timestamp": "2026-09-01T19:13:42.840058",
+  "model_version": "v1",
+  "total_projects": 128081,
+  "labels_available": false,
+  "evaluation_note": "No verified fraud labels available. Using unsupervised evaluation methods.",
+  "score_distribution": {
+    "count": 128081,
+    "mean": 12.5,
+    "std": 14.9,
+    "min": 0.0,
+    "max": 100.0,
+    "percentiles": {
+      "p25": 1.1,
+      "p50": 6.2,
+      "p75": 20.0,
+      "p90": 35.5,
+      "p95": 43.2,
+      "p99": 60.4
+    },
+    "risk_categories": {
+      "LOW (0-29)": 109904,
+      "MEDIUM (30-59)": 16828,
+      "HIGH (60-79)": 1193,
+      "CRITICAL (80-100)": 156
+    }
+  },
+  "top_anomalies": [
+    {
+      "rank": 1,
+      "project_id": 239327,
+      "ml_anomaly_risk": 100.0,
+      "state": "Odisha",
+      "category": "Normal/Others",
+      "sanction_amount": 49500000.0,
+      "total_expenditure": 7821253.0,
+      "expenditure_ratio": 0.16,
+      "description_preview": "Setting up of NaMo Semiconductor Laboratory at IIT Bhubaneswar"
+    },
+    {
+      "rank": 2,
+      "project_id": 299885,
+      "ml_anomaly_risk": 97.8,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 15255000.0,
+      "total_expenditure": 11193611.0,
+      "expenditure_ratio": 0.73,
+      "description_preview": "S.N0-1 to S No-90 , High Mast LED Light (9.5 mtrs MS Pole with 6 LED Light 150 W"
+    },
+    {
+      "rank": 3,
+      "project_id": 171163,
+      "ml_anomaly_risk": 97.3,
+      "state": "West Bengal",
+      "category": "Normal/Others",
+      "sanction_amount": 72500000.0,
+      "total_expenditure": 71238651.0,
+      "expenditure_ratio": 0.98,
+      "description_preview": "Purchase of Mobile Medical Unit"
+    },
+    {
+      "rank": 4,
+      "project_id": 171164,
+      "ml_anomaly_risk": 96.6,
+      "state": "West Bengal",
+      "category": "Normal/Others",
+      "sanction_amount": 49000000.0,
+      "total_expenditure": 47289873.0,
+      "expenditure_ratio": 0.97,
+      "description_preview": "Purchase of Mobile Medical Unit"
+    },
+    {
+      "rank": 5,
+      "project_id": 171165,
+      "ml_anomaly_risk": 96.6,
+      "state": "West Bengal",
+      "category": "Normal/Others",
+      "sanction_amount": 67500000.0,
+      "total_expenditure": 65721153.0,
+      "expenditure_ratio": 0.97,
+      "description_preview": "Purchase of Mobile Medical Unit"
+    },
+    {
+      "rank": 6,
+      "project_id": 171199,
+      "ml_anomaly_risk": 96.5,
+      "state": "West Bengal",
+      "category": "Normal/Others",
+      "sanction_amount": 73500000.0,
+      "total_expenditure": 70787264.0,
+      "expenditure_ratio": 0.96,
+      "description_preview": "Purchase of Mobile Medical Unit"
+    },
+    {
+      "rank": 7,
+      "project_id": 171179,
+      "ml_anomaly_risk": 96.3,
+      "state": "West Bengal",
+      "category": "Normal/Others",
+      "sanction_amount": 44848000.0,
+      "total_expenditure": 43283332.0,
+      "expenditure_ratio": 0.97,
+      "description_preview": "Purchase of Mobile Medical Unit"
+    },
+    {
+      "rank": 8,
+      "project_id": 162408,
+      "ml_anomaly_risk": 96.2,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 19044000.0,
+      "total_expenditure": 19044000.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "installation of 69 semi high mast light as per the list"
+    },
+    {
+      "rank": 9,
+      "project_id": 290535,
+      "ml_anomaly_risk": 96.0,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 49740000.0,
+      "total_expenditure": 35321457.0,
+      "expenditure_ratio": 0.71,
+      "description_preview": "supply and installation of led semihigh mast light 200 places"
+    },
+    {
+      "rank": 10,
+      "project_id": 65656,
+      "ml_anomaly_risk": 96.0,
+      "state": "Tamil Nadu",
+      "category": "Normal/Others",
+      "sanction_amount": 39955654.0,
+      "total_expenditure": 39955654.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "Construction of Public Waiting Hall, Toilet and Canteen at Government Head Hospi"
+    },
+    {
+      "rank": 11,
+      "project_id": 254630,
+      "ml_anomaly_risk": 95.7,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 36803188.0,
+      "total_expenditure": 36803188.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "SUPPLY AND INSTALLATION OF LED SEMI HIGH MASK LIGHT AT 217 DIFFRENT PLACES IN DI"
+    },
+    {
+      "rank": 12,
+      "project_id": 141045,
+      "ml_anomaly_risk": 95.5,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 46470400.0,
+      "total_expenditure": 46470400.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "supply and installation of led semi high mast light at 274 different places in d"
+    },
+    {
+      "rank": 13,
+      "project_id": 10748,
+      "ml_anomaly_risk": 95.2,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 14529277.0,
+      "total_expenditure": 14529277.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "Please see the attached list."
+    },
+    {
+      "rank": 14,
+      "project_id": 35268,
+      "ml_anomaly_risk": 95.2,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 13392000.0,
+      "total_expenditure": 13391204.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "supply and installation of semi high mast light at various public places with ea"
+    },
+    {
+      "rank": 15,
+      "project_id": 214766,
+      "ml_anomaly_risk": 95.0,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 16757000.0,
+      "total_expenditure": 15862312.0,
+      "expenditure_ratio": 0.95,
+      "description_preview": "Allahabad loksabha Kshetra Roads construction"
+    },
+    {
+      "rank": 16,
+      "project_id": 127389,
+      "ml_anomaly_risk": 94.3,
+      "state": "Punjab",
+      "category": "Normal/Others",
+      "sanction_amount": 15060806.0,
+      "total_expenditure": 15060806.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "Various Development work to be carried out on the heritage street of Sri Darbar "
+    },
+    {
+      "rank": 17,
+      "project_id": 179557,
+      "ml_anomaly_risk": 94.3,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 19933000.0,
+      "total_expenditure": 2710610.0,
+      "expenditure_ratio": 0.14,
+      "description_preview": "This amount of Rs 2,00,00,000 is being released towards the completion of the ne"
+    },
+    {
+      "rank": 18,
+      "project_id": 296403,
+      "ml_anomaly_risk": 94.1,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 23047200.0,
+      "total_expenditure": 13780800.0,
+      "expenditure_ratio": 0.6,
+      "description_preview": "Supply and Installation of LED Semi High Mast Lights at Different Blocks in Dist"
+    },
+    {
+      "rank": 19,
+      "project_id": 194547,
+      "ml_anomaly_risk": 94.0,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 29889000.0,
+      "total_expenditure": 29889000.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "S I OF LED SEMI HIGH MAST LIGHT AT 123 DIFFERENT PLACES"
+    },
+    {
+      "rank": 20,
+      "project_id": 170558,
+      "ml_anomaly_risk": 93.3,
+      "state": "Uttar Pradesh",
+      "category": "Normal/Others",
+      "sanction_amount": 28310620.0,
+      "total_expenditure": 28310620.0,
+      "expenditure_ratio": 1.0,
+      "description_preview": "Supply and installation of led semi high mast light at different place in distri"
+    }
+  ],
+  "stability_analysis": [
+    {
+      "contamination_a": 0.01,
+      "contamination_b": 0.02,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    },
+    {
+      "contamination_a": 0.01,
+      "contamination_b": 0.05,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    },
+    {
+      "contamination_a": 0.01,
+      "contamination_b": 0.1,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    },
+    {
+      "contamination_a": 0.02,
+      "contamination_b": 0.05,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    },
+    {
+      "contamination_a": 0.02,
+      "contamination_b": 0.1,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    },
+    {
+      "contamination_a": 0.05,
+      "contamination_b": 0.1,
+      "top_100_overlap": 100,
+      "overlap_pct": 100.0
+    }
+  ],
+  "synthetic_evaluation": {
+    "evaluation_type": "SYNTHETIC_INJECTION (NOT real-world accuracy)",
+    "n_synthetic_anomalies": 100,
+    "n_detected": 100,
+    "detection_rate": 1.0,
+    "n_false_positives_on_real": 6308,
+    "false_positive_rate": 0.0493,
+    "disclaimer": "Synthetic benchmarks do NOT represent real-world fraud detection accuracy."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-09-01T19:15:09.257252",
+  "total_projects": 128081,
+  "risk_distribution": {
+    "LOW": 126129,
+    "MEDIUM": 1952,
+    "HIGH": 0,
+    "CRITICAL": 0
+  },
+  "avg_risk_score": 6.8,
+  "avg_data_quality": 74.5,
+  "weights_used": {
+    "rule_risk": 0.3,
+    "ml_anomaly_risk": 0.3,
+    "duplicate_risk": 0.2,
+    "agency_risk": 0.2
+  },
+  "disclaimer": "Risk Score \u2260 Fraud Probability. Final decision remains with authorized human reviewers."
+}
