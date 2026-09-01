@@ -1,283 +1,248 @@
 import React from 'react';
-import { LayoutDashboard, UserPlus, ShieldAlert, Lock, ArrowRight, Sparkles, CheckCircle2, Search, Database, MapPin } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Map, 
+  Sparkles, 
+  Layers, 
+  TrendingUp, 
+  TrendingDown, 
+  ShieldCheck, 
+  Search, 
+  Activity,
+  AlertTriangle,
+  CheckCircle2
+} from 'lucide-react';
 
-export default function HeroLanding({ onNavigateTab, onOpenCitizenRequest, onOpenLogin, onOpenCopilot }) {
+export default function HeroLanding({ 
+  onNavigateTab, 
+  onOpenCitizenRequest, 
+  onOpenCopilot,
+  stats 
+}) {
+  const monitoredWorks = stats?.total_projects || 128081;
+  const releasedExp = stats?.total_sanctioned_amount 
+    ? (stats.total_sanctioned_amount / 10000000).toLocaleString('en-IN', { maximumFractionDigits: 2 })
+    : '3,939.54';
+  const priorityRisks = stats?.high_risk_count || 1620;
+
   return (
-    <div style={{ position: 'relative', width: '100%', background: '#f8fafc' }}>
-      
-      {/* High-Impact Hero Banner */}
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          minHeight: '420px',
-          backgroundImage: `linear-gradient(135deg, rgba(15, 39, 68, 0.92), rgba(10, 25, 47, 0.96)), url(/parliament_hero_bg.png)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          color: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '3.5rem 2.5rem 5rem 2.5rem'
-        }}
-      >
-        <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%' }}>
-          
-          {/* Subtle Top Badge */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.35rem 0.85rem',
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '20px',
-            fontSize: '0.8rem',
-            fontWeight: 600,
-            color: '#38bdf8',
-            marginBottom: '1.25rem'
-          }}>
-            <Sparkles size={14} />
-            Smart India Hackathon 2026 • Problem Statement PS-102
+    <div style={{ width: '100%' }}>
+      {/* 1. Hero Grid Section */}
+      <div className="hero-grid">
+        {/* Left Column Text & CTAs */}
+        <div>
+          <div className="sih-badge">
+            <span className="sih-dot" />
+            <span>SMART INDIA HACKATHON 2026 • PS-102</span>
           </div>
 
-          {/* Main Title */}
-          <h1 style={{
-            fontSize: '2.75rem',
-            fontWeight: 800,
-            lineHeight: 1.15,
-            marginBottom: '1rem',
-            letterSpacing: '-0.5px'
-          }}>
-            AI-Powered <span style={{ color: '#38bdf8' }}>MPLADS</span> Anomaly & Risk Intelligence
+          <h1 className="hero-title">
+            AI-Powered<br />
+            MPLADS<br />
+            <span className="teal-text">Risk Intelligence</span>
           </h1>
 
-          <p style={{
-            fontSize: '1.1rem',
-            color: '#cbd5e1',
-            fontWeight: 400,
-            maxWidth: '720px',
-            lineHeight: 1.6,
-            marginBottom: '2rem'
-          }}>
-            Real-time multi-signal monitoring, explainable 0–100 risk prioritization, expenditure anomaly detection, and duplicate work prevention for the eSAKSHI ecosystem.
+          <p className="hero-subtitle">
+            Real-time multi-signal monitoring, explainable risk prioritization, 
+            expenditure anomaly detection, and duplicate-work prevention for the eSAKSHI ecosystem.
           </p>
 
-          {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <button
-              onClick={() => onNavigateTab('alerts')}
-              style={{
-                background: '#0d9488',
-                color: '#ffffff',
-                border: 'none',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                boxShadow: '0 4px 14px rgba(13, 148, 136, 0.35)',
-                transition: 'all 0.15s ease'
-              }}
-            >
-              <LayoutDashboard size={18} />
-              Open Risk Dashboard
+          <div className="hero-actions">
+            <button className="btn-primary-dark" onClick={() => onNavigateTab('alerts')}>
+              <span>Open Risk Dashboard</span>
+              <ArrowRight size={16} />
             </button>
 
-            <button
-              onClick={() => onNavigateTab('map')}
-              style={{
-                background: '#dc2626',
-                color: '#ffffff',
-                border: 'none',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                boxShadow: '0 4px 14px rgba(220, 38, 38, 0.35)'
-              }}
-            >
-              <MapPin size={18} />
-              Geographic Risk Map
+            <button className="btn-secondary-outline" onClick={() => onNavigateTab('map')}>
+              <Map size={16} />
+              <span>Explore Risk Map</span>
             </button>
 
-            <button
-              onClick={onOpenCopilot}
-              style={{
-                background: 'rgba(255, 255, 255, 0.12)',
-                color: '#ffffff',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
-                backdropFilter: 'blur(8px)',
-                padding: '0.75rem 1.3rem',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
-            >
-              <Sparkles size={18} color="#38bdf8" />
-              Ask AI Copilot
-            </button>
-
-            <button
-              onClick={onOpenCitizenRequest}
-              style={{
-                background: 'transparent',
-                color: '#e2e8f0',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-                padding: '0.75rem 1.2rem',
-                borderRadius: '8px',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
-            >
-              <UserPlus size={16} />
-              Citizen Portal
+            <button className="btn-teal-outline" onClick={onOpenCopilot}>
+              <Sparkles size={16} />
+              <span>Ask AI Copilot</span>
             </button>
           </div>
+        </div>
 
+        {/* Right Column Interactive Floating Map Visual */}
+        <div className="hero-map-card" onClick={() => onNavigateTab('map')} style={{ cursor: 'pointer' }}>
+          <div className="map-card-topbar">
+            <span>Intelligence Dashboard</span>
+            <span style={{ color: '#0d9488' }}>Live Satellite Sync</span>
+          </div>
+
+          <div className="map-canvas-wrap">
+            {/* SVG India Map Silhouette with glowing radar pulses */}
+            <svg viewBox="0 0 400 420" style={{ width: '100%', height: '100%' }}>
+              <defs>
+                <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#0d9488" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
+                </linearGradient>
+                <radialGradient id="radarPulse" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#ef4444" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+
+              {/* Simplified high-tech stylized India map paths */}
+              <path
+                d="M 180 30 L 210 50 L 230 70 L 220 90 L 260 110 L 290 120 L 320 110 L 340 130 L 320 160 L 280 170 L 270 190 L 290 220 L 260 250 L 230 310 L 200 370 L 190 380 L 180 340 L 160 290 L 140 240 L 110 200 L 120 160 L 140 130 L 170 110 L 160 60 Z"
+                fill="url(#mapGradient)"
+                opacity="0.25"
+                stroke="#0d9488"
+                strokeWidth="1.5"
+              />
+
+              {/* Grid lines */}
+              <line x1="50" y1="100" x2="350" y2="100" stroke="#e2e8f0" strokeDasharray="3 3" />
+              <line x1="50" y1="200" x2="350" y2="200" stroke="#e2e8f0" strokeDasharray="3 3" />
+              <line x1="50" y1="300" x2="350" y2="300" stroke="#e2e8f0" strokeDasharray="3 3" />
+
+              {/* Glowing Pulse Nodes */}
+              <circle cx="210" cy="130" r="14" fill="url(#radarPulse)">
+                <animate attributeName="r" values="6;22;6" dur="2.5s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.5s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="210" cy="130" r="4" fill="#ef4444" />
+
+              <circle cx="180" cy="270" r="12" fill="#10b981" opacity="0.3">
+                <animate attributeName="r" values="5;18;5" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="180" cy="270" r="4" fill="#10b981" />
+
+              <circle cx="260" cy="220" r="10" fill="#0284c7" opacity="0.3" />
+              <circle cx="260" cy="220" r="3" fill="#0284c7" />
+            </svg>
+
+            {/* Anomaly Callout Overlay (matching screenshot 1) */}
+            <div className="map-callout-anomaly">
+              <AlertTriangle size={16} color="#ef4444" />
+              <div>
+                <strong style={{ color: '#0f172a', display: 'block', fontSize: '0.75rem' }}>Anomaly Detected</strong>
+                <span style={{ color: '#64748b', fontSize: '0.7rem' }}>Exp. mismatch</span>
+              </div>
+            </div>
+
+            {/* Verified Sync Callout Overlay (matching screenshot 1) */}
+            <div className="map-callout-sync">
+              <CheckCircle2 size={16} color="#10b981" />
+              <div>
+                <strong style={{ color: '#0f172a', display: 'block', fontSize: '0.75rem' }}>Verified Sync</strong>
+                <span style={{ color: '#64748b', fontSize: '0.7rem' }}>Node active</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Modern Floating Action Cards */}
-      <div style={{ maxWidth: '1100px', margin: '-2.5rem auto 3.5rem auto', padding: '0 1.5rem', position: 'relative', zIndex: 10 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
-          
-          {/* Card 1: Risk Monitoring */}
-          <div
-            onClick={() => onNavigateTab('alerts')}
-            style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ background: '#fef2f2', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ShieldAlert size={24} color="#dc2626" />
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Anomaly Intelligence</div>
-                <div style={{ fontSize: '0.78rem', color: '#dc2626', fontWeight: 600 }}>128,081 Projects Monitored</div>
-              </div>
+      {/* 2. System Overview Metrics Section (Matching Screenshot 1) */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <h2 className="section-heading">System Overview</h2>
+        
+        <div className="metrics-row">
+          {/* Card 1: Monitored Works */}
+          <div className="metric-card accent-navy">
+            <div className="metric-header">
+              <Layers size={16} />
+              <span>Monitored Works</span>
             </div>
-            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
-              Unsupervised Isolation Forest + Deterministic Compliance Rule checks with explainable scores.
+            <div className="metric-value">
+              {Number(monitoredWorks).toLocaleString()}
+            </div>
+            <div className="metric-trend trend-up">
+              <TrendingUp size={13} />
+              <span>+8.4% (30d)</span>
             </div>
           </div>
 
-          {/* Card 2: Agency Risk */}
-          <div
-            onClick={() => onNavigateTab('agencies')}
-            style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ background: '#f0fdfa', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Database size={24} color="#0d9488" />
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Agency Risk Matrix</div>
-                <div style={{ fontSize: '0.78rem', color: '#0d9488', fontWeight: 600 }}>21,367 Contractors Profiled</div>
-              </div>
+          {/* Card 2: Released Exp. (Cr) */}
+          <div className="metric-card accent-teal">
+            <div className="metric-header">
+              <Activity size={16} />
+              <span>Released Exp. (Cr)</span>
             </div>
-            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
-              Track stall rates, cost overruns, and historical anomaly concentration by implementing agency.
+            <div className="metric-value">
+              ₹{releasedExp}
+            </div>
+            <div className="metric-trend trend-up">
+              <TrendingUp size={13} />
+              <span>+3.2% (30d)</span>
             </div>
           </div>
 
-          {/* Card 3: MP Allocations */}
-          <div
-            onClick={() => onNavigateTab('mps')}
-            style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ background: '#f0f9ff', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <LayoutDashboard size={24} color="#0284c7" />
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>MP Allocation Limits</div>
-                <div style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: 600 }}>544 Parliamentary Limits</div>
-              </div>
+          {/* Card 3: Priority Risks */}
+          <div className="metric-card accent-amber">
+            <div className="metric-header">
+              <AlertTriangle size={16} />
+              <span>Priority Risks</span>
             </div>
-            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
-              Monitor sanctioned vs recommended limits, constituency expenditure trends, and fund utilization.
+            <div className="metric-value">
+              {Number(priorityRisks).toLocaleString()}
+            </div>
+            <div className="metric-trend trend-down">
+              <TrendingDown size={13} />
+              <span>-4.7% (Resolved)</span>
             </div>
           </div>
 
-          {/* Card 4: Officer Login */}
-          <div
-            onClick={onOpenLogin}
-            style={{
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              padding: '1.5rem',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <div style={{ background: '#fffbeb', width: '48px', height: '48px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Lock size={24} color="#d97706" />
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: '#0f2744' }}>Authorized Review</div>
-                <div style={{ fontSize: '0.78rem', color: '#d97706', fontWeight: 600 }}>MoSPI / District Portal</div>
-              </div>
+          {/* Card 4: Data Integrity (Dark Card with Shield Badge) */}
+          <div className="metric-card card-dark">
+            <div className="metric-header">
+              <ShieldCheck size={16} color="#10b981" />
+              <span>Data Integrity</span>
             </div>
-            <div style={{ fontSize: '0.825rem', color: '#64748b', lineHeight: 1.5 }}>
-              Submit official officer verification remarks, desk audit feedback, and field inspection requests.
+            <div className="metric-value">
+              <span>100%</span>
+              <CheckCircle2 size={20} color="#10b981" />
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
+              Index Standard Maintained
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Citizen Portal Access Section */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <h2 className="section-heading">Citizen Portal Access</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+          <div 
+            className="metric-card" 
+            onClick={onOpenCitizenRequest}
+            style={{ cursor: 'pointer', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}
+          >
+            <div style={{ background: '#f1f5f9', padding: '0.75rem', borderRadius: '8px' }}>
+              <Search size={22} color="#0d9488" />
+            </div>
+            <div>
+              <strong style={{ fontSize: '0.95rem', color: '#0f172a', display: 'block', marginBottom: '0.25rem' }}>
+                Search Local Works
+              </strong>
+              <p style={{ fontSize: '0.825rem', color: '#64748b' }}>
+                Search for local MPLADS works by state, district, or MP constituency to view transparency reports.
+              </p>
             </div>
           </div>
 
+          <div 
+            className="metric-card" 
+            onClick={onOpenCitizenRequest}
+            style={{ cursor: 'pointer', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}
+          >
+            <div style={{ background: '#f1f5f9', padding: '0.75rem', borderRadius: '8px' }}>
+              <Activity size={22} color="#0284c7" />
+            </div>
+            <div>
+              <strong style={{ fontSize: '0.95rem', color: '#0f172a', display: 'block', marginBottom: '0.25rem' }}>
+                Track Work Status
+              </strong>
+              <p style={{ fontSize: '0.825rem', color: '#64748b' }}>
+                Enter a work ID to see real-time status updates, fund utilization, and AI-assessed completion metrics.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

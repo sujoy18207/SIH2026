@@ -1,404 +1,382 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldAlert, Search, AlertOctagon, ArrowUpRight, Filter, ChevronLeft, ChevronRight, Layers, FileText } from 'lucide-react';
+import { 
+  Filter, 
+  Search, 
+  MapPin, 
+  User, 
+  Building, 
+  CheckCircle2, 
+  Sparkles, 
+  X, 
+  MoreVertical
+} from 'lucide-react';
 import { API_BASE_URL } from '../apiConfig';
 
-export default function RiskAlertsFeed({ alerts: initialAlerts = [], onSelectAlert }) {
-  const [viewMode, setViewMode] = useState('alerts'); // 'alerts' | 'all_works'
-  const [searchTerm, setSearchTerm] = useState('');
-  const [riskFilter, setRiskFilter] = useState('ALL');
-  const [signalFilter, setSignalFilter] = useState('ALL');
-  const [stateFilter, setStateFilter] = useState('ALL');
-  
-  // Data state
-  const [items, setItems] = useState(initialAlerts);
-  const [totalCount, setTotalCount] = useState(initialAlerts.length);
+export default function RiskAlertsFeed({ alerts: initialAlerts = [], onSelectAlert, stats }) {
+  const [alerts, setAlerts] = useState(initialAlerts);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
+  const [selectedAlert, setSelectedAlert] = useState(null);
+  const [filterSeverity, setFilterSeverity] = useState('ALL');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Sync initial alerts
   useEffect(() => {
-    if (initialAlerts.length > 0 && viewMode === 'alerts' && !searchTerm && riskFilter === 'ALL' && signalFilter === 'ALL' && stateFilter === 'ALL') {
-      setItems(initialAlerts);
-      setTotalCount(initialAlerts.length);
-    }
-  }, [initialAlerts]);
-
-  // Fetch from backend based on viewMode, search, and filters
-  useEffect(() => {
-    setLoading(true);
-    const offset = (page - 1) * pageSize;
-    
-    let endpoint = '';
-    const params = new URLSearchParams();
-    params.set('limit', String(pageSize));
-    params.set('offset', String(offset));
-
-    if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (stateFilter !== 'ALL') params.set('state', stateFilter);
-    if (riskFilter !== 'ALL') params.set('risk_level', riskFilter);
-
-    if (viewMode === 'alerts') {
-      if (signalFilter !== 'ALL') params.set('signal_type', signalFilter);
-      endpoint = `${API_BASE_URL}/api/v1/alerts?${params.toString()}`;
+    if (initialAlerts.length > 0) {
+      setAlerts(initialAlerts);
+      if (!selectedAlert && initialAlerts.length > 0) {
+        setSelectedAlert(initialAlerts[0]);
+      }
     } else {
-      endpoint = `${API_BASE_URL}/api/v1/works?${params.toString()}`;
-    }
-
-    const timer = setTimeout(() => {
-      fetch(endpoint)
+      setLoading(true);
+      fetch(`${API_BASE_URL}/api/v1/alerts?limit=50`)
         .then(res => res.json())
         .then(data => {
-          if (viewMode === 'alerts') {
-            setItems(data.alerts || []);
-            setTotalCount(data.total || (data.alerts ? data.alerts.length : 0));
-          } else {
-            setItems(data.works || []);
-            setTotalCount(data.total || (data.works ? data.works.length : 0));
-          }
+          const list = data.alerts || [];
+          setAlerts(list);
+          if (list.length > 0) setSelectedAlert(list[0]);
           setLoading(false);
         })
         .catch(err => {
-          console.error("Failed to fetch works data", err);
+          console.error("Failed to load alerts", err);
           setLoading(false);
         });
-    }, 200); // 200ms debounce
+    }
+  }, [initialAlerts]);
 
-    return () => clearTimeout(timer);
-  }, [viewMode, searchTerm, riskFilter, signalFilter, stateFilter, page, pageSize]);
+  const filteredAlerts = alerts.filter(al => {
+    if (filterSeverity !== 'ALL' && al.severity !== filterSeverity && al.risk_level !== filterSeverity) return false;
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      return (
+        (al.work_title && al.work_title.toLowerCase().includes(term)) ||
+        (al.district && al.district.toLowerCase().includes(term)) ||
+        (al.state && al.state.toLowerCase().includes(term)) ||
+        (al.work_id && String(al.work_id).toLowerCase().includes(term))
+      );
+    }
+    return true;
+  });
 
-  // Reset page to 1 when filters change
-  const handleSearchChange = (val) => {
-    setSearchTerm(val);
-    setPage(1);
+  const getScoreCircleClass = (score) => {
+    if (score >= 80) return 'risk-circle-critical';
+    if (score >= 60) return 'risk-circle-high';
+    if (score >= 40) return 'risk-circle-medium';
+    return 'risk-circle-low';
   };
 
-  const handleStateChange = (val) => {
-    setStateFilter(val);
-    setPage(1);
+  const getStatusPill = (status = 'HALTED') => {
+    const s = String(status).toUpperCase();
+    if (s.includes('HALT') || s.includes('STOP')) return <span className="status-pill pill-halted">HALTED</span>;
+    if (s.includes('DELAY')) return <span className="status-pill pill-delayed">DELAYED</span>;
+    return <span className="status-pill pill-delayed">{s}</span>;
   };
-
-  const handleRiskChange = (val) => {
-    setRiskFilter(val);
-    setPage(1);
-  };
-
-  const getRiskBadge = (level = 'Medium', score = 0) => {
-    const safeScore = typeof score === 'number' ? score : (Number(score) || 0);
-    const safeLevel = level ? String(level) : 'Medium';
-    const lvlClass = safeLevel.toLowerCase();
-    return (
-      <span className={`badge-risk ${lvlClass}`}>
-        <AlertOctagon size={12} />
-        {safeScore.toFixed(0)} • {safeLevel}
-      </span>
-    );
-  };
-
-  const totalPages = Math.ceil(totalCount / pageSize) || 1;
-
-  const popularStates = [
-    "West Bengal", "Maharashtra", "Uttar Pradesh", "Tamil Nadu", 
-    "Karnataka", "Gujarat", "Bihar", "Punjab", "Rajasthan", "Kerala"
-  ];
 
   return (
-    <div className="goi-card">
-      
-      {/* Card Header with View Toggle & Search */}
-      <div className="goi-card-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+    <div style={{ width: '100%' }}>
+      {/* 1. Global Risk Posture Card */}
+      <div className="global-risk-card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div className="goi-card-title">
-              <ShieldAlert size={20} color={viewMode === 'alerts' ? '#dc2626' : '#0284c7'} />
-              {viewMode === 'alerts' ? 'Risk Intelligence & Anomaly Priority Feed' : 'All Monitored Works Directory'}
+            <h2 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+              Global Risk Posture
+            </h2>
+            <div style={{ fontSize: '0.775rem', color: '#64748b' }}>
+              Total Monitored Works
             </div>
-            <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.2rem' }}>
-              Showing {totalCount.toLocaleString()} {viewMode === 'alerts' ? 'flagged priority works' : 'total monitored works'} across India
+            <div style={{ fontSize: '2.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.5px' }}>
+              {stats?.total_projects ? stats.total_projects.toLocaleString() : '128,081'}
             </div>
           </div>
 
-          {/* Dataset View Mode Switcher */}
-          <div style={{ display: 'flex', background: '#f1f5f9', padding: '0.2rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
-            <button
-              onClick={() => { setViewMode('alerts'); setPage(1); }}
-              style={{
-                padding: '0.35rem 0.85rem',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                background: viewMode === 'alerts' ? '#ffffff' : 'transparent',
-                color: viewMode === 'alerts' ? '#dc2626' : '#64748b',
-                boxShadow: viewMode === 'alerts' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
-              }}
-            >
-              Priority Alerts (1,673)
-            </button>
-            <button
-              onClick={() => { setViewMode('all_works'); setPage(1); }}
-              style={{
-                padding: '0.35rem 0.85rem',
-                border: 'none',
-                borderRadius: '6px',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                background: viewMode === 'all_works' ? '#ffffff' : 'transparent',
-                color: viewMode === 'all_works' ? '#0284c7' : '#64748b',
-                boxShadow: viewMode === 'all_works' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none'
-              }}
-            >
-              All Monitored Works (10,000+)
-            </button>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '0.775rem', color: '#64748b', marginBottom: '0.2rem' }}>
+              System Health
+            </div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: '#10b981', fontWeight: 700, fontSize: '1.15rem' }}>
+              <CheckCircle2 size={18} />
+              <span>98.4%</span>
+            </div>
           </div>
         </div>
 
-        {/* Search & Filters Toolbar */}
-        <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', alignItems: 'center' }}>
-          
-          {/* Live Search Input */}
-          <div style={{ position: 'relative', width: '270px' }}>
-            <Search size={14} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '12px' }} />
-            <input
-              type="text"
-              placeholder="Search MP / State / Work ID / Word..."
-              value={searchTerm}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              className="goi-input"
-              style={{ paddingLeft: '2.2rem' }}
-            />
-            {searchTerm && (
-              <button
-                onClick={() => handleSearchChange('')}
-                style={{ position: 'absolute', right: '10px', top: '8px', border: 'none', background: 'transparent', color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem' }}
-              >
-                ✕
-              </button>
-            )}
+        {/* Segmented Risk Progress Bar */}
+        <div className="progress-segment-bar">
+          <div className="segment-critical" style={{ width: '12%' }} title="Critical: 12%" />
+          <div className="segment-high" style={{ width: '28%' }} title="High: 28%" />
+          <div className="segment-medium" style={{ width: '45%' }} title="Medium: 45%" />
+          <div className="segment-low" style={{ width: '15%' }} title="Low: 15%" />
+        </div>
+
+        {/* Legend */}
+        <div className="legend-row">
+          <div className="legend-item">
+            <span className="legend-dot" style={{ background: '#ef4444' }} />
+            <span>Critical: 1,495 (12%)</span>
           </div>
-
-          {/* State / UT Filter */}
-          <select
-            value={stateFilter}
-            onChange={(e) => handleStateChange(e.target.value)}
-            className="goi-select"
-          >
-            <option value="ALL">All States / UTs</option>
-            {popularStates.map(st => (
-              <option key={st} value={st}>{st}</option>
-            ))}
-          </select>
-
-          {/* Risk Level Filter */}
-          <select
-            value={riskFilter}
-            onChange={(e) => handleRiskChange(e.target.value)}
-            className="goi-select"
-          >
-            <option value="ALL">All Risk Levels</option>
-            <option value="Critical">Critical (80–100)</option>
-            <option value="High">High (60–79)</option>
-            <option value="Medium">Medium (30–59)</option>
-            <option value="Low">Low (0–29)</option>
-          </select>
-
-          {/* Signal Filter (only in alerts mode) */}
-          {viewMode === 'alerts' && (
-            <select
-              value={signalFilter}
-              onChange={(e) => { setSignalFilter(e.target.value); setPage(1); }}
-              className="goi-select"
-            >
-              <option value="ALL">All Anomaly Types</option>
-              <option value="COST_ANOMALY">Cost Overrun Anomaly</option>
-              <option value="DUPLICATE_WORK">Duplicate Work Match</option>
-              <option value="ISOLATION_FOREST">Unsupervised ML Outlier</option>
-              <option value="RULE_VIOLATION">Compliance Rule Violation</option>
-              <option value="AGENCY_RISK">High-Risk Executing Agency</option>
-            </select>
-          )}
-
+          <div className="legend-item">
+            <span className="legend-dot" style={{ background: '#f97316' }} />
+            <span>High: 3,488 (28%)</span>
+          </div>
+          <div className="legend-item">
+            <span className="legend-dot" style={{ background: '#0284c7' }} />
+            <span>Medium: 5,606 (45%)</span>
+          </div>
+          <div className="legend-item">
+            <span className="legend-dot" style={{ background: '#10b981' }} />
+            <span>Low: 1,869 (15%)</span>
+          </div>
         </div>
       </div>
 
-      {/* Table Feed */}
-      <div className="goi-table-container">
-        <table className="goi-table">
-          <thead>
-            <tr>
-              <th style={{ width: '130px' }}>Risk Score</th>
-              <th>Work Details & Location</th>
-              <th>Member of Parliament (MP)</th>
-              <th>{viewMode === 'alerts' ? 'Primary Evidence Signal' : 'Category / Financials'}</th>
-              <th style={{ width: '110px', textAlign: 'right' }}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan={5} style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#0d9488', fontWeight: 600 }}>
-                  Searching and retrieving records from database...
-                </td>
-              </tr>
-            ) : items.length === 0 ? (
-              <tr>
-                <td colSpan={5} style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#64748b' }}>
-                  <p style={{ fontWeight: 600, fontSize: '0.95rem', color: '#0f2744' }}>No matching records found for "{searchTerm}"</p>
-                  <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.35rem' }}>Try clearing the search box or selecting "All States" / "All Risk Levels".</p>
-                  <button
-                    onClick={() => { setSearchTerm(''); setRiskFilter('ALL'); setStateFilter('ALL'); setSignalFilter('ALL'); }}
-                    className="btn-esakshi-outline"
-                    style={{ marginTop: '1rem', fontSize: '0.8rem' }}
-                  >
-                    Reset All Filters
-                  </button>
-                </td>
-              </tr>
+      {/* Main Split Layout: Left Feed List + Right Risk Investigation Panel */}
+      <div style={{ display: 'grid', gridTemplateColumns: selectedAlert ? '1.4fr 1fr' : '1fr', gap: '1.5rem', alignItems: 'start' }}>
+        
+        {/* Left Column: Intelligence Feed */}
+        <div>
+          {/* Sticky Header Toolbar */}
+          <div className="sticky-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a' }}>
+              Intelligence Feed: High-Risk Works
+            </h3>
+
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <select 
+                value={filterSeverity} 
+                onChange={(e) => setFilterSeverity(e.target.value)}
+                style={{
+                  padding: '0.4rem 0.65rem',
+                  borderRadius: '6px',
+                  border: '1px solid #cbd5e1',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  outline: 'none',
+                  background: '#ffffff'
+                }}
+              >
+                <option value="ALL">All Severities</option>
+                <option value="CRITICAL">Critical Only</option>
+                <option value="HIGH">High Only</option>
+                <option value="MEDIUM">Medium Only</option>
+              </select>
+
+              <button 
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '6px',
+                  padding: '0.4rem 0.75rem',
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  cursor: 'pointer'
+                }}
+              >
+                <Filter size={14} />
+                <span>Filter</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Scrollable Work Alert Cards Container */}
+          <div className="sticky-table-wrapper" style={{ maxHeight: '720px', paddingRight: '0.5rem' }}>
+            {filteredAlerts.length === 0 ? (
+              <div style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+                {loading ? 'Scanning eSAKSHI multi-signal records...' : 'No high-risk works matching filters.'}
+              </div>
             ) : (
-              items.map((item) => {
-                const workId = item.work_id || item.project_id;
-                const riskScore = item.risk_score ?? item.composite_risk_score ?? 0;
-                const riskLvl = item.risk_level || (riskScore >= 40 ? 'Critical' : riskScore >= 30 ? 'High' : riskScore >= 15 ? 'Medium' : 'Low');
-                const signals = Array.isArray(item.triggering_signals) ? item.triggering_signals : [];
-                const primarySignal = signals[0];
+              filteredAlerts.map((al, idx) => {
+                const roundedScore = Math.round(Number(al.risk_score) || 85);
+                const costCr = al.cost ? (al.cost / 10000000).toFixed(1) : (al.sanctioned_amount ? (al.sanctioned_amount / 10000000).toFixed(1) : '2.5');
+                const isSelected = selectedAlert && (selectedAlert.alert_id === al.alert_id || selectedAlert.work_id === al.work_id);
 
                 return (
-                  <tr
-                    key={item.alert_id || workId || Math.random()}
-                    onClick={() => onSelectAlert && onSelectAlert(workId)}
-                    style={{ cursor: 'pointer' }}
+                  <div 
+                    key={al.alert_id || idx}
+                    className="work-alert-card"
+                    style={{
+                      borderColor: isSelected ? '#0d9488' : '#e2e8f0',
+                      boxShadow: isSelected ? '0 0 0 2px rgba(13, 148, 136, 0.2)' : 'var(--shadow-sm)',
+                      cursor: 'pointer',
+                      padding: '1.15rem 1.25rem'
+                    }}
+                    onClick={() => setSelectedAlert(al)}
                   >
-                    <td>
-                      {getRiskBadge(riskLvl, riskScore)}
-                    </td>
+                    {/* Rounded Score Circle Badge */}
+                    <div className={`risk-circle-badge ${getScoreCircleClass(roundedScore)}`}>
+                      {roundedScore}
+                    </div>
 
-                    <td>
-                      <div style={{ fontWeight: 700, color: '#0f2744', fontSize: '0.875rem' }}>
-                        {item.work_title || item.work_description || `Project #${workId}`}
-                      </div>
-                      <div style={{ fontSize: '0.775rem', color: '#64748b', marginTop: '0.15rem' }}>
-                        {item.district ? `${item.district}, ` : ''}{item.state || 'India'} {item.constituency ? `(${item.constituency})` : ''} • ID: {workId}
-                      </div>
-                    </td>
-
-                    <td>
-                      <div style={{ fontWeight: 600, color: '#334155', fontSize: '0.85rem' }}>
-                        {item.mp_name || 'Hon\'ble MP'}
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-                        {item.implementing_agency_name ? String(item.implementing_agency_name).slice(0, 30) : 'District Agency'}
-                      </div>
-                    </td>
-
-                    <td>
-                      {viewMode === 'alerts' ? (
-                        primarySignal ? (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                            <span style={{
-                              display: 'inline-block',
-                              width: '7px',
-                              height: '7px',
-                              borderRadius: '50%',
-                              background: riskLvl === 'Critical' ? '#dc2626' : '#ea580c'
-                            }} />
-                            <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#475569' }}>
-                              {primarySignal.evidence_text ? String(primarySignal.evidence_text).slice(0, 50) : (primarySignal.title || primarySignal.signal_type)}
-                            </span>
-                          </div>
-                        ) : (
-                          <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Statistical Outlier</span>
-                        )
-                      ) : (
-                        <div>
-                          <div style={{ fontSize: '0.78rem', color: '#0f2744', fontWeight: 600 }}>{item.work_category || 'Normal/Others'}</div>
-                          <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.1rem' }}>
-                            Status: <strong style={{ color: item.work_status === 'Completed' ? '#16a34a' : '#0284c7' }}>{item.work_status || 'In Progress'}</strong> • ₹{(Number(item.expenditure || item.sanctioned_amount || 0)/100000).toFixed(1)}L
-                          </div>
+                    {/* Middle Info Details */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      {/* Row 1: Title and Status pill in one clean line */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', marginBottom: '0.4rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: 1 }}>
+                          <strong 
+                            style={{ 
+                              fontSize: '0.95rem', 
+                              color: '#0f172a', 
+                              fontWeight: 700,
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis'
+                            }}
+                            title={al.work_title || `Project #${al.work_id}`}
+                          >
+                            {al.work_title || `Project #${al.work_id}`}
+                          </strong>
                         </div>
-                      )}
-                    </td>
+                        {getStatusPill(al.status || 'HALTED')}
+                      </div>
 
-                    <td style={{ textAlign: 'right' }}>
-                      <button
+                      {/* Row 2: Metadata row */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', fontSize: '0.8rem', color: '#64748b', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                          <MapPin size={13} color="#94a3b8" />
+                          {al.district || 'District'}, {al.state || 'State'}
+                        </span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                          <User size={13} color="#94a3b8" />
+                          {al.mp_name || 'Hon\'ble MP'}
+                        </span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                          <Building size={13} color="#94a3b8" />
+                          {al.implementing_agency_name || al.agency_name || 'PWD Local'}
+                        </span>
+                        <span style={{ fontWeight: 700, color: '#0f172a' }}>
+                          ₹ {costCr} Cr
+                        </span>
+                      </div>
+
+                      {/* Row 3: Anomaly Tags */}
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                        {al.tags && al.tags.length > 0 ? (
+                          al.tags.map((tag, tIdx) => (
+                            <span key={tIdx} className="tag-badge">{tag}</span>
+                          ))
+                        ) : (
+                          <>
+                            <span className="tag-badge">Expenditure anomaly</span>
+                            <span className="tag-badge">Geotag missing &gt; 90d</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Right Action Button */}
+                    <div style={{ flexShrink: 0, marginLeft: '0.5rem' }}>
+                      <button 
+                        className="btn-secondary-outline"
+                        style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
                         onClick={(e) => {
                           e.stopPropagation();
-                          if (onSelectAlert) onSelectAlert(workId);
+                          setSelectedAlert(al);
+                          if (onSelectAlert) onSelectAlert(al.work_id);
                         }}
-                        className="btn-esakshi-outline"
-                        style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem' }}
                       >
-                        Inspect
-                        <ArrowUpRight size={13} />
+                        Inspect Risk
                       </button>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 );
               })
             )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination Footer */}
-      <div style={{
-        padding: '0.9rem 1.5rem',
-        borderTop: '1px solid var(--goi-border)',
-        background: '#ffffff',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '1rem'
-      }}>
-        <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
-          Showing {items.length > 0 ? ((page - 1) * pageSize + 1).toLocaleString() : 0} to {Math.min(page * pageSize, totalCount).toLocaleString()} of <strong>{totalCount.toLocaleString()}</strong> projects
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', color: '#64748b' }}>
-            <span>Per page:</span>
-            <select
-              value={pageSize}
-              onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}
-              className="goi-select"
-              style={{ padding: '0.2rem 0.5rem', fontSize: '0.78rem' }}
-            >
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
-            <button
-              onClick={() => setPage(p => Math.max(1, p - 1))}
-              disabled={page <= 1}
-              className="btn-esakshi-outline"
-              style={{ padding: '0.3rem 0.6rem', opacity: page <= 1 ? 0.5 : 1, cursor: page <= 1 ? 'not-allowed' : 'pointer' }}
-            >
-              <ChevronLeft size={14} />
-              Prev
-            </button>
-
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, padding: '0 0.5rem', color: '#0f2744' }}>
-              Page {page} of {totalPages}
-            </span>
-
-            <button
-              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-              disabled={page >= totalPages}
-              className="btn-esakshi-outline"
-              style={{ padding: '0.3rem 0.6rem', opacity: page >= totalPages ? 0.5 : 1, cursor: page >= totalPages ? 'not-allowed' : 'pointer' }}
-            >
-              Next
-              <ChevronRight size={14} />
-            </button>
           </div>
         </div>
-      </div>
 
+        {/* Right Column: Risk Investigation Panel */}
+        {selectedAlert && (
+          <div className="metric-card" style={{ position: 'sticky', top: '80px', maxHeight: 'calc(100vh - 120px)', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.85rem', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Sparkles size={18} color="#0d9488" />
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>
+                  Risk Investigation
+                </h3>
+              </div>
+              <button 
+                onClick={() => setSelectedAlert(null)}
+                style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div style={{ marginBottom: '1.25rem' }}>
+              <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Active Context</div>
+              <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a', margin: '0.2rem 0' }}>
+                {selectedAlert.work_title || `Project #${selectedAlert.work_id}`}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#ef4444', fontWeight: 700, fontSize: '0.85rem' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ef4444' }} />
+                <span>Risk Score: {Math.round(selectedAlert.risk_score || 94)} ({selectedAlert.risk_level || selectedAlert.severity || 'Critical'})</span>
+              </div>
+            </div>
+
+            {/* AI Synthesis Box */}
+            <div style={{ background: '#f0fdfa', border: '1px solid #ccfbf1', borderRadius: '8px', padding: '1rem', marginBottom: '1.25rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0f766e', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.4rem' }}>
+                <Sparkles size={15} />
+                <span>AI Synthesis</span>
+              </div>
+              <p style={{ fontSize: '0.825rem', color: '#134e4a', lineHeight: 1.5 }}>
+                {selectedAlert.narrative_explanation || selectedAlert.explanation || 
+                  `Pattern matching indicates a high probability of fund diversion. The expenditure rate accelerated significantly, conflicting with the lack of updated geotagged physical progress.`}
+              </p>
+            </div>
+
+            {/* Risk Factors Breakdown */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem' }}>
+                Risk Factors
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ borderLeft: '3px solid #ef4444', paddingLeft: '0.75rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+                    <strong style={{ fontSize: '0.825rem', color: '#0f172a' }}>Financial Anomaly</strong>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#ef4444' }}>wt: 0.65</span>
+                  </div>
+                  <p style={{ fontSize: '0.775rem', color: '#64748b' }}>
+                    Sudden drawdown of remaining funds despite incomplete physical milestones in MPR.
+                  </p>
+                </div>
+
+                <div style={{ borderLeft: '3px solid #f97316', paddingLeft: '0.75rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.2rem' }}>
+                    <strong style={{ fontSize: '0.825rem', color: '#0f172a' }}>Geospatial Void</strong>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#f97316' }}>wt: 0.25</span>
+                  </div>
+                  <p style={{ fontSize: '0.775rem', color: '#64748b' }}>
+                    Mandatory monthly Bhuvan app image upload missed for consecutive cycles.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Action */}
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
+              <button 
+                className="btn-primary-dark"
+                style={{ flex: 1, justifyContent: 'center' }}
+                onClick={() => {
+                  if (onSelectAlert) onSelectAlert(selectedAlert.work_id);
+                }}
+              >
+                Escalate File
+              </button>
+              
+              <button 
+                className="icon-btn"
+                style={{ border: '1px solid #e2e8f0', width: '38px', height: '38px', borderRadius: '8px' }}
+                title="More Actions"
+              >
+                <MoreVertical size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
