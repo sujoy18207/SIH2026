@@ -1,0 +1,21 @@
+:root {
+    --color-primary: #16332a;
+    --color-primary-dark: #0f2620;
+    --color-bg-light: #f2f0e7;
+    --color-bg-cream: #fdfbf3;
+    --color-border: #e2e0d8;
+    --color-text: #1a1a1a;
+    --color-text-muted: #8a8a80;
+    --color-link: #2f7d4f;
+    --radius-lg: 28px;
+    --radius-md: 12px;
+    --color-sm: 8px;
+    --font-main: 'Inter', sans-serif;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
