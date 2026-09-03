@@ -25,7 +25,7 @@ export default function Signup() {
         <div className="auth-card">
             <div className="logo">
                     <Construction className= "logo-icon" size={20}/>
-                    <span>MPLADS</span>
+                    <span>Ctrl + Alt + Win!!</span>
             </div>
             <div className="form-panel">
                 <h2 className="form-heading">Sign Up</h2>
