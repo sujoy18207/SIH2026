@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaGoogle } from 'react-icons/fa';
 import { IoLogoApple } from 'react-icons/io5';
 import { User, Mail, Lock, Eye, Construction } from 'lucide-react';
-import "./pages.signup.css";
+import "./signup.css";
 export default function Signup() {
     const [role, setRole] = useState("user");
     const [showPassword, setShowPassword] = useState(false);
