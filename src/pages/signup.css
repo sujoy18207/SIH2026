@@ -192,11 +192,11 @@
 .form-footer {
     text-align: center;
     font-size: 13px;
-    color: var(--color-text-muted);
+    font-weight: 700;
+    color: var(--color-primary);
     margin-top: 16px;
 }
 .form-footer a {
-    color: var(--color-link);
+    color: var(--color-primary-dark);
     font-weight: 600;
-    text-decoration: none;
 }
