@@ -1,5 +1,78 @@
-.container {
+.landing-page {
+  position: relative;
   height: 100vh;
   width: 100vw;
-  background-color: rgb(20, 20, 20);
+  background-image: url(../assets//ChatGPT\ Image\ Sep\ 4\,\ 2026\,\ 08_21_09\ PM.png);
+  background-size: 100% 100%;
+  background-position: center; 
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.cta-container {
+  position: absolute;
+  top: 60%; /* Aligns directly under the paragraph text */
+  left: 7%; /* Aligns with the left text margin */
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.cta-container button {
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary-sign-up {
+  background-color: #0f2744;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 39, 68, 0.25);
+}
+
+.btn-primary-sign-up:hover {
+  background-color: #1e3a5f;
+  transform: translateY(2px);
+}
+
+.btn-secondary-ai-launcher {
+  background-color: #f0efed;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+}
+
+.btn-secondary-ai-launcher:hover {
+  background-color: #696868;
+  color: #ffffff;
+  transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+  .landing-page {
+    background-size: cover;
+    background-position: center top;
+  }
+  
+  .cta-container {
+    top: 68%;
+    left: 5%;
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .cta-container button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page {
+    /* Covers the full height without squishing/stretching the visual elements */
+    background-size:260% 100%; 
+    /* Centers the key text & construction elements on smaller viewports */
+    background-position: center top; 
+  }
 }
