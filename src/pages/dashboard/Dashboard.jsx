@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom"
+import ComingSoon from "../../components/ComingSoon";
 export default function Dashboard(){
     const navigate = useNavigate();
     const handleSignup = () => {navigate("/dashboard")};
         return(
-        <div>
-            <h1>Currently dashboard is in building stage, Thank you for having patience</h1>
-        </div>
+        <ComingSoon/>
     )
 }
