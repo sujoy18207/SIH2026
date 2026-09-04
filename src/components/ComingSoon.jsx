@@ -27,11 +27,13 @@ export default function ComingSoon() {
         {/* Footer Links */}
         <div className="card-footer">
           <div className="footer-contact">
-            CONTACT : <span>shankhodeepdas609@gmail.com</span>
+            CONTACT : <a href="mailto:shankhodeepdas609@gmail.com">
+                        shankhodeepdas609@gmail.com
+                      </a>
           </div>
           <div className="footer-domain">Thank you for having patience</div>
           <div className="footer-socials">
-            <a href="#facebook">Github</a>
+            <a href="https://github.com/shankhodeep-das" target="_blank" rel="noopener noreferrer">Github</a>
             <a href="#instagram">Instagram</a>
             <a href="#twitter">Linked in</a>
           </div>

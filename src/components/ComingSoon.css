@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
 
 .coming-soon-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   /* Replace with your exact background image path */
@@ -13,6 +16,7 @@
   justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
+  z-index: 1;
 }
 
 /* Glassmorphism Outer Card */
@@ -124,8 +128,9 @@
   padding-top: 1.5rem;
 }
 
-.footer-contact span {
-  color: #ffffff;
+.footer-contact a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
 }
 
 .footer-socials {
