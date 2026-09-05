@@ -1,14 +1,9 @@
-import React from 'react';
 import './ComingSoon.css';
-
 export default function ComingSoon() {
   return (
     <div className="coming-soon-wrapper">
       <div className="glass-card">
-        {/* Brand Header */}
         <div className="card-brand">BWU 404</div>
-
-        {/* Center Content */}
         <div className="card-main">
           <p className="subtitle">UNDER CONSTRUCTION</p>
           <h1 className="title">COMING SOON</h1>
@@ -23,8 +18,6 @@ export default function ComingSoon() {
             <span className="percentage">58%</span>
           </div>
         </div>
-
-        {/* Footer Links */}
         <div className="card-footer">
           <div className="footer-contact">
             CONTACT : <a href="mailto:shankhodeepdas609@gmail.com">

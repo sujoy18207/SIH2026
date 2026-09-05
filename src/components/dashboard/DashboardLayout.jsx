@@ -51,11 +51,7 @@ export default function DashboardLayout() {
           </div>
         </nav>
       </header>
-
-      {/* Dynamic Page Content */}
-      <main className="dashboard-content">
         <Outlet />
-      </main>
     </div>
   );
 }

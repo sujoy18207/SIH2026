@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
-
 .coming-soon-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Replace with your exact background image path */
   background-image: url('../assets/bailey-zindel-NRQV-hBF10M-unsplash.jpg'); 
   background-size: cover;
   background-position: center;
@@ -18,13 +16,11 @@
   box-sizing: border-box;
   z-index: 1;
 }
-
-/* Glassmorphism Outer Card */
 .glass-card {
   width: 100%;
   max-width: 960px;
   min-height: 520px;
-  background: transparent; /* Dark transparent tint */
+  background: transparent;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -35,8 +31,6 @@
   color: #ffffff;
   box-sizing: border-box;
 }
-
-/* Header */
 .card-brand {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 1.1rem;
@@ -45,8 +39,6 @@
   text-align: center;
   letter-spacing: 1px;
 }
-
-/* Main Content */
 .card-main {
   text-align: center;
   display: flex;
@@ -147,8 +139,6 @@
 .footer-socials a:hover {
   color: #ffffff;
 }
-
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .glass-card {
     padding: 1.5rem;
