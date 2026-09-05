@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 export default function LandingPage(){
     const navigate = useNavigate();
     const handleSignup = () => {navigate("/signup")};
-    const handleDashboard =() => {navigate("/dashboard")};
+    const handleDashboard =() => {navigate("/dashboard/home")};
     return(
         <div className="landing-page">
             <div className="cta-container">

@@ -5,18 +5,14 @@ import './DashboardLayout.css';
 export default function DashboardLayout() {
   return (
     <div className="dashboard-wrapper">
-      {/* Floating Pill Navbar */}
       <header className="navbar-container">
         <nav className="floating-navbar">
-          {/* Brand Logo Circle */}
           <div className="nav-logo">
             <span className="logo-icon">🪐</span>
           </div>
-
-          {/* Navigation Links */}
           <div className="nav-links">
             <NavLink 
-              to="/dashboard" 
+              to="/dashboard/home" 
               end 
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
             >

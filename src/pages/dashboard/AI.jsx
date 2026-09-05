@@ -3,7 +3,7 @@ import ComingSoon from "../../components/ComingSoon";
 
 export default function AI(){
     const navigate = useNavigate();
-    const handleSignup = () => {navigate("/dashboar/ai")};
+    const handleSignup = () => {navigate("/dashboard/ai")};
     return(
         <ComingSoon/>
     );

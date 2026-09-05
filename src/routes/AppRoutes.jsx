@@ -15,10 +15,9 @@ export default function AppRoutes(){
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Allows CSS assets and DOM tree to complete initial rendering pass
         const timer = setTimeout(() => {
         setIsLoading(false);
-        }, 600); // Adjust duration (400ms–800ms works best)
+        }, 600);
 
         return () => clearTimeout(timer);
     }, []);
