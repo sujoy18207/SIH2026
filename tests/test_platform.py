@@ -317,3 +317,23 @@ class TestAPIEndpoints:
         response = client.post("/api/v1/copilot/query", json={"query": "Vendor concentration analysis"})
         assert response.status_code == 200
         assert "vendor" in response.json()["answer"].lower()
+
+    def test_geo_risk_zones_real_aggregates(self, client):
+        """State-level aggregates powering the Geographic Risk Map."""
+        response = client.get("/api/v1/geo/risk-zones")
+        assert response.status_code == 200
+        data = response.json()
+        # Real data fact: works span 36 states/UTs
+        assert data["total_states"] == 36
+        zones = data["zones"]
+        assert all(
+            {"state", "total_works", "high_risk_works", "avg_risk_score",
+             "disbursed_cr", "districts_count", "status"} <= set(z)
+            for z in zones
+        )
+        up = next(z for z in zones if z["state"] == "Uttar Pradesh")
+        # Real data facts: UP is the largest state by works with 1,371 high-risk flags
+        assert up["total_works"] > 20000
+        assert up["high_risk_works"] > 1000
+        assert up["status"] == "HIGH"
+        assert sum(z["total_works"] for z in zones) == 128670

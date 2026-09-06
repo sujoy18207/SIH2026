@@ -424,6 +424,61 @@ def get_audit_logs(limit: int = Query(200, le=1000)):
 
 
 # ---------------------------------------------------------------------------
+# Geographic Risk Zones (state-level aggregates for the National Risk Map)
+# ---------------------------------------------------------------------------
+
+@app.get("/api/v1/geo/risk-zones")
+def get_geo_risk_zones():
+    """State-level multi-signal aggregates powering the Geographic Risk Map.
+
+    Coordinates are NOT taken from the works data (the real eSAKSHI extracts
+    carry none); the frontend joins these aggregates onto a static table of
+    state centroids. Risk level mirrors the platform classification but is
+    ranked relative to state scale: HIGH when >=3% of the state's works are
+    high/critical risk, MEDIUM at >=1%, else LOW.
+    """
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            """
+            SELECT state,
+                   COUNT(*) AS total_works,
+                   SUM(CASE WHEN risk_level IN ('High','Critical') THEN 1 ELSE 0 END) AS high_risk_works,
+                   ROUND(AVG(risk_score), 1) AS avg_risk_score,
+                   ROUND(SUM(total_disbursed) / 10000000.0, 1) AS disbursed_cr,
+                   COUNT(DISTINCT district) AS districts_count
+            FROM works
+            WHERE state IS NOT NULL AND state != ''
+            GROUP BY state
+            ORDER BY total_works DESC
+            """
+        ).fetchall()
+        zones = []
+        for r in rows:
+            total = r["total_works"] or 0
+            high = r["high_risk_works"] or 0
+            pct = (high / total) if total else 0.0
+            if pct >= 0.03:
+                status = "HIGH"
+            elif pct >= 0.01:
+                status = "MEDIUM"
+            else:
+                status = "LOW"
+            zones.append({
+                "state": r["state"],
+                "total_works": total,
+                "high_risk_works": high,
+                "avg_risk_score": r["avg_risk_score"] or 0.0,
+                "disbursed_cr": r["disbursed_cr"] or 0.0,
+                "districts_count": r["districts_count"] or 0,
+                "status": status,
+            })
+        return {"total_states": len(zones), "zones": zones}
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
 # Agencies & Vendors
 # ---------------------------------------------------------------------------
 

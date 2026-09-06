@@ -1,38 +1,54 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  MapPin, 
-  Search, 
-  Layers, 
-  AlertTriangle, 
-  Sparkles, 
-  Navigation,
-  Globe,
-  Maximize2
+import {
+  Search,
+  Sparkles,
+  Navigation
 } from 'lucide-react';
 import { API_BASE_URL } from '../apiConfig';
 
-const INDIA_STATES_DATA = [
-  { id: 'UP', name: 'Uttar Pradesh', lat: 26.8467, lng: 80.9462, total_projects: 14200, high_risks: 342, avg_score: 78, status: 'HIGH', exp_cr: '512.4' },
-  { id: 'MH', name: 'Maharashtra', lat: 19.7515, lng: 75.7139, total_projects: 11800, high_risks: 180, avg_score: 54, status: 'MEDIUM', exp_cr: '430.8' },
-  { id: 'WB', name: 'West Bengal', lat: 22.9868, lng: 87.8550, total_projects: 9200, high_risks: 210, avg_score: 72, status: 'HIGH', exp_cr: '310.5' },
-  { id: 'BR', name: 'Bihar', lat: 25.0961, lng: 85.3131, total_projects: 9600, high_risks: 290, avg_score: 81, status: 'HIGH', exp_cr: '345.2' },
-  { id: 'TN', name: 'Tamil Nadu', lat: 11.1271, lng: 78.6569, total_projects: 8100, high_risks: 64, avg_score: 38, status: 'LOW', exp_cr: '290.1' },
-  { id: 'MP', name: 'Madhya Pradesh', lat: 22.9734, lng: 78.6569, total_projects: 7400, high_risks: 145, avg_score: 61, status: 'MEDIUM', exp_cr: '275.6' },
-  { id: 'RJ', name: 'Rajasthan', lat: 27.0238, lng: 74.2179, total_projects: 7900, high_risks: 115, avg_score: 49, status: 'MEDIUM', exp_cr: '280.4' },
-  { id: 'GJ', name: 'Gujarat', lat: 22.2587, lng: 71.1924, total_projects: 6800, high_risks: 58, avg_score: 35, status: 'LOW', exp_cr: '240.9' },
-  { id: 'KA', name: 'Karnataka', lat: 15.3173, lng: 75.7139, total_projects: 6500, high_risks: 92, avg_score: 44, status: 'MEDIUM', exp_cr: '225.0' },
-  { id: 'AP', name: 'Andhra Pradesh', lat: 15.9129, lng: 79.7400, total_projects: 5900, high_risks: 78, avg_score: 47, status: 'MEDIUM', exp_cr: '210.3' },
-  { id: 'OR', name: 'Odisha', lat: 20.9517, lng: 85.0985, total_projects: 5200, high_risks: 122, avg_score: 66, status: 'HIGH', exp_cr: '195.4' },
-  { id: 'KL', name: 'Kerala', lat: 10.8505, lng: 76.2711, total_projects: 4100, high_risks: 24, avg_score: 28, status: 'LOW', exp_cr: '160.2' },
-  { id: 'AS', name: 'Assam', lat: 26.2006, lng: 92.9376, total_projects: 3800, high_risks: 98, avg_score: 68, status: 'HIGH', exp_cr: '142.0' },
-  { id: 'PB', name: 'Punjab', lat: 31.1471, lng: 75.3412, total_projects: 3400, high_risks: 45, avg_score: 41, status: 'LOW', exp_cr: '128.5' },
-  { id: 'HR', name: 'Haryana', lat: 29.0588, lng: 76.0856, total_projects: 2900, high_risks: 52, avg_score: 46, status: 'MEDIUM', exp_cr: '110.1' },
-  { id: 'JK', name: 'Jammu & Kashmir', lat: 33.7782, lng: 76.5762, total_projects: 2400, high_risks: 62, avg_score: 59, status: 'MEDIUM', exp_cr: '95.0' },
-  { id: 'JH', name: 'Jharkhand', lat: 23.6102, lng: 85.2799, total_projects: 3100, high_risks: 110, avg_score: 74, status: 'HIGH', exp_cr: '118.6' },
-  { id: 'CT', name: 'Chhattisgarh', lat: 21.2787, lng: 81.8661, total_projects: 3300, high_risks: 85, avg_score: 58, status: 'MEDIUM', exp_cr: '124.8' },
-  { id: 'DL', name: 'Delhi', lat: 28.7041, lng: 77.1025, total_projects: 1800, high_risks: 38, avg_score: 52, status: 'MEDIUM', exp_cr: '88.0' },
-  { id: 'TS', name: 'Telangana', lat: 17.8748, lng: 78.1008, total_projects: 4200, high_risks: 68, avg_score: 45, status: 'MEDIUM', exp_cr: '172.3' }
-];
+/**
+ * Static table of state CENTROIDS only (the real eSAKSHI extracts carry no
+ * work coordinates). All risk metrics are fetched live from
+ * GET /api/v1/geo/risk-zones and joined onto this table by state name.
+ */
+const STATE_CENTROIDS = {
+  'Uttar Pradesh':                       { id: 'UP', lat: 26.8467, lng: 80.9462 },
+  'Maharashtra':                         { id: 'MH', lat: 19.7515, lng: 75.7139 },
+  'West Bengal':                         { id: 'WB', lat: 22.9868, lng: 87.8550 },
+  'Bihar':                               { id: 'BR', lat: 25.0961, lng: 85.3131 },
+  'Tamil Nadu':                          { id: 'TN', lat: 11.1271, lng: 78.6569 },
+  'Madhya Pradesh':                      { id: 'MP', lat: 22.9734, lng: 78.6569 },
+  'Rajasthan':                           { id: 'RJ', lat: 27.0238, lng: 74.2179 },
+  'Gujarat':                             { id: 'GJ', lat: 22.2587, lng: 71.1924 },
+  'Karnataka':                           { id: 'KA', lat: 15.3173, lng: 75.7139 },
+  'Andhra Pradesh':                      { id: 'AP', lat: 15.9129, lng: 79.7400 },
+  'Odisha':                              { id: 'OR', lat: 20.9517, lng: 85.0985 },
+  'Kerala':                              { id: 'KL', lat: 10.8505, lng: 76.2711 },
+  'Assam':                               { id: 'AS', lat: 26.2006, lng: 92.9376 },
+  'Punjab':                              { id: 'PB', lat: 31.1471, lng: 75.3412 },
+  'Haryana':                             { id: 'HR', lat: 29.0588, lng: 76.0856 },
+  'Jammu And Kashmir':                   { id: 'JK', lat: 33.7782, lng: 76.5762 },
+  'Jharkhand':                           { id: 'JH', lat: 23.6102, lng: 85.2799 },
+  'Chhattisgarh':                        { id: 'CT', lat: 21.2787, lng: 81.8661 },
+  'Delhi':                               { id: 'DL', lat: 28.7041, lng: 77.1025 },
+  'Telangana':                           { id: 'TS', lat: 17.8748, lng: 78.1008 },
+  'Himachal Pradesh':                    { id: 'HP', lat: 31.9048, lng: 77.0934 },
+  'Uttarakhand':                         { id: 'UK', lat: 30.0668, lng: 79.0193 },
+  'Sikkim':                              { id: 'SK', lat: 27.5330, lng: 88.6139 },
+  'Meghalaya':                           { id: 'ML', lat: 25.5460, lng: 91.3760 },
+  'Mizoram':                             { id: 'MZ', lat: 23.6850, lng: 92.7350 },
+  'Nagaland':                            { id: 'NG', lat: 26.1580, lng: 94.5624 },
+  'Manipur':                             { id: 'MN', lat: 24.6637, lng: 93.8103 },
+  'Tripura':                             { id: 'TR', lat: 23.9405, lng: 91.9882 },
+  'Arunachal Pradesh':                   { id: 'AR', lat: 28.2180, lng: 94.7278 },
+  'Goa':                                 { id: 'GA', lat: 15.2993, lng: 74.1240 },
+  'Puducherry':                          { id: 'PY', lat: 11.9416, lng: 79.8083 },
+  'Chandigarh':                          { id: 'CH', lat: 30.7333, lng: 76.7794 },
+  'Ladakh':                              { id: 'LA', lat: 34.2268, lng: 77.5619 },
+  'Andaman And Nicobar Islands':         { id: 'AN', lat: 11.7401, lng: 92.6586 },
+  'Lakshadweep':                         { id: 'LD', lat: 10.5667, lng: 72.6427 },
+  'The Dadra And Nagar Haveli And Daman And Diu': { id: 'DN', lat: 20.2667, lng: 73.0166 },
+};
 
 export default function GeoRiskMap({ onSelectAlert }) {
   const mapContainerRef = useRef(null);
@@ -43,8 +59,36 @@ export default function GeoRiskMap({ onSelectAlert }) {
   const [mapType, setMapType] = useState('street'); // 'street' | 'satellite' | 'terrain'
   const [filter, setFilter] = useState('ALL');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedState, setSelectedState] = useState(INDIA_STATES_DATA[0]);
-  const [zones, setZones] = useState(INDIA_STATES_DATA);
+  const [selectedState, setSelectedState] = useState(null);
+  const [zones, setZones] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
+
+  // Fetch real state-level risk aggregates from the backend and join them
+  // onto the static centroid table (works data carries no coordinates).
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/v1/geo/risk-zones`)
+      .then(res => {
+        if (!res.ok) throw new Error(`geo/risk-zones returned ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        const merged = (data.zones || [])
+          .map(z => {
+            const c = STATE_CENTROIDS[z.state];
+            return c ? { ...z, ...c, name: z.state } : null;
+          })
+          .filter(Boolean);
+        setZones(merged);
+        setSelectedState(merged[0] || null);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Failed to load geo risk zones', err);
+        setLoadError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   // Initialize Real Leaflet Map
   useEffect(() => {
@@ -120,6 +164,8 @@ export default function GeoRiskMap({ onSelectAlert }) {
       return true;
     });
 
+    if (!filtered.length) return;
+
     filtered.forEach(z => {
       const color = z.status === 'HIGH' ? '#ef4444' : z.status === 'MEDIUM' ? '#f59e0b' : '#10b981';
       const isHigh = z.status === 'HIGH';
@@ -141,7 +187,7 @@ export default function GeoRiskMap({ onSelectAlert }) {
 
       const marker = L.marker([z.lat, z.lng], { icon: customIcon });
 
-      // Interactive Popup Content
+      // Interactive Popup Content (real eSAKSHI aggregates)
       const popupHtml = `
         <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 4px; min-width: 220px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -151,10 +197,11 @@ export default function GeoRiskMap({ onSelectAlert }) {
             </span>
           </div>
           <div style="font-size: 12px; color: #475569; line-height: 1.6;">
-            <div>• Monitored Projects: <strong>${z.total_projects.toLocaleString()}</strong></div>
-            <div>• Disbursed: <strong>₹${z.exp_cr} Cr</strong></div>
-            <div>• High-Risk Flags: <strong style="color: #ef4444;">${z.high_risks}</strong></div>
-            <div>• Avg Risk Score: <strong>${z.avg_score}/100</strong></div>
+            <div>• Monitored Works: <strong>${z.total_works.toLocaleString('en-IN')}</strong></div>
+            <div>• Disbursed: <strong>₹${z.disbursed_cr.toLocaleString('en-IN')} Cr</strong></div>
+            <div>• High-Risk Flags: <strong style="color: #ef4444;">${z.high_risk_works.toLocaleString('en-IN')}</strong></div>
+            <div>• Avg Risk Score: <strong>${z.avg_risk_score}/100</strong></div>
+            <div>• Districts: <strong>${z.districts_count}</strong></div>
           </div>
         </div>
       `;
@@ -305,7 +352,18 @@ export default function GeoRiskMap({ onSelectAlert }) {
 
         {/* Right: State Profile Card */}
         <div className="metric-card" style={{ padding: '1.5rem', position: 'sticky', top: '80px' }}>
-          {selectedState ? (
+          {loading ? (
+            <div style={{ textAlign: 'center', color: '#94a3b8', padding: '2rem' }}>
+              Loading real state risk aggregates from the eSAKSHI database...
+            </div>
+          ) : loadError ? (
+            <div style={{ textAlign: 'center', color: '#ef4444', padding: '2rem', fontSize: '0.85rem' }}>
+              Failed to load risk zones: {loadError}
+              <div style={{ color: '#94a3b8', marginTop: '0.5rem', fontSize: '0.78rem' }}>
+                Ensure the API server is running.
+              </div>
+            </div>
+          ) : selectedState ? (
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
                 <div>
@@ -313,11 +371,11 @@ export default function GeoRiskMap({ onSelectAlert }) {
                     {selectedState.name}
                   </h3>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                    State Nodal Zone Profile
+                    State Nodal Zone Profile — real eSAKSHI aggregates
                   </div>
                 </div>
 
-                <span className={`score-pill ${selectedState.avg_score >= 60 ? 'score-pill-red' : 'score-pill-green'}`}>
+                <span className={`score-pill ${selectedState.status === 'HIGH' ? 'score-pill-red' : 'score-pill-green'}`}>
                   {selectedState.status} RISK
                 </span>
               </div>
@@ -326,47 +384,58 @@ export default function GeoRiskMap({ onSelectAlert }) {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.25rem' }}>
                 <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Monitored Works</div>
-                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>{selectedState.total_projects.toLocaleString()}</strong>
+                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>{selectedState.total_works.toLocaleString('en-IN')}</strong>
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>High Risk Flags</div>
-                  <strong style={{ fontSize: '1.15rem', color: '#ef4444' }}>{selectedState.high_risks}</strong>
+                  <strong style={{ fontSize: '1.15rem', color: '#ef4444' }}>{selectedState.high_risk_works.toLocaleString('en-IN')}</strong>
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Disbursed Total</div>
-                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>₹{selectedState.exp_cr} Cr</strong>
+                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>₹{selectedState.disbursed_cr.toLocaleString('en-IN')} Cr</strong>
                 </div>
 
                 <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Avg Composite Score</div>
-                  <strong style={{ fontSize: '1.15rem', color: selectedState.avg_score >= 60 ? '#ef4444' : '#10b981' }}>
-                    {selectedState.avg_score}/100
+                  <strong style={{ fontSize: '1.15rem', color: selectedState.status === 'HIGH' ? '#ef4444' : '#10b981' }}>
+                    {selectedState.avg_risk_score}/100
                   </strong>
                 </div>
               </div>
 
-              {/* AI Key Insights */}
+              {/* Real multi-signal insight computed from the loaded aggregates */}
               <div style={{ background: '#f0fdfa', border: '1px solid #ccfbf1', borderRadius: '8px', padding: '0.85rem', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0f766e', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem' }}>
                   <Sparkles size={14} />
-                  <span>Geospatial AI Finding</span>
+                  <span>Multi-Signal Zone Finding</span>
                 </div>
                 <p style={{ fontSize: '0.8rem', color: '#134e4a', lineHeight: 1.5 }}>
-                  {selectedState.avg_score >= 60 
-                    ? `Elevated cost variance observed in 18% of rural infrastructure projects. Spatial clustering detected in 3 adjacent districts.`
-                    : `Expenditure trajectory within standard baseline limits. Timely utilization certificates recorded in 94% of works.`}
+                  {(() => {
+                    const pct = selectedState.total_works
+                      ? (selectedState.high_risk_works / selectedState.total_works) * 100
+                      : 0;
+                    return `${selectedState.high_risk_works.toLocaleString('en-IN')} of ${selectedState.total_works.toLocaleString('en-IN')} works (${pct.toFixed(1)}%) are flagged High/Critical across ${selectedState.districts_count} districts. Average composite risk score is ${selectedState.avg_risk_score}/100 — ${selectedState.status === 'HIGH' ? 'state-level field verification is recommended.' : 'within enhanced-monitoring range.'}`;
+                  })()}
                 </p>
               </div>
 
               {/* Action Buttons */}
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button 
+                <button
                   className="btn-primary-dark"
                   style={{ flex: 1, justifyContent: 'center' }}
                   onClick={() => {
-                    if (onSelectAlert) onSelectAlert(selectedState.name || selectedState.id);
+                    // Drill into the state's highest-risk work dossier
+                    // (openInvestigation expects a work_id, not a state name)
+                    fetch(`${API_BASE_URL}/api/v1/works?state=${encodeURIComponent(selectedState.state || selectedState.name)}&limit=1`)
+                      .then(res => res.json())
+                      .then(data => {
+                        const top = data.works && data.works[0];
+                        if (top && onSelectAlert) onSelectAlert(top.work_id);
+                      })
+                      .catch(err => console.error('State work lookup failed', err));
                   }}
                 >
                   Inspect State Works

@@ -58,7 +58,8 @@ An AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work d
 | 10 | **Configurable Risk Policy Engine** | Composite Risk Score (0–100) from weighted signals. Risk levels: Low (0–25), Medium (26–50), High (51–75), Critical (76–100). |
 | 11 | **Explainable Alert Engine** | Structured narrative explanations with exact amounts, dates, stages, and evidence for every flagged alert. |
 | 12 | **AI Investigation Copilot (सक्षम AI)** | Natural language assistant over the real dataset (states, districts, agencies, vendors, duplicates) powered by Google Gemini API with deterministic SQL-backed local fallback. |
-| 13 | **eSAKSHI-Style Government Dashboard** | Premium information-dense government UI with hero landing, KPI cards, alerts feed, investigation drawer, agency matrix, and official branding. |
+| 13 | **eSAKSHI-Style Government Dashboard** | Premium information-dense government UI with hero landing, KPI cards, alerts feed, investigation drawer, agency matrix, dark-navy collapsible sidebar, and official branding. |
+| 19 | **Geographic Risk Map (Leaflet)** | Interactive national risk map over all 36 states/UTs — state-level markers sized/colored by real multi-signal aggregates from `/api/v1/geo/risk-zones` (works monitored, high-risk flags, avg composite score, disbursements, districts); street/satellite/OSM tiles; click-through drill-down into each state's highest-risk work dossier. |
 | 14 | **Citizen Request Portal** | Public form with real state/MP dropdowns loaded live from the MP allocation database. |
 | 15 | **Official MP Allocation Database** | Real allocated limits for 776 MP records (543 Lok Sabha + 233 Rajya Sabha, including 11 Nominated RS members) from the eSAKSHI dataset. |
 | 16 | **Persistent Append-Only Audit Trail** | Officer reviews recorded in SQLite — survives server restarts. Actions: Escalated for Inspection, Verified Valid, False Positive, Closed with Notice. |
@@ -282,6 +283,7 @@ On first boot the API container runs the ETL automatically (if the database volu
 | `POST` | `/api/v1/alerts/{alert_id}/review` | Officer review submission (persisted) |
 | `GET` | `/api/v1/audit-logs` | Append-only audit trail |
 | `GET` | `/api/v1/agencies` | District authority risk profiles |
+| `GET` | `/api/v1/geo/risk-zones` | State-level risk aggregates for the National Risk Map (works, high-risk flags, avg score, disbursements, districts) |
 | `GET` | `/api/v1/vendors/top` | Vendor payment concentration (contractor nexus signal) |
 | `POST` | `/api/v1/analytics/run` | Re-run the analytics pipeline in the background |
 | `GET` | `/api/v1/analytics/status` | Analytics job status |
