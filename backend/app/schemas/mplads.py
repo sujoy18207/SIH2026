@@ -178,8 +178,12 @@ class OverviewStats(BaseModel):
     total_expenditure_amount: float
     completed_works_count: int
     in_progress_works_count: int
+    pending_sanction_works_count: int = 0
+    sanctioned_works_count: int = 0
     high_risk_works_count: int
     critical_risk_works_count: int
+    medium_risk_works_count: int = 0
+    low_risk_works_count: int = 0
     potential_cost_overrun_val: float
     duplicate_candidates_count: int
     avg_data_quality_score: float = 95.0

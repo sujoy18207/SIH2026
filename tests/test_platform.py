@@ -224,6 +224,17 @@ class TestAPIEndpoints:
         assert data["total_expenditure_amount"] > 1e9   # ₹100 Cr+
         assert data["mps_count"] >= 770
         assert data["states_count"] >= 30
+        # Risk-level buckets (dashboard donut chart) partition the full dataset
+        risk_sum = (data["critical_risk_works_count"] + data["high_risk_works_count"]
+                    + data["medium_risk_works_count"] + data["low_risk_works_count"])
+        assert risk_sum == data["total_works"] == 128670
+        # Pipeline stages (status bar chart) partition the full dataset
+        pipe_sum = (data["pending_sanction_works_count"] + data["sanctioned_works_count"]
+                    + data["in_progress_works_count"] + data["completed_works_count"])
+        assert pipe_sum == 128670
+        # Real data facts
+        assert data["low_risk_works_count"] == 87250
+        assert data["medium_risk_works_count"] == 38378
 
     def test_works_filters_and_pagination(self, client):
         response = client.get("/api/v1/works?limit=10")

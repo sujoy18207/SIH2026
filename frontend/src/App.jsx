@@ -11,6 +11,7 @@ import AICopilotModal from './components/AICopilotModal';
 import CitizenRequestModal from './components/CitizenRequestModal';
 import LoginModal from './components/LoginModal';
 import Footer from './components/Footer';
+import DashboardCharts from './components/DashboardCharts';
 import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
@@ -140,11 +141,14 @@ export default function App() {
 
           {/* Risk Dashboard & Intelligence Feed View */}
           {activeTab === 'alerts' && (
-            <RiskAlertsFeed
-              alerts={alerts}
-              onSelectAlert={openInvestigation}
-              stats={stats}
-            />
+            <>
+              <DashboardCharts stats={stats} />
+              <RiskAlertsFeed
+                alerts={alerts}
+                onSelectAlert={openInvestigation}
+                stats={stats}
+              />
+            </>
           )}
 
           {/* Real Interactive Geographic Risk Map View */}
