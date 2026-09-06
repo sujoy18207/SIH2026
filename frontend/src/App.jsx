@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import HeroLanding from './components/HeroLanding';
-import OverviewCards from './components/OverviewCards';
 import RiskAlertsFeed from './components/RiskAlertsFeed';
+import GeoRiskMap from './components/GeoRiskMap';
 import AgencyRiskMatrix from './components/AgencyRiskMatrix';
 import MPAllocatedLimitsTable from './components/MPAllocatedLimitsTable';
 import InvestigationDrawer from './components/InvestigationDrawer';
@@ -13,8 +14,9 @@ import Footer from './components/Footer';
 import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
-  const [persona, setPersona] = useState('Ministry');
-  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'agencies' | 'mps'
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'map' | 'agencies' | 'mps'
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
@@ -24,10 +26,8 @@ export default function App() {
   const [isCitizenRequestOpen, setIsCitizenRequestOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchDashboardData = () => {
-    setIsRefreshing(true);
     fetch(`${API_BASE_URL}/api/v1/overview`)
       .then(res => res.json())
       .then(data => setStats(data))
@@ -37,95 +37,138 @@ export default function App() {
       .then(res => res.json())
       .then(data => {
         setAlerts(data.alerts || []);
-        setIsRefreshing(false);
       })
-      .catch(err => {
-        console.error("Failed to fetch alerts", err);
-        setIsRefreshing(false);
-      });
+      .catch(err => console.error("Failed to fetch alerts", err));
   };
 
   useEffect(() => {
     fetchDashboardData();
   }, []);
 
-  const handleTriggerAnalytics = () => {
-    setIsRefreshing(true);
-    fetch(`${API_BASE_URL}/api/v1/analytics/run`, { method: 'POST' })
-      .then(res => res.json())
-      .then(() => fetchDashboardData())
-      .catch(err => {
-        console.error("Analytics failed", err);
-        setIsRefreshing(false);
-      });
+  const handleGenerateReport = () => {
+    window.open(`${API_BASE_URL}/api/v1/overview`, '_blank');
+  };
+
+  // Safe modal triggers (opens only one at a time)
+  const openCopilot = () => {
+    setSelectedWorkId(null);
+    setIsCitizenRequestOpen(false);
+    setIsLoginOpen(false);
+    setIsCopilotOpen(true);
+  };
+
+  const openCitizenRequest = () => {
+    setSelectedWorkId(null);
+    setIsCopilotOpen(false);
+    setIsLoginOpen(false);
+    setIsCitizenRequestOpen(true);
+  };
+
+  const openLogin = () => {
+    setSelectedWorkId(null);
+    setIsCopilotOpen(false);
+    setIsCitizenRequestOpen(false);
+    setIsLoginOpen(true);
+  };
+
+  const openInvestigation = (wid) => {
+    setIsCopilotOpen(false);
+    setIsCitizenRequestOpen(false);
+    setIsLoginOpen(false);
+    setSelectedWorkId(wid);
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f4f6f9' }}>
-      <Header
-        persona={persona}
-        setPersona={setPersona}
+    <div className="app-container">
+      {/* 1. Dark Navy Collapsible Left Sidebar with Bubble Effect */}
+      <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onTriggerAnalytics={handleTriggerAnalytics}
-        isRefreshing={isRefreshing}
-        onOpenCopilot={() => setIsCopilotOpen(true)}
-        onOpenCitizenRequest={() => setIsCitizenRequestOpen(true)}
-        onOpenLogin={() => setIsLoginOpen(true)}
+        isOpen={isSidebarOpen}
+        setIsOpen={setIsSidebarOpen}
+        onGenerateReport={handleGenerateReport}
+        onOpenCopilot={openCopilot}
+        onOpenCitizenRequest={openCitizenRequest}
+        onOpenLogin={openLogin}
         loggedInUser={loggedInUser}
       />
 
-      {/* Landing Hero View */}
-      {activeTab === 'home' && (
-        <HeroLanding
-          onNavigateTab={(tab) => setActiveTab(tab)}
-          onOpenCitizenRequest={() => setIsCitizenRequestOpen(true)}
-          onOpenLogin={() => setIsLoginOpen(true)}
-          onOpenCopilot={() => setIsCopilotOpen(true)}
+      {/* 2. Main Content Wrapper */}
+      <div className="main-wrapper">
+        {/* Top Header */}
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onOpenCopilot={openCopilot}
+          onOpenLogin={openLogin}
+          loggedInUser={loggedInUser}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
         />
-      )}
 
-      {/* Dashboard & Analytics View */}
-      {activeTab !== 'home' && (
-        <main style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', padding: '1.5rem 1.5rem', flex: 1 }}>
-          {/* KPI Overview Summary Cards */}
-          <OverviewCards stats={stats} />
+        {/* Page Content View */}
+        <main className="page-content">
+          {/* Overview / Landing View */}
+          {activeTab === 'home' && (
+            <HeroLanding
+              onNavigateTab={(tab) => setActiveTab(tab)}
+              onOpenCitizenRequest={openCitizenRequest}
+              onOpenCopilot={openCopilot}
+              stats={stats}
+            />
+          )}
 
-          {/* Tab Content */}
+          {/* Risk Dashboard & Intelligence Feed View */}
           {activeTab === 'alerts' && (
-            <RiskAlertsFeed alerts={alerts} onSelectAlert={(wid) => setSelectedWorkId(wid)} />
+            <RiskAlertsFeed
+              alerts={alerts}
+              onSelectAlert={openInvestigation}
+              stats={stats}
+            />
           )}
 
+          {/* Real Interactive Geographic Risk Map View */}
+          {activeTab === 'map' && (
+            <GeoRiskMap onSelectAlert={openInvestigation} />
+          )}
+
+          {/* Agency Risk Matrix View */}
           {activeTab === 'agencies' && (
-            <AgencyRiskMatrix />
+            <AgencyRiskMatrix onSelectAgency={(ag) => openInvestigation(ag.agency_id)} />
           )}
 
+          {/* MP Allocation View */}
           {activeTab === 'mps' && (
             <MPAllocatedLimitsTable />
           )}
         </main>
-      )}
 
-      {/* Investigation Drawer Dossier */}
+        {/* Sticky Bottom Government Footer */}
+        <Footer />
+      </div>
+
+      {/* Deep-Dive Investigation Dossier Drawer (Fixed Overlay) */}
       <InvestigationDrawer
         workId={selectedWorkId}
         onClose={() => setSelectedWorkId(null)}
         onSubmitReview={() => fetchDashboardData()}
       />
 
-      {/* AI Copilot Modal */}
+      {/* AI Copilot Modal (Fixed Overlay) */}
       <AICopilotModal
         isOpen={isCopilotOpen}
         onClose={() => setIsCopilotOpen(false)}
       />
 
-      {/* Citizen Request Portal Modal */}
+      {/* Citizen Request Portal Modal (Fixed Overlay) */}
       <CitizenRequestModal
         isOpen={isCitizenRequestOpen}
         onClose={() => setIsCitizenRequestOpen(false)}
       />
 
-      {/* Official eSAKSHI Split-Screen Login Modal */}
+      {/* Official Officer Login Modal (Fixed Overlay) */}
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
@@ -134,9 +177,6 @@ export default function App() {
           setActiveTab('alerts');
         }}
       />
-
-      {/* Official Government Footer */}
-      <Footer />
     </div>
   );
 }

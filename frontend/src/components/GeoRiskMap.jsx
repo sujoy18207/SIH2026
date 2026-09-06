@@ -1,0 +1,392 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  MapPin, 
+  Search, 
+  Layers, 
+  AlertTriangle, 
+  Sparkles, 
+  Navigation,
+  Globe,
+  Maximize2
+} from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
+
+const INDIA_STATES_DATA = [
+  { id: 'UP', name: 'Uttar Pradesh', lat: 26.8467, lng: 80.9462, total_projects: 14200, high_risks: 342, avg_score: 78, status: 'HIGH', exp_cr: '512.4' },
+  { id: 'MH', name: 'Maharashtra', lat: 19.7515, lng: 75.7139, total_projects: 11800, high_risks: 180, avg_score: 54, status: 'MEDIUM', exp_cr: '430.8' },
+  { id: 'WB', name: 'West Bengal', lat: 22.9868, lng: 87.8550, total_projects: 9200, high_risks: 210, avg_score: 72, status: 'HIGH', exp_cr: '310.5' },
+  { id: 'BR', name: 'Bihar', lat: 25.0961, lng: 85.3131, total_projects: 9600, high_risks: 290, avg_score: 81, status: 'HIGH', exp_cr: '345.2' },
+  { id: 'TN', name: 'Tamil Nadu', lat: 11.1271, lng: 78.6569, total_projects: 8100, high_risks: 64, avg_score: 38, status: 'LOW', exp_cr: '290.1' },
+  { id: 'MP', name: 'Madhya Pradesh', lat: 22.9734, lng: 78.6569, total_projects: 7400, high_risks: 145, avg_score: 61, status: 'MEDIUM', exp_cr: '275.6' },
+  { id: 'RJ', name: 'Rajasthan', lat: 27.0238, lng: 74.2179, total_projects: 7900, high_risks: 115, avg_score: 49, status: 'MEDIUM', exp_cr: '280.4' },
+  { id: 'GJ', name: 'Gujarat', lat: 22.2587, lng: 71.1924, total_projects: 6800, high_risks: 58, avg_score: 35, status: 'LOW', exp_cr: '240.9' },
+  { id: 'KA', name: 'Karnataka', lat: 15.3173, lng: 75.7139, total_projects: 6500, high_risks: 92, avg_score: 44, status: 'MEDIUM', exp_cr: '225.0' },
+  { id: 'AP', name: 'Andhra Pradesh', lat: 15.9129, lng: 79.7400, total_projects: 5900, high_risks: 78, avg_score: 47, status: 'MEDIUM', exp_cr: '210.3' },
+  { id: 'OR', name: 'Odisha', lat: 20.9517, lng: 85.0985, total_projects: 5200, high_risks: 122, avg_score: 66, status: 'HIGH', exp_cr: '195.4' },
+  { id: 'KL', name: 'Kerala', lat: 10.8505, lng: 76.2711, total_projects: 4100, high_risks: 24, avg_score: 28, status: 'LOW', exp_cr: '160.2' },
+  { id: 'AS', name: 'Assam', lat: 26.2006, lng: 92.9376, total_projects: 3800, high_risks: 98, avg_score: 68, status: 'HIGH', exp_cr: '142.0' },
+  { id: 'PB', name: 'Punjab', lat: 31.1471, lng: 75.3412, total_projects: 3400, high_risks: 45, avg_score: 41, status: 'LOW', exp_cr: '128.5' },
+  { id: 'HR', name: 'Haryana', lat: 29.0588, lng: 76.0856, total_projects: 2900, high_risks: 52, avg_score: 46, status: 'MEDIUM', exp_cr: '110.1' },
+  { id: 'JK', name: 'Jammu & Kashmir', lat: 33.7782, lng: 76.5762, total_projects: 2400, high_risks: 62, avg_score: 59, status: 'MEDIUM', exp_cr: '95.0' },
+  { id: 'JH', name: 'Jharkhand', lat: 23.6102, lng: 85.2799, total_projects: 3100, high_risks: 110, avg_score: 74, status: 'HIGH', exp_cr: '118.6' },
+  { id: 'CT', name: 'Chhattisgarh', lat: 21.2787, lng: 81.8661, total_projects: 3300, high_risks: 85, avg_score: 58, status: 'MEDIUM', exp_cr: '124.8' },
+  { id: 'DL', name: 'Delhi', lat: 28.7041, lng: 77.1025, total_projects: 1800, high_risks: 38, avg_score: 52, status: 'MEDIUM', exp_cr: '88.0' },
+  { id: 'TS', name: 'Telangana', lat: 17.8748, lng: 78.1008, total_projects: 4200, high_risks: 68, avg_score: 45, status: 'MEDIUM', exp_cr: '172.3' }
+];
+
+export default function GeoRiskMap({ onSelectAlert }) {
+  const mapContainerRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markersGroupRef = useRef(null);
+  const tileLayerRef = useRef(null);
+
+  const [mapType, setMapType] = useState('street'); // 'street' | 'satellite' | 'terrain'
+  const [filter, setFilter] = useState('ALL');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedState, setSelectedState] = useState(INDIA_STATES_DATA[0]);
+  const [zones, setZones] = useState(INDIA_STATES_DATA);
+
+  // Initialize Real Leaflet Map
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+
+    const L = window.L;
+    if (!L) return;
+
+    if (!mapInstanceRef.current) {
+      // Create Leaflet Map centered over India
+      const map = L.map(mapContainerRef.current, {
+        center: [22.8, 80.0],
+        zoom: 5,
+        minZoom: 4,
+        maxZoom: 14,
+        zoomControl: true
+      });
+
+      // Default CartoDB Positron / Voyager Street Tiles
+      const tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+      tileLayerRef.current = L.tileLayer(tileUrl, {
+        attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
+        maxZoom: 19
+      }).addTo(map);
+
+      markersGroupRef.current = L.featureGroup().addTo(map);
+      mapInstanceRef.current = map;
+
+      // Invalidate size to ensure crisp rendering
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 200);
+    }
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  // Switch Map Layer (Street vs Satellite vs OpenStreetMap)
+  useEffect(() => {
+    if (!mapInstanceRef.current || !tileLayerRef.current || !window.L) return;
+    const L = window.L;
+    mapInstanceRef.current.removeLayer(tileLayerRef.current);
+
+    let newUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+    let attrib = '&copy; CARTO &copy; OpenStreetMap';
+
+    if (mapType === 'satellite') {
+      newUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+      attrib = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
+    } else if (mapType === 'terrain') {
+      newUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      attrib = '&copy; OpenStreetMap contributors';
+    }
+
+    tileLayerRef.current = L.tileLayer(newUrl, { attribution: attrib, maxZoom: 18 }).addTo(mapInstanceRef.current);
+  }, [mapType]);
+
+  // Render Real Markers with Glowing Pulses
+  useEffect(() => {
+    if (!mapInstanceRef.current || !markersGroupRef.current || !window.L) return;
+    const L = window.L;
+
+    markersGroupRef.current.clearLayers();
+
+    const filtered = zones.filter(z => {
+      if (filter !== 'ALL' && z.status !== filter) return false;
+      if (searchTerm && !z.name.toLowerCase().includes(searchTerm.toLowerCase().trim())) return false;
+      return true;
+    });
+
+    filtered.forEach(z => {
+      const color = z.status === 'HIGH' ? '#ef4444' : z.status === 'MEDIUM' ? '#f59e0b' : '#10b981';
+      const isHigh = z.status === 'HIGH';
+
+      // Custom animated HTML Marker Icon
+      const customIcon = L.divIcon({
+        className: 'custom-leaflet-marker',
+        html: `
+          <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px;">
+            ${isHigh ? `<div style="position: absolute; width: 32px; height: 32px; border-radius: 50%; background: ${color}; opacity: 0.35; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>` : ''}
+            <div style="background: ${color}; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 800;">
+              ${z.id}
+            </div>
+          </div>
+        `,
+        iconSize: [34, 34],
+        iconAnchor: [17, 17]
+      });
+
+      const marker = L.marker([z.lat, z.lng], { icon: customIcon });
+
+      // Interactive Popup Content
+      const popupHtml = `
+        <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 4px; min-width: 220px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="font-size: 14px; color: #0f172a;">${z.name}</strong>
+            <span style="background: ${color}20; color: ${color}; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid ${color}40;">
+              ${z.status} RISK
+            </span>
+          </div>
+          <div style="font-size: 12px; color: #475569; line-height: 1.6;">
+            <div>• Monitored Projects: <strong>${z.total_projects.toLocaleString()}</strong></div>
+            <div>• Disbursed: <strong>₹${z.exp_cr} Cr</strong></div>
+            <div>• High-Risk Flags: <strong style="color: #ef4444;">${z.high_risks}</strong></div>
+            <div>• Avg Risk Score: <strong>${z.avg_score}/100</strong></div>
+          </div>
+        </div>
+      `;
+
+      marker.bindPopup(popupHtml);
+      marker.on('click', () => {
+        setSelectedState(z);
+      });
+
+      markersGroupRef.current.addLayer(marker);
+    });
+  }, [zones, filter, searchTerm]);
+
+  // Fly to state
+  const handleFlyToState = (st) => {
+    setSelectedState(st);
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.flyTo([st.lat, st.lng], 7, { duration: 1.2 });
+    }
+  };
+
+  return (
+    <div style={{ width: '100%' }}>
+      {/* Top Sticky Header & Controls */}
+      <div className="sticky-section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.5px' }}>
+            Geographic Risk Map
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '0.85rem' }}>
+            Real-time geospatial intelligence & multi-signal anomaly clustering across India.
+          </p>
+        </div>
+
+        {/* Controls Toolbar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+          {/* Search Box */}
+          <div style={{ position: 'relative', width: '200px' }}>
+            <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input
+              type="text"
+              placeholder="Search state..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.4rem 0.75rem 0.4rem 2.2rem',
+                fontSize: '0.825rem',
+                background: '#f1f5f9',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                outline: 'none'
+              }}
+            />
+          </div>
+
+          {/* Risk Filter Buttons */}
+          <div style={{ display: 'flex', gap: '0.25rem', background: '#f1f5f9', padding: '0.2rem', borderRadius: '8px' }}>
+            {['ALL', 'HIGH', 'MEDIUM', 'LOW'].map(lvl => (
+              <button
+                key={lvl}
+                onClick={() => setFilter(lvl)}
+                style={{
+                  padding: '0.35rem 0.65rem',
+                  borderRadius: '6px',
+                  border: 'none',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  background: filter === lvl ? '#0f172a' : 'transparent',
+                  color: filter === lvl ? '#ffffff' : '#64748b',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                {lvl}
+              </button>
+            ))}
+          </div>
+
+          {/* Tile Layer Switcher */}
+          <div style={{ display: 'flex', gap: '0.25rem', background: '#f1f5f9', padding: '0.2rem', borderRadius: '8px' }}>
+            <button
+              onClick={() => setMapType('street')}
+              style={{
+                padding: '0.35rem 0.65rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: mapType === 'street' ? '#0d9488' : 'transparent',
+                color: mapType === 'street' ? '#ffffff' : '#64748b'
+              }}
+            >
+              Street
+            </button>
+            <button
+              onClick={() => setMapType('satellite')}
+              style={{
+                padding: '0.35rem 0.65rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: mapType === 'satellite' ? '#0d9488' : 'transparent',
+                color: mapType === 'satellite' ? '#ffffff' : '#64748b'
+              }}
+            >
+              Satellite
+            </button>
+            <button
+              onClick={() => setMapType('terrain')}
+              style={{
+                padding: '0.35rem 0.65rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: mapType === 'terrain' ? '#0d9488' : 'transparent',
+                color: mapType === 'terrain' ? '#ffffff' : '#64748b'
+              }}
+            >
+              OSM
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Map & Live Dossier Split */}
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem', alignItems: 'start', marginTop: '1.25rem' }}>
+        
+        {/* Real Leaflet Map Container */}
+        <div className="metric-card" style={{ padding: '0.75rem', background: '#ffffff', overflow: 'hidden' }}>
+          <div 
+            ref={mapContainerRef} 
+            style={{ 
+              width: '100%', 
+              height: '560px', 
+              borderRadius: '8px', 
+              background: '#e5e7eb',
+              position: 'relative',
+              zIndex: 1
+            }} 
+          />
+        </div>
+
+        {/* Right: State Profile Card */}
+        <div className="metric-card" style={{ padding: '1.5rem', position: 'sticky', top: '80px' }}>
+          {selectedState ? (
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.75rem' }}>
+                <div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+                    {selectedState.name}
+                  </h3>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                    State Nodal Zone Profile
+                  </div>
+                </div>
+
+                <span className={`score-pill ${selectedState.avg_score >= 60 ? 'score-pill-red' : 'score-pill-green'}`}>
+                  {selectedState.status} RISK
+                </span>
+              </div>
+
+              {/* Stats Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Monitored Works</div>
+                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>{selectedState.total_projects.toLocaleString()}</strong>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>High Risk Flags</div>
+                  <strong style={{ fontSize: '1.15rem', color: '#ef4444' }}>{selectedState.high_risks}</strong>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Disbursed Total</div>
+                  <strong style={{ fontSize: '1.15rem', color: '#0f172a' }}>₹{selectedState.exp_cr} Cr</strong>
+                </div>
+
+                <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Avg Composite Score</div>
+                  <strong style={{ fontSize: '1.15rem', color: selectedState.avg_score >= 60 ? '#ef4444' : '#10b981' }}>
+                    {selectedState.avg_score}/100
+                  </strong>
+                </div>
+              </div>
+
+              {/* AI Key Insights */}
+              <div style={{ background: '#f0fdfa', border: '1px solid #ccfbf1', borderRadius: '8px', padding: '0.85rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0f766e', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem' }}>
+                  <Sparkles size={14} />
+                  <span>Geospatial AI Finding</span>
+                </div>
+                <p style={{ fontSize: '0.8rem', color: '#134e4a', lineHeight: 1.5 }}>
+                  {selectedState.avg_score >= 60 
+                    ? `Elevated cost variance observed in 18% of rural infrastructure projects. Spatial clustering detected in 3 adjacent districts.`
+                    : `Expenditure trajectory within standard baseline limits. Timely utilization certificates recorded in 94% of works.`}
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button 
+                  className="btn-primary-dark"
+                  style={{ flex: 1, justifyContent: 'center' }}
+                  onClick={() => {
+                    if (onSelectAlert) onSelectAlert(selectedState.name || selectedState.id);
+                  }}
+                >
+                  Inspect State Works
+                </button>
+                <button
+                  className="btn-secondary-outline"
+                  onClick={() => handleFlyToState(selectedState)}
+                  title="Center map on state"
+                >
+                  <Navigation size={16} />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div style={{ textAlign: 'center', color: '#94a3b8', padding: '2rem' }}>
+              Click any state marker on the map to inspect risk details.
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

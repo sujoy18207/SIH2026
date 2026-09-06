@@ -1,0 +1,31 @@
+{
+  "features": [
+    "cost_deviation",
+    "expenditure_ratio",
+    "rec_san_ratio",
+    "sanction_delay_days",
+    "spending_velocity",
+    "velocity_ratio",
+    "payment_frequency",
+    "payment_concentration",
+    "category_cost_ratio",
+    "expenditure_spread_days",
+    "vendor_constituency_count",
+    "completion_duration_days"
+  ],
+  "candidate_features": [
+    "cost_deviation",
+    "expenditure_ratio",
+    "rec_san_ratio",
+    "sanction_delay_days",
+    "spending_velocity",
+    "velocity_ratio",
+    "payment_frequency",
+    "payment_concentration",
+    "category_cost_ratio",
+    "expenditure_spread_days",
+    "vendor_constituency_count",
+    "completion_duration_days"
+  ],
+  "unavailable_features": []
+}

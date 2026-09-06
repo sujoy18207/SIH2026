@@ -15,8 +15,18 @@ venv/
 backend/data/
 *.db
 *.sqlite
+*.sqlite3
 *.db-wal
 *.db-shm
+
+# Large scraped datasets & ML pipeline intermediates (>50MB)
+data/mplads_data/
+mplads_data/raw/
+ml/data/*.db
+ml/data/master_projects.csv
+ml/data/cleaned/works_recommended_all.csv
+ml/data/cleaned/works_sanctioned_all.csv
+ml/data/cleaned/expenditure_all.csv
 
 # IDE / OS
 .DS_Store

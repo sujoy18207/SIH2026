@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-09-01T19:12:25.933363",
+  "total_projects": 128081,
+  "total_pairs": 130164,
+  "similarity_threshold": 0.7,
+  "blocking_strategy": "by constituency",
+  "high_duplicate_risk_count": 13999,
+  "note": "Without GPS data, duplicate risk is based solely on text similarity."
+}

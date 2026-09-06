@@ -1,0 +1,90 @@
+{
+  "computed_at": "2026-09-01T19:12:03.105053",
+  "total_projects": 128081,
+  "feature_columns": [
+    "cost_deviation",
+    "cost_deviation_pct",
+    "expenditure_ratio",
+    "rec_san_ratio",
+    "sanction_delay_days",
+    "completion_duration_days",
+    "project_age_days",
+    "spending_velocity",
+    "velocity_ratio",
+    "payment_frequency",
+    "payment_concentration",
+    "vendor_constituency_count",
+    "category_cost_ratio",
+    "expenditure_spread_days"
+  ],
+  "feature_availability": {
+    "cost_deviation": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "expenditure_ratio": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "rec_san_ratio": {
+      "available": true,
+      "computed_count": 127415
+    },
+    "sanction_delay_days": {
+      "available": true,
+      "computed_count": 96916
+    },
+    "completion_duration_days": {
+      "available": true,
+      "computed_count": 43644
+    },
+    "project_age_days": {
+      "available": true,
+      "computed_count": 96916
+    },
+    "spending_velocity": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "velocity_ratio": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "payment_frequency": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "payment_concentration": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "vendor_constituency_count": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "category_cost_ratio": {
+      "available": true,
+      "computed_count": 127415
+    },
+    "expenditure_spread_days": {
+      "available": true,
+      "computed_count": 70594
+    },
+    "progress_gap": {
+      "available": false,
+      "reason": "financial_progress_pct and physical_progress_pct not in dataset"
+    },
+    "progress_risk": {
+      "available": false,
+      "reason": "progress percentages not in dataset"
+    },
+    "geo_distance": {
+      "available": false,
+      "reason": "latitude/longitude not in dataset"
+    },
+    "photo_evidence_score": {
+      "available": false,
+      "reason": "photo_count not in dataset"
+    }
+  }
+}
