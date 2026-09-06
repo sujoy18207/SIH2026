@@ -2,9 +2,11 @@
 
 **Smart India Hackathon 2026 — Problem Statement 102**
 
-An AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work detection, and decision-support analytics platform for the **Members of Parliament Local Area Development Scheme (MPLADS)**, benchmarked against the official **eSAKSHI digital ecosystem** (`https://mplads.mospi.gov.in/`).
+An AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work detection, and decision-support analytics platform for the **Members of Parliament Local Area Development Scheme (MPLADS)**, running on the **REAL eSAKSHI dataset scraped from the official portal** (`https://mplads.mospi.gov.in/`).
 
 > **Key Philosophy**: This platform **NEVER** accuses anyone of fraud. All findings are scored and classified as **"Potential Anomaly / Verification Required"** with multi-signal evidence, serving to guide government officials on where to direct field verification and audit resources.
+
+> **Real Data**: No synthetic/test records. The platform operates on the genuine scraped eSAKSHI dataset: **1,28,670 works** (Lok Sabha + Rajya Sabha, all tenures), **1,07,828 vendor payment records**, **776 MP allocation records** (543 Lok Sabha + 233 Rajya Sabha), and **27,961 unique vendors**, served from a persistent SQLite database on a long-lived server (Docker deployment) — the dataset is far too large for serverless functions.
 
 ---
 
@@ -12,103 +14,76 @@ An AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work d
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│                         DATA INGESTION LAYER                                │
-│   eSAKSHI CSV/JSON → Synthetic Generator (10,000 records) → Validation     │
+│                    REAL DATA INGESTION LAYER (eSAKSHI CSVs)                  │
+│  works_recommended / sanctioned / completed / expenditure (LS + RS)          │
+│  → ETL (backend/app/etl.py) → SQLite: works | payments | vendors | mps        │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│                    MULTI-SIGNAL AI ANALYTICS ENGINE                         │
-│  ┌─────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐    │
-│  │ Rule Engine  │ │ ML Anomaly   │ │ NLP Duplicate│ │ GIS Proximity    │    │
-│  │ (5 Rules)    │ │ (Iso Forest) │ │ (TF-IDF+Emb) │ │ (Haversine)      │    │
-│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────────┘    │
-│  ┌─────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐    │
-│  │ Agency Risk │ │ Payment vs   │ │ GIS Spiral   │ │ Cost Intelligence│    │
-│  │ Profiler    │ │ Progress     │ │ Intelligence │ │ (Market Bench.)  │    │
-│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────────┘    │
-│  ┌─────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐    │
-│  │ Network     │ │ Time Anomaly │ │ Predictive   │ │ Document & Cert. │    │
-│  │ Anomaly     │ │ Detection    │ │ AI Forecast  │ │ Intelligence     │    │
-│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────────┘    │
-│  ┌─────────────┐ ┌──────────────┐                                          │
-│  │ Image Reuse │ │ National Map │                                          │
-│  │ Detection   │ │ Risk Agg.    │                                          │
-│  └──────────────┘ └──────────────┘                                          │
+│                    MULTI-SIGNAL AI ANALYTICS ENGINE                          │
+│  ┌─────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────────┐      │
+│  │ Rule Engine  │ │ ML Anomaly   │ │ NLP Duplicate│ │ Vendor Concentr. │      │
+│  │ (9 Rules)    │ │ (Iso Forest) │ │ (TF-IDF+Hash) │ │ (Nexus Signal)   │      │
+│  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────────┘      │
+│  ┌─────────────┐ ┌──────────────┐                                    │
+│  │ Agency Risk │ │ Data Quality │                                     │
+│  │ Profiler    │ │ + Confidence │                                     │
+│  └─────────────┘ └──────────────┘                                    │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│               CENTRAL RISK ENGINE v2.0 (11 Weighted Signals)               │
-│          Risk Score (0–100) → Severity Classification → Alerts             │
+│           CENTRAL RISK ENGINE (5 Weighted Signals, 0–100 Score)             │
+│          Risk Score → Severity Classification → Explainable Alerts          │
+│                     (persisted to SQLite alerts table)                      │
 ├──────────────────────────────────────────────────────────────────────────────┤
-│                      INTELLIGENCE & UX LAYER                               │
-│   Explainable Alerts │ AI Copilot │ National Map │ Investigation Drawer    │
+│                      INTELLIGENCE & UX LAYER                                │
+│   Explainable Alerts │ AI Copilot (सक्षम AI) │ Investigation Drawer         │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │                    HUMAN-IN-THE-LOOP VERIFICATION                          │
-│          Officer Review → Audit Trail → Action Logging                     │
+│       Officer Review → Persistent Audit Trail (SQLite) → Action Log          │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🌟 All Features (Existing + Planned v2.0)
-
-### ✅ Built & Operational Features
+## 🌟 Features (All Operational on Real Data)
 
 | # | Feature | Description |
 |---|---------|-------------|
-| 1 | **Data Quality Engine** | Evaluates raw work records for missing coordinates, sanction dates, incomplete descriptions. Outputs Data Quality Score (0–100%): `Reliable`, `Warning`, `Invalid`. |
-| 2 | **Evidence Confidence Score** | Evaluates input data quality, photo proof count, coordinate validity, and multi-signal consensus. Indicates how reliable the evidence is (0–100%). |
-| 3 | **Rule-Based Compliance Engine** | 5 deterministic rules: Expenditure > Sanction, Progress Mismatch (>35% gap), Invalid Timeline, Excessive Delay (>180 days), Missing Mandatory Docs. |
-| 4 | **ML Statistical Outlier Detection** | Scikit-Learn **Isolation Forest** + **Local Outlier Factor (LOF)** trained on cost deviation ratios, spending velocity, financial-physical gap, and duration ratios. |
-| 5 | **NLP Duplicate Work Detection** | TF-IDF N-gram vectorization with cosine similarity. Detects semantically similar work descriptions within geographic proximity. Labels: *"Potentially Similar/Duplicate Work — Verification Required"*. |
-| 6 | **GIS Spatial Proximity Engine** | Haversine distance calculation to detect works of identical categories located within 300m. Flags suspicious geographic co-location. |
-| 7 | **Implementing Agency Risk Profiler** | **Headline Feature** — Pattern analysis aggregating delay counts, cost anomalies, and financial mismatches across ALL projects managed by an agency. Systemic risk scoring. |
-| 8 | **Configurable Risk Policy Engine** | Computes composite Risk Score (0–100) using configurable policy weights. Risk levels: Low (0–25), Medium (26–50), High (51–75), Critical (76–100). |
-| 9 | **Explainable Alert Engine** | Generates structured, human-readable narrative explanations for every flagged alert with specific triggering evidence. |
-| 10 | **AI Investigation Copilot (सक्षम AI)** | Natural language investigation assistant powered by Google Gemini API with local RAG fallback. Answers queries about works, agencies, risk patterns. |
-| 11 | **eSAKSHI-Style Government Dashboard** | Premium, information-dense government UI with hero landing, KPI cards, alerts feed, investigation drawer, agency matrix, and official branding. |
-| 12 | **Citizen Request Portal** | Public-facing form for citizens to submit infrastructure complaints and requests. |
-| 13 | **Official MP Allocation Database** | Ingests and displays official allocated limits for all 543 Lok Sabha MPs from government Excel data. |
-| 14 | **Append-Only Audit Trail** | Immutable log of all officer review actions: Escalated for Inspection, Verified Valid, False Positive, Closed with Notice. |
-| 15 | **Multi-Stakeholder Persona Views** | Role-based access for Ministry, State Nodal Authority, District Collector, and MP personas. |
+| 1 | **Real eSAKSHI Data Pipeline** | ETL joins works recommended → sanctioned → completed → vendor payments on `WORK_RECOMMENDATION_DTL_ID`; cleans scraped fields (embedded tabs, broken multiline dates); parses districts from IDA names. |
+| 2 | **Data Quality Engine** | Evaluates real records for missing descriptions, absent sanction dates on advanced stages, non-positive amounts, missing completion dates. Outputs Data Quality Score (0–100%): `Reliable`, `Warning`, `Invalid`. |
+| 3 | **Evidence Confidence Score** | Factors payment-trail richness, attached sanction files, and multi-signal consensus (0–100%). |
+| 4 | **Rule-Based Compliance Engine** | 9 deterministic rules on real fields: disbursed > sanction, multi-vendor splitting of a single sanction, completion cost overrun, sanction ≤ recommendation date, completion < sanction date, zombie works (>2yr stalled), completed with zero payments, advanced stage without file evidence, unverified completions (no rating). |
+| 5 | **Multi-Vendor Splitting Detection** | Flags single sanctions paid to 4+ distinct vendors — cost-splitting to circumvent procurement thresholds (real signal found in the live dataset). |
+| 6 | **ML Statistical Outlier Detection** | Scikit-Learn **Isolation Forest** trained on real features: sanction cost deviation vs (activity × state) median, disbursal ratio, actual-vs-sanction deviation, sanction/completion durations, payment concentration. |
+| 7 | **NLP Duplicate Work Detection** | Exact normalized-description grouping + TF-IDF n-gram cosine similarity, blocked by (state, district); amount-proximity boosted scoring. Labels: *"Potentially Similar/Duplicate Work — Verification Required"*. **18K+ real candidates detected.** |
+| 8 | **Vendor Concentration (Contractor Nexus)** | Profiles all 27,961 vendors from the real payment ledger — e.g. a single vendor paid across **785 distinct works** is surfaced as a priority procurement-fairness verification signal. |
+| 9 | **District Authority Risk Profiler** | **Headline Feature** — pattern analysis aggregating stalled works, cost variance, and anomaly counts across ALL projects under an Integrated District Authority (IDA). |
+| 10 | **Configurable Risk Policy Engine** | Composite Risk Score (0–100) from weighted signals. Risk levels: Low (0–25), Medium (26–50), High (51–75), Critical (76–100). |
+| 11 | **Explainable Alert Engine** | Structured narrative explanations with exact amounts, dates, stages, and evidence for every flagged alert. |
+| 12 | **AI Investigation Copilot (सक्षम AI)** | Natural language assistant over the real dataset (states, districts, agencies, vendors, duplicates) powered by Google Gemini API with deterministic SQL-backed local fallback. |
+| 13 | **eSAKSHI-Style Government Dashboard** | Premium information-dense government UI with hero landing, KPI cards, alerts feed, investigation drawer, agency matrix, and official branding. |
+| 14 | **Citizen Request Portal** | Public form with real state/MP dropdowns loaded live from the MP allocation database. |
+| 15 | **Official MP Allocation Database** | Real allocated limits for 776 MP records (543 Lok Sabha + 233 Rajya Sabha, including 11 Nominated RS members) from the eSAKSHI dataset. |
+| 16 | **Persistent Append-Only Audit Trail** | Officer reviews recorded in SQLite — survives server restarts. Actions: Escalated for Inspection, Verified Valid, False Positive, Closed with Notice. |
+| 17 | **Vendor Payment Ledger Dossier** | Every investigation drawer shows the actual eSAKSHI vendor payment rows (date, vendor, amount, status) for the work. |
+| 18 | **Persistent Server Deployment** | Docker + docker-compose (FastAPI + nginx) with volume-persisted SQLite — sized for the real 128K-work dataset. |
 
-### 🔴 New v2.0 AI Intelligence Modules (To Be Built)
-
-| # | Feature | Description |
-|---|---------|-------------|
-| 16 | **AI Risk Score with Explanation** | Structured risk score card with radar chart breakdown showing each signal's % contribution. Natural language "Why This Score?" explanation. |
-| 17 | **Payment vs Progress Intelligence** | Detects disproportionate financial disbursements vs physical construction progress. Tracks spending velocity, last-minute spikes, and early exhaustion patterns. |
-| 18 | **Enhanced Duplicate Detection** | Multi-modal: Sentence-Transformer embeddings + geo-proximity + cost similarity + agency match. Cross-constituency duplicate checking. Side-by-side comparison dossier. |
-| 19 | **GIS Spiral Intelligence** | Detects when same type of projects keep getting sanctioned in same area repeatedly — area saturation, temporal spirals, cost escalation spirals, beneficiary overlap. |
-| 20 | **Cost Intelligence Engine** | Market rate benchmarking database per category per state. Detects inflated estimates, cost splitting to avoid thresholds, and district-level cost discrepancies. |
-| 21 | **Network Anomaly (Contractor Nexus)** | Graph-based analysis detecting agency monopolies (>40% district projects), concurrent overload (>10 simultaneous projects), cross-district nexus, and shell agency patterns. |
-| 22 | **Time Anomaly Detection** | Detects impossible timelines, instant completions (<7 days), zombie projects (no update >180 days), fiscal year boundary gaming, backdated sanctions, seasonal impossibilities. |
-| 23 | **Predictive AI (Completion Forecast)** | ML-based probability of on-time completion. Predicts expected completion date with confidence interval. Classifications: On Track, At Risk, Likely Delayed, Likely Abandoned. |
-| 24 | **Enhanced AI Copilot v2.0** | Structured context retrieval, comparative analysis, drill-down commands, proactive insights, and PDF report generation. Integrates all new engine outputs. |
-| 25 | **Document Intelligence** | Verifies mandatory MPLADS paperwork at each stage: MP Recommendation, Sanction Order, Work Order, Utilization Certificate, Completion Report. Detects missing/suspect documents. |
-| 26 | **Certificate & Letter Handling** | Tracks lifecycle of official certificates (UCs, NOCs, Completion Certs). Detects duplicate certificate numbers, expired certs, and UC submission gaps. |
-| 27 | **Construction Image Analysis** | Perceptual hashing (pHash) for cross-project image reuse detection. Optional progress estimation from photos. EXIF GPS/timestamp validation. |
-| 28 | **National Risk Map** | Interactive choropleth map with Green (Low Risk) / Yellow (Watch) / Red (Priority Audit) zone classification per district. Click-to-drill-down: State → District → Projects. |
+> **Not applicable to current data**: GPS-based GIS proximity and physical/financial progress-percentage rules were part of the v1 synthetic prototype; the real eSAKSHI extracts contain no coordinates or progress percentages, so those engines were replaced with the real-data detectors above (multi-vendor splitting, vendor concentration, stage-stalled analytics).
 
 ---
 
-## 📊 Risk Score Formula (v2.0)
+## 📊 Risk Score Formula
 
-The central Risk Engine computes a composite score from **11 weighted signals**:
+The central Risk Engine computes a composite score from **5 weighted signal groups**:
 
 ```
-Risk Score = Σ(wᵢ × Sᵢ) for i = 1 to 11
+Risk Score = 0.35·Rule + 0.25·ML + 0.20·Duplicate + 0.10·Timeline + 0.10·Authority
 ```
 
-| Signal | Engine Module | Weight |
+| Signal Group | Engine Module | Weight |
 |--------|---------------|--------|
-| Rule Compliance | `rule_engine.py` | 0.15 |
-| ML Statistical Outlier | `ml_anomaly.py` | 0.12 |
-| Payment vs Progress Gap | `payment_progress.py` | 0.12 |
-| NLP Duplicate Score | `nlp_duplicate.py` | 0.10 |
-| Cost Deviation | `cost_intelligence.py` | 0.10 |
-| Delay Risk | `risk_engine.py` | 0.08 |
-| Agency Risk | `agency_risk.py` | 0.08 |
-| Network Anomaly | `network_anomaly.py` | 0.08 |
-| Time Anomaly | `time_anomaly.py` | 0.07 |
-| GIS Spiral | `gis_spiral.py` | 0.05 |
-| Document Compliance | `document_intelligence.py` | 0.05 |
+| Rule Compliance (top rule score) | `rule_engine.py` | 0.35 |
+| ML Statistical Outlier | `ml_anomaly.py` | 0.25 |
+| NLP Duplicate Score | `nlp_duplicate.py` | 0.20 |
+| Timeline Risk (zombie/impossible dates) | `rule_engine.py` | 0.10 |
+| District Authority Risk | `agency_risk.py` | 0.10 |
 
 **Risk Level Classification**:
 | Score Range | Level | Action |
@@ -120,17 +95,43 @@ Risk Score = Σ(wᵢ × Sᵢ) for i = 1 to 11
 
 ---
 
-## 📈 Empirical Evaluation Metrics
-
-Tested on synthetic dataset with ground-truth labeled anomaly cases:
+## 📈 Real Dataset Scale & Detected Signals
 
 | Metric | Value |
 |--------|-------|
-| **Precision** | 0.7607 (76.07%) |
-| **Recall** | 0.4837 |
-| **F1 Score** | 0.5914 |
-| **Total Works Monitored** | 10,000 |
-| **Anomaly Detection Rate** | 5% (injected ground truth) |
+| **Total Works Monitored** | 1,28,670 (1,03,554 Lok Sabha + 25,116 Rajya Sabha) |
+| **Vendor Payment Records** | 1,07,828 |
+| **Total Vendor Disbursements** | ₹3,969 Crore |
+| **MP Allocation Records** | 776 (543 Lok Sabha + 233 Rajya Sabha) |
+| **Unique Vendors** | 27,961 |
+| **States / UTs Covered** | 36 |
+| **Districts Covered** | 773 |
+| **District Authorities Profiled** | 776 |
+| **Explainable Alerts Generated** | 48,305 |
+| **NLP Duplicate Candidates** | 18,133 (7,654 duplicate clusters) |
+| **Zombie Works (2+ yrs stalled)** | 5,523 |
+| **Impossible Timelines Detected** | 246 |
+| **Completed Without Payments** | 832 |
+| **ML Statistical Outliers** | 500 |
+| **Unverified Completions (no rating)** | 14,266 |
+| **Advanced Stage Without File Evidence** | 27,412 |
+| **Multi-Vendor Splitting Sanctions** | 1,351 |
+| **Top Vendor Concentration** | 1 vendor paid across 785 distinct works |
+
+### Detected Signals by Engine (live database)
+
+| Signal Type | Works Flagged | Engine |
+|-------------|---------------|--------|
+| `RULE_MISSING_EVIDENCE` — advanced stage without file evidence | 27,412 | Rule Engine |
+| `NLP_DUPLICATE_WORK` — potentially similar/duplicate works | 18,133 | NLP Engine |
+| `RULE_UNVERIFIED_COMPLETION` — completed with no rating | 14,266 | Rule Engine |
+| `RULE_ZOMBIE_WORK` — stage-stuck > 2 years | 5,523 | Rule Engine |
+| `RULE_VENDOR_SPLITTING` — single sanction, 4+ vendors | 1,351 | Rule Engine |
+| `RULE_COMPLETED_NO_PAYMENTS` — completed, zero vendor payments | 832 | Rule Engine |
+| `ML_STATISTICAL_OUTLIER` — multivariate cost/duration outlier | 500 | Isolation Forest |
+| `RULE_TIMELINE_INCONSISTENT` — impossible sanction/completion dates | 246 | Rule Engine |
+
+**Risk-level distribution across all 1,28,670 works**: 🟢 Low: 87,250 · 🟡 Medium: 38,378 · 🟠 High: 3,036 · 🔴 Critical: 6
 
 ---
 
@@ -139,108 +140,77 @@ Tested on synthetic dataset with ground-truth labeled anomaly cases:
 ### Backend
 | Technology | Purpose |
 |------------|---------|
-| **Python 3.10+** | Core language |
+| **Python 3.12** | Core language |
 | **FastAPI** | REST API framework |
-| **Scikit-Learn** | Isolation Forest, LOF anomaly detection |
-| **Sentence-Transformers** | Semantic text embedding for duplicate detection |
-| **NumPy / Pandas** | Data processing & feature engineering |
-| **Haversine** | Geospatial distance calculations |
+| **SQLite (WAL)** | Persistent storage for the real dataset — scales to millions of rows, zero admin |
+| **Scikit-Learn** | Isolation Forest anomaly detection + TF-IDF vectorization |
+| **NumPy / Pandas** | Feature engineering |
 | **Pydantic** | Data validation & schema enforcement |
 | **httpx** | Async HTTP client for Gemini API |
 
 ### Frontend
 | Technology | Purpose |
 |------------|---------|
-| **React 18** | UI framework |
+| **React 19** | UI framework |
 | **Vite** | Build tool & dev server |
 | **Vanilla CSS** | Custom government-style design system |
 | **Lucide React** | Icon library |
-| **Leaflet.js** | Interactive map rendering |
-| **Chart.js / Recharts** | Data visualization charts |
-| **D3.js / vis-network** | Force-directed network graph |
 
-### AI & ML
+### AI
 | Technology | Purpose |
 |------------|---------|
-| **Google Gemini API** | AI Copilot natural language intelligence |
-| **TF-IDF + Cosine** | Text similarity baseline |
-| **Isolation Forest** | Unsupervised anomaly detection |
-| **Random Forest / XGBoost** | Predictive completion forecasting |
-| **Perceptual Hashing (pHash)** | Image fingerprinting & reuse detection |
+| **Google Gemini API** | AI Copilot natural language intelligence (optional; local engine works without it) |
+| **TF-IDF + Cosine Similarity** | Duplicate description detection |
+| **Isolation Forest** | Unsupervised multivariate anomaly detection |
+
+### Deployment
+| Technology | Purpose |
+|------------|---------|
+| **Docker + docker-compose** | Persistent server deployment (dataset too large for serverless) |
+| **nginx** | Static frontend hosting + reverse proxy to API |
 
 ---
 
 ## 📁 Repository Structure
 
 ```text
-SIH 2026/
+SIH2026/
 ├── backend/
 │   ├── app/
-│   │   ├── api/                          # FastAPI REST endpoints
-│   │   ├── engine/                       # Multi-Signal AI & Risk Engine Modules
-│   │   │   ├── data_quality.py           # ✅ Data Quality & Evidence Confidence
-│   │   │   ├── rule_engine.py            # ✅ 5 Compliance Rules
-│   │   │   ├── ml_anomaly.py             # ✅ Isolation Forest Statistical Model
-│   │   │   ├── nlp_duplicate.py          # ✅ TF-IDF + Semantic Duplicate Detection
-│   │   │   ├── gis_proximity.py          # ✅ Haversine Spatial Proximity
-│   │   │   ├── agency_risk.py            # ✅ Agency Risk Profiler
-│   │   │   ├── risk_engine.py            # ✅ Central Policy Risk Engine (v2.0)
-│   │   │   ├── explainability.py         # ✅ Narrative Explanation Generator
-│   │   │   ├── payment_progress.py       # 🔴 Payment vs Progress Analyzer
-│   │   │   ├── gis_spiral.py             # 🔴 GIS Spiral Intelligence
-│   │   │   ├── cost_intelligence.py      # 🔴 Market Cost Benchmarking
-│   │   │   ├── network_anomaly.py        # 🔴 Contractor Nexus Detection
-│   │   │   ├── time_anomaly.py           # 🔴 Time Anomaly Detection
-│   │   │   ├── predictive_ai.py          # 🔴 Completion Forecasting
-│   │   │   ├── document_intelligence.py  # 🔴 Document Completeness Checker
-│   │   │   ├── certificate_handler.py    # 🔴 Certificate Lifecycle Tracker
-│   │   │   ├── image_intelligence.py     # 🔴 Image Analysis & Reuse Detection
-│   │   │   └── national_risk_map.py      # 🔴 District/State Risk Aggregation
-│   │   ├── schemas/                      # Pydantic data schemas
-│   │   ├── services/                     # LLM RAG & Copilot service
-│   │   └── main.py                       # FastAPI application entrypoint
-│   ├── data/                             # Generated synthetic dataset
-│   └── tests/                            # Pytest suite & evaluation metrics
-├── frontend/                             # Vite + React + Government UI
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── AICopilotModal.jsx        # ✅ AI Investigation Copilot
-│   │   │   ├── AgencyRiskMatrix.jsx      # ✅ Agency Risk Analytics Table
-│   │   │   ├── AshokaStambhaLogo.jsx     # ✅ Official Emblem Component
-│   │   │   ├── CitizenRequestModal.jsx   # ✅ Public Citizen Request Form
-│   │   │   ├── Footer.jsx               # ✅ Official Government Footer
-│   │   │   ├── Header.jsx               # ✅ eSAKSHI Navigation Header
-│   │   │   ├── HeroLanding.jsx          # ✅ Hero Landing Page
-│   │   │   ├── InvestigationDrawer.jsx  # ✅ Deep-Dive Investigation Panel
-│   │   │   ├── LoginModal.jsx           # ✅ eSAKSHI Officer Login
-│   │   │   ├── MPAllocatedLimitsTable.jsx # ✅ MP Allocation Database
-│   │   │   ├── OverviewCards.jsx        # ✅ Executive KPI Cards
-│   │   │   ├── RiskAlertsFeed.jsx       # ✅ Risk Alert Feed Table
-│   │   │   ├── RiskScoreCard.jsx        # 🔴 Risk Score Radar Breakdown
-│   │   │   ├── PaymentProgressChart.jsx # 🔴 Payment vs Progress Viz
-│   │   │   ├── DuplicateComparisonView.jsx # 🔴 Side-by-Side Duplicate View
-│   │   │   ├── SpiralMapView.jsx        # 🔴 GIS Spiral Map
-│   │   │   ├── CostIntelligencePanel.jsx # 🔴 Cost Benchmark Dashboard
-│   │   │   ├── NetworkGraphView.jsx     # 🔴 Agency Nexus Graph
-│   │   │   ├── TimelineAnomalyView.jsx  # 🔴 Gantt Timeline Anomalies
-│   │   │   ├── PredictiveInsightsPanel.jsx # 🔴 Completion Probability Gauge
-│   │   │   ├── DocumentChecklist.jsx    # 🔴 Document Compliance Checklist
-│   │   │   ├── CertificateTracker.jsx   # 🔴 Certificate Pipeline Viz
-│   │   │   ├── ImageAnalysisPanel.jsx   # 🔴 Construction Image Analysis
-│   │   │   └── NationalRiskMap.jsx      # 🔴 Choropleth National Risk Map
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css                    # Design System
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
+│   │   ├── db.py                         # SQLite schema + connection layer
+│   │   ├── etl.py                        # Real eSAKSHI CSV → SQLite ETL + analytics
+│   │   ├── main.py                       # FastAPI application
+│   │   ├── engine/
+│   │   │   ├── data_quality.py           # Data Quality & Evidence Confidence
+│   │   │   ├── rule_engine.py            # 9 real-data compliance rules
+│   │   │   ├── ml_anomaly.py             # Isolation Forest on real features
+│   │   │   ├── nlp_duplicate.py          # Exact-hash + TF-IDF duplicate detection
+│   │   │   ├── agency_risk.py            # District Authority risk profiler
+│   │   │   ├── risk_engine.py            # Central weighted risk engine
+│   │   │   └── explainability.py         # Narrative explanation generator
+│   │   ├── schemas/mplads.py             # Pydantic schemas (real fields)
+│   │   └── services/llm_service.py       # AI Copilot (Gemini + local SQL engine)
+│   └── data/                             # Built mplads.db (gitignored; built by ETL)
+├── data/
+│   └── mplads_data/csv/                  # REAL eSAKSHI scraped dataset (14 CSVs)
+├── frontend/                             # Vite + React government UI
+│   ├── nginx.conf                        # Static hosting + /api/ reverse proxy
+│   └── src/components/                   # HeroLanding, OverviewCards, RiskAlertsFeed,
+│       │                                 #   InvestigationDrawer, AgencyRiskMatrix,
+│       │                                 #   MPAllocatedLimitsTable, AICopilotModal,
+│       │                                 #   CitizenRequestModal, LoginModal
+│       └── apiConfig.js                  # Dev/prod API base routing
 ├── scripts/
-│   └── generate_synthetic_data.py       # 10,000 record eSAKSHI data generator
-├── data/                                # Synthetic MPLADS dataset & ground truth
-├── docs/                                # Documentation & research
-├── tests/                               # Platform-level test suite
-├── requirements.txt                     # Python dependencies
-└── README.md                            # This file
+│   └── generate_pdf_dossier.py           # Problem-statement dossier generator
+├── tests/
+│   └── test_platform.py                  # Engine + database + API test suite
+├── docs/
+│   └── MPLADS_AI_RiskIntel_SIH2026_PS102_Dossier.pdf
+├── Dockerfile                            # Backend (FastAPI + SQLite + ETL entrypoint)
+├── frontend/Dockerfile                   # Frontend (nginx static + API proxy)
+├── docker-compose.yml                    # Persistent-server deployment
+├── implementation_plan.md                # v2.0 planning document
+└── requirements.txt
 ```
 
 ---
@@ -248,27 +218,29 @@ SIH 2026/
 ## 🚀 Quick Start Guide
 
 ### Prerequisites
-- Python 3.10+
+- Python 3.12+
 - Node.js 18+
-- npm 9+
+- Docker (for deployment)
 
-### 1. Backend Setup & Running
+### 1. Build the database from the real CSVs (one-time, ~3 minutes)
 
 ```bash
-# Install Python dependencies
 pip install -r requirements.txt
+PYTHONPATH=backend python -m app.etl
+```
 
-# Generate 10,000 realistic synthetic records (if not already generated)
-python scripts/generate_synthetic_data.py
+This parses the 14 real eSAKSHI CSVs, builds `backend/data/mplads.db`, and runs the full multi-signal analytics pipeline (rules + Isolation Forest + NLP duplicates + authority profiling) over all 128K works.
 
-# Run FastAPI backend server
-python -m uvicorn backend.app.main:app --reload --port 8000
+### 2. Run the backend
+
+```bash
+PYTHONPATH=backend python -m uvicorn app.main:app --port 8000
 ```
 
 - **API Documentation (Swagger UI)**: `http://localhost:8000/docs`
 - **Health Check**: `http://localhost:8000/api/v1/health`
 
-### 2. Frontend Setup & Running
+### 3. Run the frontend
 
 ```bash
 cd frontend
@@ -278,80 +250,56 @@ npm run dev
 
 - **Dashboard UI**: `http://localhost:5173`
 
-### 3. Run Evaluation & Test Suite
+### 4. Run the test suite (15 tests: engines + real database + API)
 
 ```bash
-python -m pytest tests/test_platform.py -s
+PYTHONPATH=backend:. python -m pytest tests/test_platform.py -s
 ```
+
+### 5. Production deployment (persistent server)
+
+```bash
+docker compose up --build -d
+```
+
+- **Frontend**: `http://<host>:3000`
+- **API**: `http://<host>:8000` (also proxied at `http://<host>:3000/api/`)
+
+On first boot the API container runs the ETL automatically (if the database volume is empty) and then serves; subsequent boots start instantly from the persisted SQLite volume. Set `GEMINI_API_KEY` in the environment (or a `.env` file) to enable the Gemini-powered copilot.
 
 ---
 
 ## 🔌 API Endpoints
 
-### Core Endpoints (Existing)
-
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/v1/health` | Service health check |
+| `GET` | `/api/v1/health` | Service health check with real dataset counts |
 | `GET` | `/api/v1/overview` | Executive overview KPI statistics |
-| `GET` | `/api/v1/works` | Filtered list of works with risk scores |
+| `GET` | `/api/v1/works` | Filtered list of works (state, district, house, status, risk level, search, pagination) |
 | `GET` | `/api/v1/works/{work_id}` | Full work detail |
-| `GET` | `/api/v1/works/{work_id}/investigation` | Investigation dossier with evidence |
-| `GET` | `/api/v1/alerts` | Paginated risk alerts feed |
-| `POST` | `/api/v1/alerts/{alert_id}/review` | Officer review submission |
-| `GET` | `/api/v1/agencies` | Agency risk profiles |
-| `POST` | `/api/v1/analytics/run` | Re-run analytics pipeline |
-| `POST` | `/api/v1/copilot/query` | AI Copilot natural language query |
+| `GET` | `/api/v1/works/{work_id}/investigation` | Investigation dossier: work + alert + duplicate candidate + authority profile + **vendor payment ledger** + review history |
+| `GET` | `/api/v1/alerts` | Paginated risk alerts feed (filter by risk level / signal type) |
+| `POST` | `/api/v1/alerts/{alert_id}/review` | Officer review submission (persisted) |
 | `GET` | `/api/v1/audit-logs` | Append-only audit trail |
-| `GET` | `/api/v1/mps/allocated-limits` | Official MP allocation database |
-
-### New v2.0 Endpoints (Planned)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/v1/works/{id}/payment-progress` | Payment vs Progress analysis |
-| `GET` | `/api/v1/works/{id}/prediction` | Predictive AI completion forecast |
-| `GET` | `/api/v1/works/{id}/documents` | Document intelligence checklist |
-| `GET` | `/api/v1/works/{id}/certificates` | Certificate lifecycle status |
-| `GET` | `/api/v1/works/{id}/images` | Image analysis results |
-| `GET` | `/api/v1/districts/risk-map` | District-level risk aggregation |
-| `GET` | `/api/v1/agencies/{id}/network` | Network anomaly analysis |
-| `GET` | `/api/v1/analytics/cost-benchmarks` | Cost intelligence benchmarks |
-| `GET` | `/api/v1/analytics/time-anomalies` | Time anomaly summary |
-| `GET` | `/api/v1/analytics/spiral-patterns` | GIS spiral detection results |
-| `GET` | `/api/v1/analytics/duplicate-clusters` | Enhanced duplicate clusters |
-
----
-
-## 🗺️ National Risk Map — Zone Classification
-
-The National Risk Map provides a real-time geographic view of MPLADS project health:
-
-| Zone | District Risk Index | Color | Interpretation |
-|------|-------------------|-------|----------------|
-| **Green Zone** | 0–25 | 🟢 | Low anomaly density. Healthy project execution. Standard monitoring sufficient. |
-| **Yellow Zone** | 26–50 | 🟡 | Moderate anomaly density. Watch-list. Enhanced monitoring recommended. |
-| **Red Zone** | 51–100 | 🔴 | High anomaly density. Priority audit zone. Field verification required. |
-
-**Features**:
-- State-level choropleth coloring
-- Click-to-drill-down: State → District → Individual project pins
-- Toggle layers: Risk zones, spending heatmap, duplicate clusters, agency footprints
-- Search by MP name, constituency, or district
+| `GET` | `/api/v1/agencies` | District authority risk profiles |
+| `GET` | `/api/v1/vendors/top` | Vendor payment concentration (contractor nexus signal) |
+| `POST` | `/api/v1/analytics/run` | Re-run the analytics pipeline in the background |
+| `GET` | `/api/v1/analytics/status` | Analytics job status |
+| `POST` | `/api/v1/copilot/query` | AI Copilot natural language query |
+| `GET` | `/api/v1/mps/allocated-limits` | Official MP allocation database (both houses, filterable) |
 
 ---
 
 ## 🤖 AI Copilot (सक्षम AI) — Query Examples
 
 | Query | What It Does |
-|-------|-------------|
-| "Show all high-risk works" | Lists critical/high risk works with evidence |
-| "Financial mismatch in West Bengal" | Filters progress gap anomalies by state |
-| "Which agencies are risky?" | Agency risk profiler summary |
-| "Compare District Nadia vs Hooghly" | Cross-district cost/risk comparison |
-| "Predict completion for MPL-2024-WB-0042" | Completion probability & forecast |
-| "Generate risk report for Maharashtra" | Structured state-level risk summary |
-| "Network analysis for Agency AG-WB-007" | Contractor nexus investigation |
+|-------|--------------|
+| "Show all high-risk works" | Lists critical/high risk works with real evidence |
+| "Analysis for Uttar Pradesh" | State-level real aggregates + drill-down |
+| "Analysis for Jaunpur district" | District-level risk and financial summary |
+| "Which authorities are risky?" | District authority risk profiler summary |
+| "Vendor concentration analysis" | Contractor nexus — top vendors by works paid |
+| "Show duplicate works" | NLP duplicate candidates with scores |
 
 ---
 
@@ -360,10 +308,9 @@ The National Risk Map provides a real-time geographic view of MPLADS project hea
 - **Full Name**: Members of Parliament Local Area Development Scheme
 - **Ministry**: Ministry of Statistics and Programme Implementation (MoSPI)
 - **Annual Fund**: ₹5 Crore per MP per year
-- **Eligible MPs**: 543 Lok Sabha + 245 Rajya Sabha = 788 MPs
-- **Total Annual Outlay**: ~₹3,940 Crore
+- **Eligible MPs**: 543 Lok Sabha + 245 Rajya Sabha = 788 MPs (the scraped allocation extract covers 776: 543 LS + 233 RS, including 11 Nominated members)
 - **Digital Portal**: eSAKSHI (`https://mplads.mospi.gov.in/`)
-- **Work Categories**: Roads, Bridges, Water Supply, Sanitation, Education, Community Halls, Sports Infrastructure, Health Facilities
+- **Work Stages** (as recorded in the real dataset): Pending for Sanction → Sanction → Vendor Identification → Physical Inspection → Time Estimation → Work partially Completed / Work Completed
 
 ---
 

@@ -1,8 +1,10 @@
 """
-Pydantic Data Schemas for MPLADS eSAKSHI Anomaly & Risk Platform
+Pydantic Data Schemas for the real eSAKSHI MPLADS Anomaly & Risk Platform.
+Fields mirror the official scraped eSAKSHI dataset joined on
+WORK_RECOMMENDATION_DTL_ID.
 """
 
-from datetime import date, datetime
+from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
@@ -14,11 +16,10 @@ class HouseType(str, Enum):
 
 
 class WorkStatus(str, Enum):
-    RECOMMENDED = "Recommended"
+    PENDING_SANCTION = "Pending Sanction"
     SANCTIONED = "Sanctioned"
     IN_PROGRESS = "In Progress"
     COMPLETED = "Completed"
-    SUSPENDED = "Suspended"
 
 
 class RiskLevel(str, Enum):
@@ -36,33 +37,55 @@ class ReviewAction(str, Enum):
 
 
 class WorkBase(BaseModel):
+    """A work record from the real eSAKSHI dataset (works table row)."""
     work_id: str
-    state: str
-    district: str
-    constituency: str
-    mp_name: str
     house: HouseType
-    work_category: str
-    work_description: str
-    recommendation_date: str
+    state: Optional[str] = None
+    district: Optional[str] = None
+    constituency: Optional[str] = None
+    constituency_id: Optional[str] = None
+    mp_name: Optional[str] = None
+    tenure: Optional[str] = None
+    work_category: Optional[str] = None
+    activity_name: Optional[str] = None
+    work_description: Optional[str] = None
+    ida_name: Optional[str] = None
+    letter_no: Optional[str] = None
+    file_status: Optional[str] = None
+    attach_id: Optional[str] = None
+    work_stage: Optional[str] = None
+    work_status: Optional[str] = None
+    recommendation_date: Optional[str] = None
     sanction_date: Optional[str] = None
-    start_date: Optional[str] = None
-    expected_completion_date: Optional[str] = None
-    actual_completion_date: Optional[str] = None
-    estimated_cost: float
-    sanctioned_amount: float
-    expenditure: float
-    implementing_agency_id: str
-    implementing_agency_name: str
-    work_status: WorkStatus
-    physical_progress_pct: float = Field(ge=0.0, le=100.0)
-    financial_progress_pct: float = Field(ge=0.0, le=100.0)
-    latitude: float
-    longitude: float
-    photo_count: int = 0
-    documents_count: int = 0
-    data_quality_score: float = 100.0
-    data_quality_status: str = "Reliable"
+    actual_end_date: Optional[str] = None
+    recommended_amount: Optional[float] = None
+    sanction_amount: Optional[float] = None
+    actual_amount: Optional[float] = None
+    total_disbursed: Optional[float] = None
+    payment_count: Optional[int] = 0
+    vendor_count: Optional[int] = 0
+    completion_rating: Optional[float] = None
+    days_to_sanction: Optional[float] = None
+    days_to_completion: Optional[float] = None
+    # Analytics output
+    risk_score: Optional[float] = None
+    risk_level: Optional[str] = None
+    data_quality_score: Optional[float] = None
+    data_quality_status: Optional[str] = None
+    evidence_confidence_score: Optional[float] = None
+    evidence_confidence_level: Optional[str] = None
+    signals_count: Optional[int] = 0
+
+
+class PaymentRecord(BaseModel):
+    """A single vendor payment row from the expenditure dataset."""
+    work_id: Optional[str] = None
+    vendor_name: Optional[str] = None
+    vendor_id: Optional[str] = None
+    ia_name: Optional[str] = None
+    expenditure_date: Optional[str] = None
+    fund_disbursed_amt: float = 0.0
+    work_status: Optional[str] = None
 
 
 class AnomalySignal(BaseModel):
@@ -77,12 +100,12 @@ class AnomalySignal(BaseModel):
 class RiskScoreBreakdown(BaseModel):
     overall_risk_score: float  # 0 to 100
     risk_level: RiskLevel
-    financial_risk: float
-    cost_risk: float
-    timeline_risk: float
-    duplicate_risk_score: float
-    agency_risk: float
-    compliance_risk: float
+    financial_risk: float          # disbursal vs sanction irregularities
+    cost_risk: float               # cost deviation outliers
+    timeline_risk: float           # delays, stage-stuck, impossible dates
+    duplicate_risk_score: float    # NLP duplicate candidates
+    agency_risk: float             # IDA/IA systemic patterns
+    compliance_risk: float         # missing documents/attachments
 
 
 class ExplainableAlert(BaseModel):
@@ -112,7 +135,7 @@ class ExplainableAlert(BaseModel):
 
 
 class OfficerReview(BaseModel):
-    review_id: Optional[str] = None
+    review_id: Optional[int] = None
     alert_id: str
     work_id: str
     officer_name: str
@@ -137,6 +160,17 @@ class AgencyProfile(BaseModel):
     agency_risk_level: RiskLevel
 
 
+class VendorProfile(BaseModel):
+    """Vendor payment-concentration profile (contractor nexus signal)."""
+    vendor_name: str
+    total_disbursed: float
+    work_count: int
+    district_count: int
+    state_count: int
+    first_payment_date: Optional[str] = None
+    last_payment_date: Optional[str] = None
+
+
 class OverviewStats(BaseModel):
     total_works: int
     total_recommended_amount: float
@@ -149,3 +183,7 @@ class OverviewStats(BaseModel):
     potential_cost_overrun_val: float
     duplicate_candidates_count: int
     avg_data_quality_score: float = 95.0
+    states_count: int = 0
+    districts_count: int = 0
+    vendors_count: int = 0
+    mps_count: int = 0

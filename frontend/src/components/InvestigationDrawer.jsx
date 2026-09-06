@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ShieldAlert, CheckCircle2, AlertOctagon, MapPin, Copy, Clock, FileText, UserCheck, Send, ShieldCheck, Database, Building2 } from 'lucide-react';
+import { X, ShieldAlert, MapPin, Copy, Clock, FileText, UserCheck, Send, Building2, IndianRupee, Truck } from 'lucide-react';
 import { API_BASE_URL } from '../apiConfig';
 
 export default function InvestigationDrawer({ workId, onClose, onSubmitReview }) {
@@ -7,7 +7,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
   const [loading, setLoading] = useState(true);
 
   // Review Form State
-  const [officerName, setOfficerName] = useState('District Magistrate Nadia');
+  const [officerName, setOfficerName] = useState('District Magistrate');
   const [officerRole, setOfficerRole] = useState('District Collector');
   const [reviewAction, setReviewAction] = useState('Escalated for Physical Site Inspection');
   const [remarks, setRemarks] = useState('');
@@ -31,6 +31,11 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
 
   if (!workId) return null;
 
+  const formatLakh = (val) => {
+    if (val === null || val === undefined) return '—';
+    return `₹${(val / 100000).toFixed(2)} L`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!dossier || !dossier.alert) return;
@@ -51,8 +56,12 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
       .then(res => res.json())
       .then(resData => {
         setIsSubmitting(false);
-        setSubmitMessage("✅ Officer Action Submitted! Recorded in immutable official audit trail.");
-        if (onSubmitReview) onSubmitReview(alertId);
+        if (resData.status === 'success') {
+          setSubmitMessage("✅ Officer Action Submitted! Recorded in immutable official audit trail.");
+          if (onSubmitReview) onSubmitReview(alertId);
+        } else {
+          setSubmitMessage(`❌ ${resData.detail || 'Failed to submit review.'}`);
+        }
       })
       .catch(err => {
         setIsSubmitting(false);
@@ -65,7 +74,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
       <div className="drawer-content" onClick={(e) => e.stopPropagation()}>
         {loading ? (
           <div style={{ padding: '3rem', textAlign: 'center' }}>
-            <p style={{ color: 'var(--goi-text-muted)' }}>Loading Official Case Investigation Dossier...</p>
+            <p style={{ color: 'var(--goi-text-muted)' }}>Loading Official Case Investigation Dossier (real eSAKSHI record)...</p>
           </div>
         ) : !dossier || !dossier.work ? (
           <div style={{ padding: '3rem', textAlign: 'center' }}>
@@ -80,18 +89,18 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
               paddingBottom: '1rem',
               marginBottom: '1.25rem',
               display: 'flex',
-              justify: 'space-between',
+              justifyContent: 'space-between',
               alignItems: 'flex-start'
             }}>
               <div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--goi-saffron)', fontWeight: 800, letterSpacing: '0.5px' }}>
-                  GOVERNMENT OF INDIA • OFFICIAL CASE DOSSIER
+                  GOVERNMENT OF INDIA • OFFICIAL CASE DOSSIER • REAL eSAKSHI RECORD
                 </div>
                 <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--goi-navy)', margin: '0.2rem 0' }}>
                   {dossier.work.work_id}
                 </h2>
                 <div style={{ fontSize: '0.85rem', color: 'var(--goi-text-muted)' }}>
-                  {dossier.work.work_category} • {dossier.work.district}, {dossier.work.state} ({dossier.work.constituency})
+                  {dossier.work.activity_name || dossier.work.work_category} • {dossier.work.district}, {dossier.work.state} ({dossier.work.constituency})
                 </div>
               </div>
               <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer' }}>
@@ -132,7 +141,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
                   </div>
                   <div style={{ background: '#ffffff', padding: '0.4rem 0.6rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
                     <div style={{ fontSize: '0.68rem', color: '#64748b' }}>DUPLICATE RISK</div>
-                    <div style={{ fontWeight: 800, color: '#0284c7' }}>{dossier.alert.risk_breakdown.duplicate_risk_score}%</div>
+                    <div style={{ fontWeight: 800, color: '#0284c7' }}>{dossier.alert.duplicate_risk_score ?? 0}%</div>
                   </div>
                 </div>
               </div>
@@ -141,7 +150,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
             {/* Work Details Panel */}
             <div style={{ background: '#ffffff', border: '1px solid var(--goi-border)', borderRadius: '4px', padding: '1rem', marginBottom: '1.25rem' }}>
               <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.6rem', color: 'var(--goi-navy)' }}>
-                Work Project Details & Milestone Financials
+                Work Project Details & Real Financial Trail
               </h3>
               <p style={{ fontSize: '0.88rem', marginBottom: '0.8rem', color: '#334155', background: '#f8fafc', padding: '0.6rem', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
                 "{dossier.work.work_description}"
@@ -149,45 +158,94 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem', marginBottom: '0.8rem', fontSize: '0.825rem' }}>
                 <div><span style={{ color: '#64748b' }}>Hon'ble MP:</span> <strong>{dossier.work.mp_name}</strong></div>
-                <div><span style={{ color: '#64748b' }}>Executing Agency:</span> <strong>{dossier.work.implementing_agency_name}</strong></div>
-                <div><span style={{ color: '#64748b' }}>Sanctioned Cost:</span> <strong>₹{(dossier.work.sanctioned_amount / 100000).toFixed(2)} Lakhs</strong></div>
-                <div><span style={{ color: '#64748b' }}>Released Payment:</span> <strong>₹{(dossier.work.expenditure / 100000).toFixed(2)} Lakhs</strong></div>
+                <div><span style={{ color: '#64748b' }}>House:</span> <strong>{dossier.work.house}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Executing Authority (IDA):</span> <strong>{dossier.work.ida_name}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Current Stage:</span> <strong>{dossier.work.work_stage}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Recommended On:</span> <strong>{dossier.work.recommendation_date || '—'}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Sanctioned On:</span> <strong>{dossier.work.sanction_date || '—'}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Sanctioned Cost:</span> <strong>{formatLakh(dossier.work.sanction_amount)}</strong></div>
+                <div><span style={{ color: '#64748b' }}>Vendor Payments:</span> <strong>{formatLakh(dossier.work.total_disbursed)} ({dossier.work.payment_count} payments)</strong></div>
+                {dossier.work.actual_amount !== null && dossier.work.actual_amount !== undefined && (
+                  <>
+                    <div><span style={{ color: '#64748b' }}>Final Completion Amount:</span> <strong>{formatLakh(dossier.work.actual_amount)}</strong></div>
+                    <div><span style={{ color: '#64748b' }}>Completed On:</span> <strong>{dossier.work.actual_end_date || '—'}</strong></div>
+                  </>
+                )}
               </div>
 
-              {/* Progress gap */}
+              {/* Sanction vs disbursed progress bar */}
               <div style={{ marginTop: '0.8rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.2rem' }}>
-                  <span>Physical Completion: <strong>{dossier.work.physical_progress_pct}%</strong></span>
-                  <span>Financial Progress: <strong>{dossier.work.financial_progress_pct}%</strong></span>
+                  <span>Vendor Disbursed vs Sanctioned:
+                    <strong>
+                      {' '}{dossier.work.sanction_amount > 0
+                        ? `${Math.min(100, (dossier.work.total_disbursed / dossier.work.sanction_amount) * 100).toFixed(0)}%`
+                        : '—'}
+                    </strong>
+                  </span>
+                  <span>{dossier.work.vendor_count || 0} distinct vendor(s)</span>
                 </div>
-
-                <div className="progress-bar-container" style={{ height: '8px', marginBottom: '0.3rem' }}>
-                  <div className="progress-bar-fill progress-fill-physical" style={{ width: `${dossier.work.physical_progress_pct}%`, position: 'absolute' }} />
-                  <div className="progress-bar-fill progress-fill-financial" style={{ width: `${dossier.work.financial_progress_pct}%`, opacity: 0.6 }} />
+                <div className="progress-bar-container" style={{ height: '8px', position: 'relative' }}>
+                  <div className="progress-bar-fill progress-fill-financial" style={{
+                    width: `${dossier.work.sanction_amount > 0 ? Math.min(100, (dossier.work.total_disbursed / dossier.work.sanction_amount) * 100) : 0}%`
+                  }} />
                 </div>
               </div>
             </div>
+
+            {/* Vendor Payment Ledger (real eSAKSHI expenditure records) */}
+            {dossier.payments && dossier.payments.length > 0 && (
+              <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', borderLeft: '4px solid #0284c7', borderRadius: '4px', padding: '0.85rem', marginBottom: '1.25rem' }}>
+                <h4 style={{ fontSize: '0.825rem', fontWeight: 700, color: '#0369a1', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Truck size={16} /> Vendor Payment Ledger ({dossier.payments.length} eSAKSHI disbursement records)
+                </h4>
+                <div style={{ maxHeight: '180px', overflowY: 'auto', background: '#ffffff', borderRadius: '4px', border: '1px solid #e0f2fe' }}>
+                  <table style={{ width: '100%', fontSize: '0.75rem', borderCollapse: 'collapse' }}>
+                    <thead>
+                      <tr style={{ background: '#f0f9ff', textAlign: 'left' }}>
+                        <th style={{ padding: '0.35rem 0.5rem' }}>Date</th>
+                        <th style={{ padding: '0.35rem 0.5rem' }}>Vendor</th>
+                        <th style={{ padding: '0.35rem 0.5rem' }}>Status</th>
+                        <th style={{ padding: '0.35rem 0.5rem', textAlign: 'right' }}>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dossier.payments.map(p => (
+                        <tr key={p.payment_id} style={{ borderTop: '1px solid #e0f2fe' }}>
+                          <td style={{ padding: '0.35rem 0.5rem' }}>{p.expenditure_date || '—'}</td>
+                          <td style={{ padding: '0.35rem 0.5rem', fontWeight: 600 }}>{p.vendor_name || '—'}</td>
+                          <td style={{ padding: '0.35rem 0.5rem' }}>{p.work_status || '—'}</td>
+                          <td style={{ padding: '0.35rem 0.5rem', textAlign: 'right', fontWeight: 700 }}>
+                            ₹{(p.fund_disbursed_amt || 0).toLocaleString('en-IN')}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
 
             {/* Headline Feature: Agency Multi-Project Pattern History */}
             {dossier.agency_profile && (
               <div style={{ background: '#f0f9ff', border: '1px solid #bae6fd', borderLeft: '4px solid #0284c7', borderRadius: '4px', padding: '0.85rem', marginBottom: '1.25rem' }}>
                 <h4 style={{ fontSize: '0.825rem', fontWeight: 700, color: '#0369a1', marginBottom: '0.3rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <Building2 size={16} /> Agency Multi-Project Execution Pattern ({dossier.agency_profile.agency_name})
+                  <Building2 size={16} /> District Authority Multi-Project Execution Pattern
                 </h4>
                 <div style={{ fontSize: '0.8rem', color: '#0f172a' }}>
-                  Agency manages <strong>{dossier.agency_profile.total_works} works</strong> in district ({dossier.agency_profile.delayed_works} delayed, {dossier.agency_profile.anomaly_count} total anomaly signals). Agency Risk Score: <strong>{dossier.agency_profile.agency_risk_score} / 100</strong>.
+                  {dossier.agency_profile.agency_name} manages <strong>{dossier.agency_profile.total_works} works</strong> in {dossier.agency_profile.district} ({dossier.agency_profile.delayed_works} stalled &gt;1yr, {dossier.agency_profile.anomaly_count} anomaly signals). Authority Risk Score: <strong>{dossier.agency_profile.agency_risk_score} / 100</strong>.
                 </div>
               </div>
             )}
 
             {/* Candidate Duplicate Work Match */}
             {dossier.duplicate_candidate_work && (
-              <div style={{ background: '#fffbebfb', border: '1px solid #fde68a', borderLeft: '4px solid #d97706', borderRadius: '4px', padding: '0.85rem', marginBottom: '1.25rem' }}>
+              <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderLeft: '4px solid #d97706', borderRadius: '4px', padding: '0.85rem', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem', color: '#b45309', fontWeight: 700, fontSize: '0.85rem' }}>
                   <Copy size={16} /> Potentially Similar/Duplicate Work — Verification Required
                 </div>
                 <div style={{ fontSize: '0.825rem', color: '#451a03' }}>
-                  High text similarity detected with candidate work <strong>{dossier.duplicate_candidate_work.work_id}</strong> (Duplicate Risk Score: {dossier.alert.duplicate_risk_score}%).
+                  Similar work description detected with candidate work <strong>{dossier.duplicate_candidate_work.work_id}</strong> (Duplicate Risk Score: {dossier.alert?.duplicate_risk_score}%).
                 </div>
                 <div style={{ fontSize: '0.78rem', color: '#78350f', marginTop: '0.4rem', background: '#ffffff', padding: '0.5rem', borderRadius: '4px', border: '1px solid #fef3c7' }}>
                   <strong>Candidate Description:</strong> "{dossier.duplicate_candidate_work.work_description}"
@@ -217,6 +275,20 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
               </div>
             )}
 
+            {/* Prior Review History (persistent audit trail) */}
+            {dossier.review_history && dossier.review_history.length > 0 && (
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '0.85rem', marginBottom: '1.25rem' }}>
+                <h4 style={{ fontSize: '0.825rem', fontWeight: 700, color: 'var(--goi-navy)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Clock size={14} /> Prior Officer Review History ({dossier.review_history.length})
+                </h4>
+                {dossier.review_history.map(r => (
+                  <div key={r.review_id} style={{ fontSize: '0.75rem', color: '#475569', padding: '0.3rem 0', borderTop: '1px dashed #e2e8f0' }}>
+                    <strong>{r.officer_name}</strong> ({r.officer_role}) — {r.action} on {r.created_at?.slice(0, 10)}: {r.remarks}
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Official Review & Append-Only Audit Trail Form */}
             <div style={{ background: '#f8fafc', border: '1px solid var(--goi-navy)', borderRadius: '4px', padding: '1rem' }}>
               <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '0.8rem', color: 'var(--goi-navy)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -224,7 +296,7 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
               </h3>
 
               {submitMessage && (
-                <div style={{ padding: '0.5rem', background: '#f0fff4', border: '1px solid #16a34a', borderRadius: '4px', color: '#15803d', fontSize: '0.8rem', marginBottom: '0.8rem' }}>
+                <div style={{ padding: '0.5rem', background: submitMessage.startsWith('✅') ? '#f0fff4' : '#fff5f5', border: `1px solid ${submitMessage.startsWith('✅') ? '#16a34a' : '#fc8181'}`, borderRadius: '4px', color: submitMessage.startsWith('✅') ? '#15803d' : '#c53030', fontSize: '0.8rem', marginBottom: '0.8rem' }}>
                   {submitMessage}
                 </div>
               )}

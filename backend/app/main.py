@@ -1,24 +1,32 @@
 """
 FastAPI Backend Application for MPLADS Anomaly & Risk Detection Platform
+Serving the REAL eSAKSHI dataset (scraped from mplads.mospi.gov.in) from a
+persistent SQLite database. Designed for a persistent server deployment —
+no serverless assumptions.
 """
 
 import json
 import os
+import sqlite3
+import threading
+from datetime import datetime
 from typing import List, Optional, Dict, Any
-from fastapi import FastAPI, Query, HTTPException, Body
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from app.schemas.mplads import (
-    OverviewStats, WorkBase, ExplainableAlert, OfficerReview, AgencyProfile, ReviewAction
+    OverviewStats, WorkBase, ExplainableAlert, OfficerReview, AgencyProfile, ReviewAction,
+    AnomalySignal, RiskScoreBreakdown, RiskLevel
 )
+from app.db import get_db_path, get_connection, init_schema
 from app.engine.risk_engine import RiskEngine
 from app.services.llm_service import LLMCopilotService
 
 app = FastAPI(
     title="MPLADS AI Anomaly & Risk Detection Platform API",
-    description="AI-powered monitoring, fraud detection, cost benchmarking, duplicate work detection & decision-support API for MPLADS",
-    version="1.0.0"
+    description="AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work detection & decision-support API for MPLADS (real eSAKSHI data)",
+    version="2.0.0"
 )
 
 app.add_middleware(
@@ -29,83 +37,123 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "mplads_synthetic_dataset.json")
-RAW_WORKS: List[Dict[str, Any]] = []
-ANALYZED_WORKS: List[Dict[str, Any]] = []
-ALERTS_MAP: Dict[str, ExplainableAlert] = {}
-AGENCY_PROFILES_MAP: Dict[str, AgencyProfile] = {}
-REVIEWS_STORE: Dict[str, Dict[str, Any]] = {}
-AUDIT_LOGS: List[Dict[str, Any]] = []
-
 risk_engine = RiskEngine()
 llm_service = LLMCopilotService()
 
-
-def load_and_analyze_dataset():
-    global RAW_WORKS, ANALYZED_WORKS, ALERTS_MAP, AGENCY_PROFILES_MAP
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            RAW_WORKS = json.load(f)
-    else:
-        from app.engine.synthetic_data import generate_synthetic_dataset
-        RAW_WORKS = generate_synthetic_dataset(5000)
-        # Save for next time
-        os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-        with open(DATA_FILE, "w", encoding="utf-8") as f:
-            json.dump(RAW_WORKS, f)
-
-    alerts, agency_profiles, analyzed_works = risk_engine.analyze_all_works(RAW_WORKS)
-    
-    ANALYZED_WORKS = analyzed_works
-    ALERTS_MAP = {a.alert_id: a for a in alerts}
-    AGENCY_PROFILES_MAP = agency_profiles
-    print(f"[API Startup] Analyzed {len(ANALYZED_WORKS)} works. Generated {len(ALERTS_MAP)} explainable alerts.")
+# Background analytics job state (in-memory job bookkeeping only; results are persisted in SQLite)
+ANALYTICS_STATE = {
+    "running": False,
+    "last_run": None,
+    "last_alerts": None,
+    "works_processed": None,
+    "error": None,
+}
 
 
 @app.on_event("startup")
 def startup_event():
-    load_and_analyze_dataset()
+    """Open/validate the SQLite database. Analytics are precomputed by the ETL — startup is instant."""
+    db_path = get_db_path()
+    if not db_path.exists():
+        raise RuntimeError(
+            f"Database not found at {db_path}. Run `python -m backend.app.etl` first "
+            f"to build it from the real eSAKSHI CSVs."
+        )
+    conn = get_connection()
+    try:
+        init_schema(conn)  # no-op if schema exists
+        n = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
+        print(f"[API Startup] Real eSAKSHI database ready: {n:,} works at {db_path}")
+    finally:
+        conn.close()
 
+
+# ---------------------------------------------------------------------------
+# Health
+# ---------------------------------------------------------------------------
 
 @app.get("/api/v1/health")
 def health_check():
-    return {"status": "healthy", "monitored_works": len(ANALYZED_WORKS), "active_alerts": len(ALERTS_MAP)}
+    conn = get_connection()
+    try:
+        works = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
+        alerts = conn.execute("SELECT COUNT(*) FROM alerts").fetchone()[0]
+        mps = conn.execute("SELECT COUNT(*) FROM mp_allocations").fetchone()[0]
+        return {
+            "status": "healthy",
+            "data_source": "real eSAKSHI scraped dataset",
+            "monitored_works": works,
+            "active_alerts": alerts,
+            "mps": mps,
+        }
+    finally:
+        conn.close()
 
+
+# ---------------------------------------------------------------------------
+# Overview
+# ---------------------------------------------------------------------------
 
 @app.get("/api/v1/overview", response_model=OverviewStats)
 def get_overview_stats():
-    total_w = len(ANALYZED_WORKS)
-    rec_amt = sum(w.get("estimated_cost", 0) for w in ANALYZED_WORKS)
-    sanc_amt = sum(w.get("sanctioned_amount", 0) for w in ANALYZED_WORKS)
-    exp_amt = sum(w.get("expenditure", 0) for w in ANALYZED_WORKS)
+    conn = get_connection()
+    try:
+        row = conn.execute(
+            """
+            SELECT COUNT(*) AS total_works,
+                   COALESCE(SUM(recommended_amount),0) AS rec_amt,
+                   COALESCE(SUM(sanction_amount),0) AS sanc_amt,
+                   COALESCE(SUM(total_disbursed),0) AS exp_amt,
+                   SUM(CASE WHEN work_status='Completed' THEN 1 ELSE 0 END) AS completed_cnt,
+                   SUM(CASE WHEN work_status='In Progress' THEN 1 ELSE 0 END) AS in_prog_cnt,
+                   SUM(CASE WHEN risk_level='High' THEN 1 ELSE 0 END) AS high_cnt,
+                   SUM(CASE WHEN risk_level='Critical' THEN 1 ELSE 0 END) AS crit_cnt,
+                   SUM(CASE WHEN total_disbursed > sanction_amount THEN total_disbursed - sanction_amount ELSE 0 END) AS overrun_val,
+                   COUNT(DISTINCT state) AS states_cnt,
+                   COUNT(DISTINCT district) AS districts_cnt
+            FROM works
+            """
+        ).fetchone()
+        dup_cnt = conn.execute(
+            "SELECT COUNT(*) FROM alerts WHERE duplicate_candidate_id IS NOT NULL").fetchone()[0]
+        avg_dq = conn.execute("SELECT AVG(data_quality_score) FROM works").fetchone()[0] or 100.0
+        vendors = conn.execute("SELECT COUNT(*) FROM vendors").fetchone()[0]
+        mps = conn.execute("SELECT COUNT(*) FROM mp_allocations").fetchone()[0]
 
-    completed_cnt = sum(1 for w in ANALYZED_WORKS if w.get("work_status") == "Completed")
-    in_prog_cnt = sum(1 for w in ANALYZED_WORKS if w.get("work_status") == "In Progress")
-    
-    high_cnt = sum(1 for w in ANALYZED_WORKS if w.get("risk_level") == "High")
-    crit_cnt = sum(1 for w in ANALYZED_WORKS if w.get("risk_level") == "Critical")
+        return OverviewStats(
+            total_works=row["total_works"],
+            total_recommended_amount=round(row["rec_amt"], 2),
+            total_sanctioned_amount=round(row["sanc_amt"], 2),
+            total_expenditure_amount=round(row["exp_amt"], 2),
+            completed_works_count=row["completed_cnt"] or 0,
+            in_progress_works_count=row["in_prog_cnt"] or 0,
+            high_risk_works_count=row["high_cnt"] or 0,
+            critical_risk_works_count=row["crit_cnt"] or 0,
+            potential_cost_overrun_val=round(row["overrun_val"], 2),
+            duplicate_candidates_count=dup_cnt,
+            avg_data_quality_score=round(avg_dq, 1),
+            states_count=row["states_cnt"] or 0,
+            districts_count=row["districts_cnt"] or 0,
+            vendors_count=vendors,
+            mps_count=mps
+        )
+    finally:
+        conn.close()
 
-    cost_overrun_val = sum(
-        max(0.0, w.get("expenditure", 0) - w.get("sanctioned_amount", 0))
-        for w in ANALYZED_WORKS
-    )
-    
-    dup_cnt = sum(1 for a in ALERTS_MAP.values() if a.duplicate_candidate_id)
-    avg_dq = sum(w.get("data_quality_score", 100.0) for w in ANALYZED_WORKS) / max(1, total_w)
 
-    return OverviewStats(
-        total_works=total_w,
-        total_recommended_amount=round(rec_amt, 2),
-        total_sanctioned_amount=round(sanc_amt, 2),
-        total_expenditure_amount=round(exp_amt, 2),
-        completed_works_count=completed_cnt,
-        in_progress_works_count=in_prog_cnt,
-        high_risk_works_count=high_cnt,
-        critical_risk_works_count=crit_cnt,
-        potential_cost_overrun_val=round(cost_overrun_val, 2),
-        duplicate_candidates_count=dup_cnt,
-        avg_data_quality_score=round(avg_dq, 1)
-    )
+# ---------------------------------------------------------------------------
+# Works
+# ---------------------------------------------------------------------------
+
+WORK_LIST_COLUMNS = """
+    work_id, house, state, district, constituency, mp_name, tenure,
+    work_category, activity_name, work_description, ida_name, work_stage, work_status,
+    recommendation_date, sanction_date, actual_end_date,
+    recommended_amount, sanction_amount, actual_amount,
+    total_disbursed, payment_count, vendor_count,
+    risk_score, risk_level, data_quality_score, data_quality_status,
+    evidence_confidence_score, evidence_confidence_level, signals_count
+"""
 
 
 @app.get("/api/v1/works")
@@ -115,108 +163,199 @@ def list_works(
     constituency: Optional[str] = None,
     house: Optional[str] = None,
     work_category: Optional[str] = None,
+    work_status: Optional[str] = None,
     risk_level: Optional[str] = None,
     search: Optional[str] = None,
-    limit: int = 100,
+    limit: int = Query(100, le=500),
     offset: int = 0
 ):
-    filtered = list(ANALYZED_WORKS)
+    where_clauses: List[str] = []
+    params: List[Any] = []
 
     if state:
-        filtered = [w for w in filtered if w.get("state") == state]
+        where_clauses.append("state = ?"); params.append(state)
     if district:
-        filtered = [w for w in filtered if w.get("district") == district]
+        where_clauses.append("district = ?"); params.append(district)
     if constituency:
-        filtered = [w for w in filtered if w.get("constituency") == constituency]
+        where_clauses.append("constituency = ?"); params.append(constituency)
     if house:
-        filtered = [w for w in filtered if w.get("house") == house]
+        where_clauses.append("house = ?"); params.append(house)
     if work_category:
-        filtered = [w for w in filtered if w.get("work_category") == work_category]
+        where_clauses.append("work_category = ?"); params.append(work_category)
+    if work_status:
+        where_clauses.append("work_status = ?"); params.append(work_status)
     if risk_level:
-        filtered = [w for w in filtered if w.get("risk_level") == risk_level]
+        where_clauses.append("risk_level = ?"); params.append(risk_level)
     if search:
-        s_low = search.lower()
-        filtered = [
-            w for w in filtered
-            if s_low in w.get("work_id", "").lower()
-            or s_low in w.get("work_description", "").lower()
-            or s_low in w.get("mp_name", "").lower()
-            or s_low in w.get("implementing_agency_name", "").lower()
-        ]
+        like = f"%{search.lower()}%"
+        where_clauses.append(
+            "(LOWER(work_id) LIKE ? OR LOWER(work_description) LIKE ? OR LOWER(mp_name) LIKE ? OR LOWER(ida_name) LIKE ?)"
+        )
+        params.extend([like, like, like, like])
 
-    total = len(filtered)
-    paged = filtered[offset : offset + limit]
+    where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
+    order_sql = "ORDER BY COALESCE(risk_score, 0) DESC, work_id ASC"
 
-    return {"total": total, "limit": limit, "offset": offset, "works": paged}
+    conn = get_connection()
+    try:
+        total = conn.execute(f"SELECT COUNT(*) FROM works {where_sql}", params).fetchone()[0]
+        rows = conn.execute(
+            f"SELECT {WORK_LIST_COLUMNS} FROM works {where_sql} {order_sql} LIMIT ? OFFSET ?",
+            params + [limit, offset]
+        ).fetchall()
+        return {
+            "total": total,
+            "limit": limit,
+            "offset": offset,
+            "works": [dict(r) for r in rows]
+        }
+    finally:
+        conn.close()
 
 
 @app.get("/api/v1/works/{work_id}")
 def get_work_by_id(work_id: str):
-    for w in ANALYZED_WORKS:
-        if w["work_id"] == work_id:
-            return w
-    raise HTTPException(status_code=404, detail=f"Work {work_id} not found")
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT * FROM works WHERE work_id=?", (work_id,)).fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail=f"Work {work_id} not found")
+        return dict(row)
+    finally:
+        conn.close()
 
 
 @app.get("/api/v1/works/{work_id}/investigation")
 def get_work_investigation_dossier(work_id: str):
-    work = None
-    for w in ANALYZED_WORKS:
-        if w["work_id"] == work_id:
-            work = w
-            break
-    if not work:
-        raise HTTPException(status_code=404, detail=f"Work {work_id} not found")
+    conn = get_connection()
+    try:
+        work = conn.execute("SELECT * FROM works WHERE work_id=?", (work_id,)).fetchone()
+        if work is None:
+            raise HTTPException(status_code=404, detail=f"Work {work_id} not found")
+        work = dict(work)
 
-    alert_obj = ALERTS_MAP.get(f"ALT-{work_id}")
-    
-    duplicate_work = None
-    if alert_obj and alert_obj.duplicate_candidate_id:
-        for w in ANALYZED_WORKS:
-            if w["work_id"] == alert_obj.duplicate_candidate_id:
-                duplicate_work = w
-                break
+        alert_row = conn.execute("SELECT * FROM alerts WHERE work_id=?", (work_id,)).fetchone()
 
-    ag_id = work.get("implementing_agency_id")
-    agency_profile = AGENCY_PROFILES_MAP.get(ag_id)
-    review_history = REVIEWS_STORE.get(f"ALT-{work_id}")
+        alert_obj = None
+        duplicate_work = None
+        if alert_row is not None:
+            a = dict(alert_row)
+            # Rehydrate the Pydantic alert from persisted JSON
+            try:
+                signals = [AnomalySignal(**s) for s in json.loads(a["triggering_signals"] or "[]")]
+                breakdown = RiskScoreBreakdown(**json.loads(a["risk_breakdown"] or "{}"))
+                alert_obj = ExplainableAlert(
+                    alert_id=a["alert_id"],
+                    work_id=a["work_id"],
+                    work_title=a["work_title"] or "",
+                    state=a["state"] or "",
+                    district=a["district"] or "",
+                    constituency=a["constituency"] or "",
+                    mp_name=a["mp_name"] or "",
+                    implementing_agency_name=a["agency_name"] or "",
+                    created_at=a["created_at"] or "",
+                    risk_score=a["risk_score"] or 0.0,
+                    risk_level=RiskLevel(a["risk_level"]) if a["risk_level"] else RiskLevel.LOW,
+                    risk_breakdown=breakdown,
+                    data_quality_score=a["data_quality_score"] or 0.0,
+                    data_quality_status=a["data_quality_status"] or "",
+                    evidence_confidence_score=a["evidence_confidence_score"] or 0.0,
+                    evidence_confidence_level=a["evidence_confidence_level"] or "",
+                    triggering_signals=signals,
+                    narrative_explanation=a["narrative_explanation"] or "",
+                    duplicate_candidate_id=a["duplicate_candidate_id"],
+                    duplicate_risk_score=a["duplicate_risk_score"],
+                    recommended_action=a["recommended_action"] or "Priority Review Recommended",
+                    is_reviewed=bool(a["is_reviewed"]),
+                    latest_review=json.loads(a["latest_review"]) if a["latest_review"] else None
+                )
+            except Exception:
+                alert_obj = None
 
-    return {
-        "work": work,
-        "alert": alert_obj,
-        "duplicate_candidate_work": duplicate_work,
-        "agency_profile": agency_profile,
-        "review_history": review_history
-    }
+            if a["duplicate_candidate_id"]:
+                dup = conn.execute(
+                    "SELECT * FROM works WHERE work_id=?", (a["duplicate_candidate_id"],)).fetchone()
+                if dup is not None:
+                    duplicate_work = dict(dup)
 
+        agency_profile = None
+        if work.get("ida_name"):
+            ag = conn.execute("SELECT * FROM agencies WHERE agency_id=?", (work["ida_name"],)).fetchone()
+            if ag is not None:
+                agency_profile = dict(ag)
+
+        reviews = conn.execute(
+            "SELECT * FROM reviews WHERE work_id=? ORDER BY created_at DESC", (work_id,)).fetchall()
+
+        payments = conn.execute(
+            """SELECT payment_id, vendor_name, vendor_id, ia_name, expenditure_date,
+                      fund_disbursed_amt, work_status
+               FROM payments WHERE work_id=? ORDER BY expenditure_date ASC""",
+            (work_id,)).fetchall()
+
+        return {
+            "work": work,
+            "alert": alert_obj,
+            "duplicate_candidate_work": duplicate_work,
+            "agency_profile": agency_profile,
+            "review_history": [dict(r) for r in reviews],
+            "payments": [dict(p) for p in payments]
+        }
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Alerts
+# ---------------------------------------------------------------------------
 
 @app.get("/api/v1/alerts")
 def list_alerts(
     risk_level: Optional[str] = None,
     signal_type: Optional[str] = None,
-    limit: int = 50,
+    limit: int = Query(50, le=500),
     offset: int = 0
 ):
-    alert_list = list(ALERTS_MAP.values())
+    conn = get_connection()
+    try:
+        where_clauses: List[str] = []
+        params: List[Any] = []
 
-    if risk_level:
-        alert_list = [a for a in alert_list if a.risk_level.value == risk_level]
+        if risk_level:
+            where_clauses.append("risk_level = ?"); params.append(risk_level)
+        if signal_type:
+            # Match against the JSON signals array text
+            where_clauses.append("LOWER(triggering_signals) LIKE ?")
+            params.append(f'%"{signal_type.lower()}"%')
 
-    if signal_type:
-        alert_list = [
-            a for a in alert_list
-            if any(s.signal_type == signal_type for s in a.triggering_signals)
-        ]
+        where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
-    total = len(alert_list)
-    paged = alert_list[offset : offset + limit]
+        total = conn.execute(f"SELECT COUNT(*) FROM alerts {where_sql}", params).fetchone()[0]
+        rows = conn.execute(
+            f"SELECT * FROM alerts {where_sql} ORDER BY risk_score DESC LIMIT ? OFFSET ?",
+            params + [limit, offset]
+        ).fetchall()
 
-    for a in paged:
-        if a.alert_id in REVIEWS_STORE:
-            a.is_reviewed = True
-            a.latest_review = REVIEWS_STORE[a.alert_id]
+        alerts = []
+        for r in rows:
+            a = dict(r)
+            try:
+                a["risk_breakdown"] = json.loads(a["risk_breakdown"] or "{}")
+                a["triggering_signals"] = json.loads(a["triggering_signals"] or "[]")
+            except json.JSONDecodeError:
+                a["risk_breakdown"] = {}
+                a["triggering_signals"] = []
+            if a.get("latest_review"):
+                try:
+                    a["latest_review"] = json.loads(a["latest_review"])
+                except json.JSONDecodeError:
+                    a["latest_review"] = None
+            a["is_reviewed"] = bool(a.get("is_reviewed"))
+            alerts.append(a)
 
-    return {"total": total, "alerts": paged}
+        return {"total": total, "alerts": alerts}
+    finally:
+        conn.close()
 
 
 class ReviewSubmissionReq(BaseModel):
@@ -228,48 +367,179 @@ class ReviewSubmissionReq(BaseModel):
 
 @app.post("/api/v1/alerts/{alert_id}/review")
 def submit_officer_review(alert_id: str, req: ReviewSubmissionReq):
-    if alert_id not in ALERTS_MAP:
-        raise HTTPException(status_code=404, detail=f"Alert {alert_id} not found")
+    conn = get_connection()
+    try:
+        alert = conn.execute("SELECT alert_id, work_id FROM alerts WHERE alert_id=?", (alert_id,)).fetchone()
+        if alert is None:
+            raise HTTPException(status_code=404, detail=f"Alert {alert_id} not found")
 
-    alert = ALERTS_MAP[alert_id]
-    review_record = {
-        "alert_id": alert_id,
-        "work_id": alert.work_id,
-        "officer_name": req.officer_name,
-        "officer_role": req.officer_role,
-        "action": req.action.value,
-        "remarks": req.remarks,
-        "timestamp": json.dumps(str(json.loads(json.dumps(dict(req))) if hasattr(req, 'dict') else {}))
-    }
+        now = datetime.now().isoformat()
+        review_record = {
+            "alert_id": alert_id,
+            "work_id": alert["work_id"],
+            "officer_name": req.officer_name,
+            "officer_role": req.officer_role,
+            "action": req.action.value,
+            "remarks": req.remarks,
+            "timestamp": now
+        }
 
-    REVIEWS_STORE[alert_id] = review_record
-    alert.is_reviewed = True
-    alert.latest_review = review_record
+        cur = conn.cursor()
+        cur.execute("BEGIN")
+        cur.execute(
+            """INSERT INTO reviews (alert_id, work_id, officer_name, officer_role, action, remarks, created_at)
+               VALUES (?,?,?,?,?,?,?)""",
+            (alert_id, alert["work_id"], req.officer_name, req.officer_role,
+             req.action.value, req.remarks, now)
+        )
+        cur.execute("UPDATE alerts SET is_reviewed=1, latest_review=? WHERE alert_id=?",
+                    (json.dumps(review_record), alert_id))
+        # Append-only audit log entry
+        cur.execute(
+            """INSERT INTO audit_logs (created_at, action_type, alert_id, work_id, officer, action, remarks)
+               VALUES (?,?,?,?,?,?,?)""",
+            (now, "OFFICER_ALERT_REVIEW", alert_id, alert["work_id"],
+             req.officer_name, req.action.value, req.remarks)
+        )
+        conn.commit()
 
-    # Append-only audit log entry
-    AUDIT_LOGS.append({
-        "timestamp": review_record["timestamp"],
-        "action_type": "OFFICER_ALERT_REVIEW",
-        "alert_id": alert_id,
-        "work_id": alert.work_id,
-        "officer": req.officer_name,
-        "action": req.action.value,
-        "remarks": req.remarks
-    })
+        return {
+            "status": "success",
+            "message": "Officer review recorded in append-only audit log.",
+            "review": review_record
+        }
+    finally:
+        conn.close()
 
-    return {"status": "success", "message": "Officer review recorded in append-only audit log.", "review": review_record}
 
+@app.get("/api/v1/audit-logs")
+def get_audit_logs(limit: int = Query(200, le=1000)):
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM audit_logs ORDER BY log_id DESC LIMIT ?", (limit,)).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Agencies & Vendors
+# ---------------------------------------------------------------------------
 
 @app.get("/api/v1/agencies")
-def list_agencies():
-    return list(AGENCY_PROFILES_MAP.values())
+def list_agencies(limit: int = Query(500, le=5000)):
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM agencies ORDER BY agency_risk_score DESC LIMIT ?", (limit,)).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+@app.get("/api/v1/vendors/top")
+def list_top_vendors(limit: int = Query(50, le=500)):
+    """Vendor payment concentration — contractor-nexus verification signal."""
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT * FROM vendors ORDER BY work_count DESC, total_disbursed DESC LIMIT ?", (limit,)).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# MP Allocation Database (real eSAKSHI data, both houses)
+# ---------------------------------------------------------------------------
+
+@app.get("/api/v1/mps/allocated-limits")
+def get_official_mp_allocated_limits(
+    house: Optional[str] = None,
+    state: Optional[str] = None,
+    search: Optional[str] = None,
+    limit: int = Query(800, le=1000),
+):
+    conn = get_connection()
+    try:
+        where_clauses: List[str] = []
+        params: List[Any] = []
+        if house:
+            where_clauses.append("house = ?"); params.append(house)
+        if state:
+            where_clauses.append("state = ?"); params.append(state)
+        if search:
+            like = f"%{search.lower()}%"
+            where_clauses.append("(LOWER(mp_name) LIKE ? OR LOWER(constituency) LIKE ? OR LOWER(state) LIKE ?)")
+            params.extend([like, like, like])
+        where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
+
+        total = conn.execute(f"SELECT COUNT(*) FROM mp_allocations {where_sql}", params).fetchone()[0]
+        rows = conn.execute(
+            f"SELECT * FROM mp_allocations {where_sql} ORDER BY sr_no ASC LIMIT ?",
+            params + [limit]).fetchall()
+        records = [dict(r) for r in rows]
+        return {
+            "total": total,
+            "source": "eSAKSHI Official Allocated Limit dataset (Lok Sabha + Rajya Sabha)",
+            "mp_allocations": records
+        }
+    finally:
+        conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Analytics pipeline
+# ---------------------------------------------------------------------------
+
+def _run_analytics_job():
+    """Background worker: full multi-signal analysis over all real works, persisted to SQLite."""
+    try:
+        n_alerts, n_works = risk_engine.run_full_analysis()
+        ANALYTICS_STATE.update({
+            "running": False,
+            "last_run": datetime.now().isoformat(),
+            "last_alerts": n_alerts,
+            "works_processed": n_works,
+            "error": None
+        })
+        print(f"[Analytics] Completed: {n_alerts} alerts over {n_works} works")
+    except Exception as e:
+        ANALYTICS_STATE.update({"running": False, "error": str(e)})
+        print(f"[Analytics] FAILED: {e}")
 
 
 @app.post("/api/v1/analytics/run")
 def trigger_analytics_rerun():
-    load_and_analyze_dataset()
-    return {"status": "success", "message": f"Analytics pipeline completed. Analyzed {len(ANALYZED_WORKS)} works and updated alerts."}
+    if ANALYTICS_STATE["running"]:
+        return {"status": "already_running", "message": "Analytics pipeline is currently running."}
+    ANALYTICS_STATE.update({"running": True, "error": None})
+    thread = threading.Thread(target=_run_analytics_job, daemon=True)
+    thread.start()
+    return {"status": "started", "message": "Analytics pipeline started in background over the real dataset."}
 
+
+@app.get("/api/v1/analytics/status")
+def analytics_status():
+    conn = get_connection()
+    try:
+        last_run = conn.execute("SELECT value FROM meta WHERE key='last_analytics_run'").fetchone()
+        alerts = conn.execute("SELECT COUNT(*) FROM alerts").fetchone()[0]
+    finally:
+        conn.close()
+    return {
+        "running": ANALYTICS_STATE["running"],
+        "last_run": ANALYTICS_STATE["last_run"] or (last_run[0] if last_run else None),
+        "last_alerts": ANALYTICS_STATE["last_alerts"] if ANALYTICS_STATE["last_alerts"] is not None else alerts,
+        "works_processed": ANALYTICS_STATE["works_processed"],
+        "error": ANALYTICS_STATE["error"]
+    }
+
+
+# ---------------------------------------------------------------------------
+# AI Copilot
+# ---------------------------------------------------------------------------
 
 class CopilotQueryReq(BaseModel):
     query: str
@@ -277,36 +547,5 @@ class CopilotQueryReq(BaseModel):
 
 @app.post("/api/v1/copilot/query")
 async def copilot_query(req: CopilotQueryReq):
-    res = await llm_service.answer_investigation_query(
-        req.query, ANALYZED_WORKS, list(ALERTS_MAP.values()), AGENCY_PROFILES_MAP
-    )
+    res = await llm_service.answer_investigation_query(req.query)
     return res
-
-
-@app.get("/api/v1/audit-logs")
-def get_audit_logs():
-    return AUDIT_LOGS
-
-
-@app.get("/api/v1/mps/allocated-limits")
-def get_official_mp_allocated_limits():
-    excel_path = "Allocated Limit for Honble MPs.xlsx"
-    if os.path.exists(excel_path):
-        try:
-            import pandas as pd
-            df = pd.read_excel(excel_path, engine='calamine', skiprows=1, names=['sr_no', 'state', 'mp_name', 'constituency', 'allocated_amount'])
-            records = []
-            for _, row in df.iterrows():
-                if pd.notna(row['mp_name']) and pd.notna(row['state']):
-                    records.append({
-                        "sr_no": int(row['sr_no']) if pd.notna(row['sr_no']) and str(row['sr_no']).isdigit() else len(records) + 1,
-                        "state": str(row['state']).strip(),
-                        "mp_name": str(row['mp_name']).strip(),
-                        "constituency": str(row['constituency']).strip() if pd.notna(row['constituency']) else "General",
-                        "allocated_amount": float(row['allocated_amount']) if pd.notna(row['allocated_amount']) and str(row['allocated_amount']).replace('.','').isdigit() else 147000000.0
-                    })
-            return {"total": len(records), "source": "Allocated Limit for Honble MPs.xlsx", "mp_allocations": records}
-        except Exception as e:
-            print(f"[WARN] Error reading Excel database ({e})")
-    return {"total": 0, "source": "Not Found", "mp_allocations": []}
-

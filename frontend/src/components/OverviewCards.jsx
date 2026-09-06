@@ -15,10 +15,10 @@ export default function OverviewCards({ stats }) {
       <div className="kpi-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div className="kpi-title">Total Monitored Works</div>
-            <div className="kpi-value">{stats.total_works || 0}</div>
+            <div className="kpi-title">Real eSAKSHI Works Monitored</div>
+            <div className="kpi-value">{(stats.total_works || 0).toLocaleString('en-IN')}</div>
             <div className="kpi-sub">
-              {stats.completed_works_count} Completed • {stats.in_progress_works_count} In Progress
+              {(stats.completed_works_count || 0).toLocaleString('en-IN')} Completed • {stats.in_progress_works_count?.toLocaleString('en-IN')} In Progress • {stats.states_count} States/UTs
             </div>
           </div>
           <div style={{ background: '#e0f2fe', padding: '0.5rem', borderRadius: '4px' }}>
@@ -30,10 +30,10 @@ export default function OverviewCards({ stats }) {
       <div className="kpi-card warning">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
-            <div className="kpi-title">Total Released Expenditure</div>
+            <div className="kpi-title">Total Vendor Disbursements (Real Ledger)</div>
             <div className="kpi-value">{formatCrores(stats.total_expenditure_amount)}</div>
             <div className="kpi-sub">
-              Sanctioned: {formatCrores(stats.total_sanctioned_amount)}
+              Sanctioned: {formatCrores(stats.total_sanctioned_amount)} • {stats.vendors_count?.toLocaleString('en-IN')} Vendors
             </div>
           </div>
           <div style={{ background: '#fef3c7', padding: '0.5rem', borderRadius: '4px' }}>
@@ -47,7 +47,7 @@ export default function OverviewCards({ stats }) {
           <div>
             <div className="kpi-title">High / Critical Risk Anomalies</div>
             <div className="kpi-value" style={{ color: '#c53030' }}>
-              {(stats.high_risk_works_count || 0) + (stats.critical_risk_works_count || 0)}
+              {((stats.high_risk_works_count || 0) + (stats.critical_risk_works_count || 0)).toLocaleString('en-IN')}
             </div>
             <div className="kpi-sub" style={{ color: '#9b2c2c', fontWeight: 600 }}>
               {stats.critical_risk_works_count || 0} Priority Review Recommendations
@@ -64,10 +64,10 @@ export default function OverviewCards({ stats }) {
           <div>
             <div className="kpi-title">Duplicate Work Candidates</div>
             <div className="kpi-value" style={{ color: '#0284c7' }}>
-              {stats.duplicate_candidates_count || 0}
+              {(stats.duplicate_candidates_count || 0).toLocaleString('en-IN')}
             </div>
             <div className="kpi-sub">
-              NLP & GIS Spatial Overlaps
+              NLP Similarity Within Districts
             </div>
           </div>
           <div style={{ background: '#e0f2fe', padding: '0.5rem', borderRadius: '4px' }}>

@@ -1,7 +1,0 @@
-# Netscape HTTP Cookie File
-# http://curl.haxx.se/rfc/cookie_spec.html
-# This is a generated file!  Do not edit.
-
-mplads.mospi.gov.in	FALSE	/	FALSE		JSESSIONID	gBuVBRPipIWPl9PvtbR8EbNO_1TIUIbbhBdU4BRt.jboss_8081
-mplads.mospi.gov.in	FALSE	/	FALSE		ROUTEID	.2
-mplads.mospi.gov.in	FALSE	/	FALSE		TS01d11681	01927b8e6123c3081ad2d64b30fd70b61bd10b0b05ac1796b3ce7995fcbc8e6bc991aa3d94805711d941a5809d6dc2eb58381a3ff0039bc5582b9bc458c80da70f4fece757ee938f33f56599b91ba4e01af639e4ce

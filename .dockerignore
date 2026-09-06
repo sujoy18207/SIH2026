@@ -1,0 +1,19 @@
+# Never send these to the Docker build context
+.git
+frontend/node_modules
+frontend/dist
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+backend/data
+*.db
+*.sqlite
+mplads_data
+data/mplads_data/raw
+data/mplads_data/logs
+docs
+*.pdf
+*.pptx
+.claude

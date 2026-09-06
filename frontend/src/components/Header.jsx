@@ -162,7 +162,7 @@ export default function Header({
           NOTICE
         </span>
         <span>
-          Official eSAKSHI Portal AI Decision-Support Layer — Monitoring 10,000+ sanctioned MPLADS works across 10 States & 30 Districts for cost overruns, timeline delays, and spatial duplicate candidate works.
+          Official eSAKSHI Portal AI Decision-Support Layer — Monitoring 1.28 lakh+ REAL MPLADS works across 37 States/UTs from the live eSAKSHI dataset for disbursal overruns, stalled works, impossible timelines, and duplicate work candidates.
         </span>
       </div>
     </header>

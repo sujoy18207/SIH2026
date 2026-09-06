@@ -1,23 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Send, FileText, CheckCircle2, User, MapPin, Building, ShieldCheck } from 'lucide-react';
+import { API_BASE_URL } from '../apiConfig';
 
 export default function CitizenRequestModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false);
+  const [mps, setMps] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     mobile: '',
-    state: 'West Bengal',
-    district: 'Nadia',
+    state: '',
     locationType: 'rural',
-    subDistrict: 'Krishnanagar',
-    mpName: 'Hon\'ble Mahua Moitra (Krishnanagar Constituency)',
+    subDistrict: '',
+    mpName: '',
     workTitle: '',
     workDescription: '',
     fundRequired: ''
   });
 
+  // Load real MP allocations (Lok Sabha + Rajya Sabha) from the eSAKSHI dataset
+  useEffect(() => {
+    if (!isOpen || mps.length > 0) return;
+    fetch(`${API_BASE_URL}/api/v1/mps/allocated-limits?house=Lok%20Sabha&limit=1000`)
+      .then(res => res.json())
+      .then(data => setMps(data.mp_allocations || []))
+      .catch(err => console.error("Failed to load MP list", err));
+  }, [isOpen, mps.length]);
+
   if (!isOpen) return null;
+
+  const statesList = Array.from(new Set(mps.map(m => m.state))).sort();
+
+  const stateMps = formData.state
+    ? mps.filter(m => m.state === formData.state)
+    : [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,11 +46,10 @@ export default function CitizenRequestModal({ isOpen, onClose }) {
       name: '',
       email: '',
       mobile: '',
-      state: 'West Bengal',
-      district: 'Nadia',
+      state: '',
       locationType: 'rural',
-      subDistrict: 'Krishnanagar',
-      mpName: 'Hon\'ble Mahua Moitra (Krishnanagar Constituency)',
+      subDistrict: '',
+      mpName: '',
       workTitle: '',
       workDescription: '',
       fundRequired: ''
@@ -136,47 +151,46 @@ export default function CitizenRequestModal({ isOpen, onClose }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <div>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.2rem' }}>State *</label>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.2rem' }}>State / UT *</label>
                   <select
+                    required
                     value={formData.state}
-                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value, mpName: '' })}
                     style={{ width: '100%', padding: '0.4rem', border: '1px solid var(--goi-border)', borderRadius: '4px', fontSize: '0.825rem' }}
                   >
-                    <option value="West Bengal">West Bengal</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Delhi">Delhi</option>
+                    <option value="">Select State / Union Territory...</option>
+                    {statesList.map(st => (
+                      <option key={st} value={st}>{st}</option>
+                    ))}
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.2rem' }}>District *</label>
-                  <select
-                    value={formData.district}
-                    onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.2rem' }}>Sub-District / Block / Village Area</label>
+                  <input
+                    type="text"
+                    value={formData.subDistrict}
+                    onChange={(e) => setFormData({ ...formData, subDistrict: e.target.value })}
+                    placeholder="e.g. Krishnanagar Block"
                     style={{ width: '100%', padding: '0.4rem', border: '1px solid var(--goi-border)', borderRadius: '4px', fontSize: '0.825rem' }}
-                  >
-                    <option value="Nadia">Nadia</option>
-                    <option value="Kolkata">Kolkata</option>
-                    <option value="Varanasi">Varanasi</option>
-                    <option value="Lucknow">Lucknow</option>
-                    <option value="Bengaluru Urban">Bengaluru Urban</option>
-                  </select>
+                  />
                 </div>
               </div>
 
               <div style={{ marginBottom: '0.75rem' }}>
                 <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.2rem' }}>Select Hon'ble Member of Parliament (MP) *</label>
                 <select
+                  required
                   value={formData.mpName}
                   onChange={(e) => setFormData({ ...formData, mpName: e.target.value })}
+                  disabled={!formData.state}
                   style={{ width: '100%', padding: '0.4rem', border: '1px solid var(--goi-border)', borderRadius: '4px', fontSize: '0.825rem', fontWeight: 600, color: '#002147' }}
                 >
-                  <option value="Hon'ble Mahua Moitra (Krishnanagar Constituency)">Hon'ble Mahua Moitra (Krishnanagar Constituency)</option>
-                  <option value="Hon'ble Narendra Modi (Varanasi Constituency)">Hon'ble Narendra Modi (Varanasi Constituency)</option>
-                  <option value="Hon'ble Rajnath Singh (Lucknow Constituency)">Hon'ble Rajnath Singh (Lucknow Constituency)</option>
-                  <option value="Hon'ble Sudip Bandyopadhyay (Kolkata Uttar)">Hon'ble Sudip Bandyopadhyay (Kolkata Uttar)</option>
+                  <option value="">{formData.state ? 'Select your MP...' : 'Select a State first...'}</option>
+                  {stateMps.map(m => (
+                    <option key={m.sr_no} value={`Hon'ble ${m.mp_name} (${m.constituency} Constituency)`}>
+                      Hon'ble {m.mp_name} — {m.constituency}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

@@ -102,10 +102,13 @@ export default function RiskAlertsFeed({ alerts, onSelectAlert }) {
             }}
           >
             <option value="ALL">All Signal Categories</option>
-            <option value="EXP">Cost / Expenditure Overrun</option>
-            <option value="PROGRESS">Financial vs Physical Mismatch</option>
+            <option value="VENDOR">Multi-Vendor Splitting</option>
+            <option value="OVERRUN">Completion Cost Overrun</option>
             <option value="DUPLICATE">NLP Duplicate Candidate</option>
-            <option value="DELAY">Timeline Delay</option>
+            <option value="ZOMBIE">Stalled / Zombie Work</option>
+            <option value="TIMELINE">Impossible Timeline</option>
+            <option value="NO_PAYMENTS">Completed Without Payments</option>
+            <option value="MISSING">Missing File Evidence</option>
             <option value="STATISTICAL">ML Outlier</option>
           </select>
         </div>

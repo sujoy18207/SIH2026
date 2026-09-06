@@ -1,7 +1,8 @@
 """
-Data Quality Engine & Evidence Confidence Engine for MPLADS
-Evaluates raw work records for missing fields, coordinate validity, logical data flaws,
-and computes Data Quality Score (0-100%) and Evidence Confidence Score (0-100%).
+Data Quality Engine & Evidence Confidence Engine for real eSAKSHI records.
+Evaluates completeness of description, dates, amounts, file attachments, and
+payment records; computes Data Quality Score (0-100%) and Evidence Confidence
+Score (0-100%).
 """
 
 from typing import Dict, Any, List, Tuple
@@ -10,39 +11,43 @@ from app.schemas.mplads import AnomalySignal
 
 class DataQualityEngine:
     """
-    Evaluates input data completeness, coordinate validity, and field formatting.
-    Produces Data Quality Score (0-100%) and Quality Level ('Reliable', 'Warning', 'Invalid').
+    Evaluates real eSAKSHI work records for missing fields, unparseable values,
+    and evidence gaps. Produces Data Quality Score (0-100%) and quality level
+    ('Reliable', 'Warning', 'Invalid').
     """
 
     def evaluate_work_quality(self, work: Dict[str, Any]) -> Tuple[float, str, List[str]]:
         quality_score = 100.0
         warnings: List[str] = []
 
-        # Check 1: Valid GPS Coordinates
-        lat = float(work.get("latitude", 0.0))
-        lng = float(work.get("longitude", 0.0))
-        if lat == 0.0 or lng == 0.0 or not (8.0 <= lat <= 37.0) or not (68.0 <= lng <= 97.0):
-            quality_score -= 25.0
-            warnings.append("Missing or invalid GPS spatial coordinates.")
-
-        # Check 2: Mandatory Core Fields
-        if not work.get("sanction_date"):
-            quality_score -= 15.0
-            warnings.append("Missing formal sanction date.")
-        if not work.get("work_description") or len(work.get("work_description", "")) < 10:
-            quality_score -= 15.0
-            warnings.append("Incomplete work description.")
-        if not work.get("implementing_agency_name"):
-            quality_score -= 15.0
-            warnings.append("Missing designated Implementing Agency.")
-
-        # Check 3: Negative or Impossible Financial Values
-        est = float(work.get("estimated_cost", 0.0))
-        sanc = float(work.get("sanctioned_amount", 0.0))
-        exp = float(work.get("expenditure", 0.0))
-        if est <= 0 or sanc <= 0 or exp < 0:
+        # Check 1: Core identifying fields
+        if not work.get("work_description") or len(str(work.get("work_description", ""))) < 15:
             quality_score -= 20.0
-            warnings.append("Negative or zero estimated/sanctioned cost.")
+            warnings.append("Missing or too-short work description.")
+        if not work.get("mp_name"):
+            quality_score -= 10.0
+            warnings.append("Missing MP name.")
+        if not work.get("district"):
+            quality_score -= 10.0
+            warnings.append("District could not be determined from the district authority record.")
+
+        # Check 2: Financial values sanity
+        sanction = work.get("sanction_amount")
+        if sanction is None or float(sanction) <= 0:
+            quality_score -= 15.0
+            warnings.append("Missing or non-positive sanctioned amount.")
+
+        # Check 3: Date completeness relative to stage
+        stage = (work.get("work_stage") or "").lower()
+        if "pending" not in stage and not work.get("sanction_date"):
+            quality_score -= 15.0
+            warnings.append("No sanction date recorded for a work past recommendation stage.")
+        if "completed" in stage and not work.get("actual_end_date"):
+            quality_score -= 15.0
+            warnings.append("Completed work without recorded completion date.")
+        if not work.get("recommendation_date"):
+            quality_score -= 15.0
+            warnings.append("Missing recommendation date.")
 
         quality_score = max(0.0, quality_score)
 
@@ -58,8 +63,10 @@ class DataQualityEngine:
 
 class EvidenceConfidenceEngine:
     """
-    Calculates Evidence Confidence Score (0-100%) - 'How reliable is the evidence backing this alert?'
-    Factors in Data Quality Score, uploaded photo evidence, coordinate validity, and independent signal consensus.
+    Calculates Evidence Confidence Score (0-100%) — 'How reliable is the
+    evidence backing this alert?' Factors in Data Quality Score, recorded
+    vendor payment evidence, attached sanction files, and independent signal
+    consensus.
     """
 
     def calculate_evidence_confidence(
@@ -70,14 +77,14 @@ class EvidenceConfidenceEngine:
     ) -> Tuple[float, str]:
         confidence = 0.5 * data_quality_score
 
-        # Factor 1: Photo Evidence Count
-        photo_count = int(work.get("photo_count", 0))
-        if photo_count >= 3:
+        # Factor 1: Recorded vendor payment trail
+        payment_count = int(work.get("payment_count") or 0)
+        if payment_count >= 3:
             confidence += 20.0
-        elif photo_count >= 1:
+        elif payment_count >= 1:
             confidence += 10.0
 
-        # Factor 2: Signal Consensus (Multiple independent concurring signals increase evidence confidence)
+        # Factor 2: Signal consensus (multiple independent concurring signals raise confidence)
         unique_signal_types = set(s.signal_type for s in signals)
         if len(unique_signal_types) >= 3:
             confidence += 20.0
@@ -86,8 +93,8 @@ class EvidenceConfidenceEngine:
         elif len(unique_signal_types) == 1:
             confidence += 10.0
 
-        # Factor 3: Financial Records Completeness
-        if float(work.get("sanctioned_amount", 0.0)) > 0 and float(work.get("expenditure", 0.0)) >= 0:
+        # Factor 3: Attached sanction file evidence
+        if work.get("attach_id"):
             confidence += 10.0
 
         confidence = round(min(100.0, max(10.0, confidence)), 1)
