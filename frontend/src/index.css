@@ -1568,3 +1568,35 @@ body {
   border-top: 4px solid var(--esakshi-teal);
   margin-top: 3rem;
 }
+
+/* Sidebar nav polish (referenced by Sidebar.jsx) */
+.nav-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.nav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cta-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+.bubble-effect-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 30% 50%, rgba(56, 189, 248, 0.18), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.sidebar-nav-item:hover .bubble-effect-glow,
+.sidebar-nav-item.active .bubble-effect-glow {
+  opacity: 1;
+}

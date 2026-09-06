@@ -17,10 +17,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'map' | 'agencies' | 'mps'
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [persona, setPersona] = useState('Ministry');
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
-  
+
   // Modals
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
   const [isCitizenRequestOpen, setIsCitizenRequestOpen] = useState(false);
@@ -44,6 +46,17 @@ export default function App() {
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  const handleTriggerAnalytics = () => {
+    setIsRefreshing(true);
+    fetch(`${API_BASE_URL}/api/v1/analytics/run`, { method: 'POST' })
+      .then(res => res.json())
+      .then(() => fetchDashboardData())
+      .catch(err => {
+        console.error("Analytics failed", err);
+        setIsRefreshing(false);
+      });
+  };
 
   const handleGenerateReport = () => {
     window.open(`${API_BASE_URL}/api/v1/overview`, '_blank');
@@ -97,15 +110,20 @@ export default function App() {
       <div className="main-wrapper">
         {/* Top Header */}
         <Header
+          persona={persona}
+          setPersona={setPersona}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
+          onTriggerAnalytics={handleTriggerAnalytics}
+          isRefreshing={isRefreshing}
           onOpenCopilot={openCopilot}
+          onOpenCitizenRequest={openCitizenRequest}
           onOpenLogin={openLogin}
           loggedInUser={loggedInUser}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
+          setIsOpen={setIsSidebarOpen}
         />
 
         {/* Page Content View */}
@@ -136,7 +154,22 @@ export default function App() {
 
           {/* Agency Risk Matrix View */}
           {activeTab === 'agencies' && (
-            <AgencyRiskMatrix onSelectAgency={(ag) => openInvestigation(ag.agency_id)} />
+            <AgencyRiskMatrix
+              onSelectAgency={(ag) => {
+                // Open the agency's highest-risk work dossier (agency_id is the
+                // IDA name, not a work_id — look up the top-risk work under it)
+                setIsCopilotOpen(false);
+                setIsCitizenRequestOpen(false);
+                setIsLoginOpen(false);
+                fetch(`${API_BASE_URL}/api/v1/works?search=${encodeURIComponent(ag.agency_id || ag.agency_name)}&limit=1`)
+                  .then(res => res.json())
+                  .then(data => {
+                    const top = data.works && data.works[0];
+                    if (top) openInvestigation(top.work_id);
+                  })
+                  .catch(err => console.error("Agency work lookup failed", err));
+              }}
+            />
           )}
 
           {/* MP Allocation View */}
