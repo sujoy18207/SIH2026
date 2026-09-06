@@ -59,12 +59,12 @@ An AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work d
 | 11 | **Explainable Alert Engine** | Structured narrative explanations with exact amounts, dates, stages, and evidence for every flagged alert. |
 | 12 | **AI Investigation Copilot (सक्षम AI)** | Natural language assistant over the real dataset (states, districts, agencies, vendors, duplicates) powered by Google Gemini API with deterministic SQL-backed local fallback. |
 | 13 | **eSAKSHI-Style Government Dashboard** | Premium information-dense government UI with hero landing, KPI cards, alerts feed, investigation drawer, agency matrix, dark-navy collapsible sidebar, and official branding. |
-| 19 | **Geographic Risk Map (Leaflet)** | Interactive national risk map over all 36 states/UTs — state-level markers sized/colored by real multi-signal aggregates from `/api/v1/geo/risk-zones` (works monitored, high-risk flags, avg composite score, disbursements, districts); street/satellite/OSM tiles; click-through drill-down into each state's highest-risk work dossier. |
-| 14 | **Citizen Request Portal** | Public form with real state/MP dropdowns loaded live from the MP allocation database. |
-| 15 | **Official MP Allocation Database** | Real allocated limits for 776 MP records (543 Lok Sabha + 233 Rajya Sabha, including 11 Nominated RS members) from the eSAKSHI dataset. |
-| 16 | **Persistent Append-Only Audit Trail** | Officer reviews recorded in SQLite — survives server restarts. Actions: Escalated for Inspection, Verified Valid, False Positive, Closed with Notice. |
-| 17 | **Vendor Payment Ledger Dossier** | Every investigation drawer shows the actual eSAKSHI vendor payment rows (date, vendor, amount, status) for the work. |
-| 18 | **Persistent Server Deployment** | Docker + docker-compose (FastAPI + nginx) with volume-persisted SQLite — sized for the real 128K-work dataset. |
+| 14 | **Geographic Risk Map (Leaflet)** | Interactive national risk map over all 36 states/UTs — state-level markers sized/colored by real multi-signal aggregates from `/api/v1/geo/risk-zones` (works monitored, high-risk flags, avg composite score, disbursements, districts); street/satellite/OSM tiles; click-through drill-down into each state's highest-risk work dossier. |
+| 15 | **Citizen Request Portal** | Public form with real state/MP dropdowns loaded live from the MP allocation database. |
+| 16 | **Official MP Allocation Database** | Real allocated limits for 776 MP records (543 Lok Sabha + 233 Rajya Sabha, including 11 Nominated RS members) from the eSAKSHI dataset. |
+| 17 | **Persistent Append-Only Audit Trail** | Officer reviews recorded in SQLite — survives server restarts. Actions: Escalated for Inspection, Verified Valid, False Positive, Closed with Notice. |
+| 18 | **Vendor Payment Ledger Dossier** | Every investigation drawer shows the actual eSAKSHI vendor payment rows (date, vendor, amount, status) for the work. |
+| 19 | **Persistent Server Deployment** | Docker + docker-compose (FastAPI + nginx) with volume-persisted SQLite — sized for the real 128K-work dataset. |
 
 > **Not applicable to current data**: GPS-based GIS proximity and physical/financial progress-percentage rules were part of the v1 synthetic prototype; the real eSAKSHI extracts contain no coordinates or progress percentages, so those engines were replaced with the real-data detectors above (multi-vendor splitting, vendor concentration, stage-stalled analytics).
 
