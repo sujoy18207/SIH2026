@@ -25,6 +25,7 @@ export default function DashboardLayout() {
             >
               Details
             </NavLink>
+            
 
             <NavLink 
               to="/dashboard/leaderboard" 
@@ -38,6 +39,12 @@ export default function DashboardLayout() {
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
             >
               AI
+            </NavLink>
+            <NavLink 
+              to="/dashboard/team" 
+              className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+            >
+              Team
             </NavLink>
           </div>
 

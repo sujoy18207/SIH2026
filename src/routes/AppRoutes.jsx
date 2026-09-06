@@ -31,7 +31,7 @@ export default function AppRoutes(){
                 <Route path="/"element={<PageTransition><LandingPage /></PageTransition>}/>
                 <Route path="/signup" element={<PageTransition><Signup /></PageTransition>}/>
                 <Route path="/dashboard" element={<DashboardLayout />}>
-                    <Route index element={<HomeDashboard />} />
+                    <Route path="home" element={<HomeDashboard />} />
                     <Route path="*" element={<ComingSoon />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
