@@ -69,7 +69,7 @@ export default function HeroLanding({
         <div className="hero-map-card" onClick={() => onNavigateTab('map')} style={{ cursor: 'pointer' }}>
           <div className="map-card-topbar">
             <span>Intelligence Dashboard</span>
-            <span style={{ color: '#0d9488' }}>Live Satellite Sync</span>
+            <span style={{ color: '#0ea5e9' }}>Live Satellite Sync</span>
           </div>
 
           <div className="map-canvas-wrap">
@@ -77,8 +77,8 @@ export default function HeroLanding({
             <svg viewBox="0 0 400 420" style={{ width: '100%', height: '100%' }}>
               <defs>
                 <linearGradient id="mapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#0d9488" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
+                  <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#6366f1" stopOpacity="0.45" />
                 </linearGradient>
                 <radialGradient id="radarPulse" cx="50%" cy="50%" r="50%">
                   <stop offset="0%" stopColor="#ef4444" stopOpacity="0.6" />
@@ -91,7 +91,7 @@ export default function HeroLanding({
                 d="M 180 30 L 210 50 L 230 70 L 220 90 L 260 110 L 290 120 L 320 110 L 340 130 L 320 160 L 280 170 L 270 190 L 290 220 L 260 250 L 230 310 L 200 370 L 190 380 L 180 340 L 160 290 L 140 240 L 110 200 L 120 160 L 140 130 L 170 110 L 160 60 Z"
                 fill="url(#mapGradient)"
                 opacity="0.25"
-                stroke="#0d9488"
+                stroke="#0ea5e9"
                 strokeWidth="1.5"
               />
 
@@ -112,8 +112,8 @@ export default function HeroLanding({
               </circle>
               <circle cx="180" cy="270" r="4" fill="#10b981" />
 
-              <circle cx="260" cy="220" r="10" fill="#0284c7" opacity="0.3" />
-              <circle cx="260" cy="220" r="3" fill="#0284c7" />
+              <circle cx="260" cy="220" r="10" fill="#6366f1" opacity="0.3" />
+              <circle cx="260" cy="220" r="3" fill="#6366f1" />
             </svg>
 
             {/* Anomaly Callout Overlay (matching screenshot 1) */}
@@ -214,7 +214,7 @@ export default function HeroLanding({
             style={{ cursor: 'pointer', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}
           >
             <div style={{ background: '#f1f5f9', padding: '0.75rem', borderRadius: '8px' }}>
-              <Search size={22} color="#0d9488" />
+              <Search size={22} color="#0ea5e9" />
             </div>
             <div>
               <strong style={{ fontSize: '0.95rem', color: '#0f172a', display: 'block', marginBottom: '0.25rem' }}>
@@ -232,7 +232,7 @@ export default function HeroLanding({
             style={{ cursor: 'pointer', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}
           >
             <div style={{ background: '#f1f5f9', padding: '0.75rem', borderRadius: '8px' }}>
-              <Activity size={22} color="#0284c7" />
+              <Activity size={22} color="#2563eb" />
             </div>
             <div>
               <strong style={{ fontSize: '0.95rem', color: '#0f172a', display: 'block', marginBottom: '0.25rem' }}>

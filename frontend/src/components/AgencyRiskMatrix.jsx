@@ -125,7 +125,7 @@ export default function AgencyRiskMatrix({ onSelectAgency }) {
             <div style={{ width: '28px', height: '70px', background: '#cbd5e1', borderRadius: '4px' }} />
             <div style={{ width: '28px', height: '55px', background: '#cbd5e1', borderRadius: '4px' }} />
             <div style={{ width: '28px', height: '95px', background: '#94a3b8', borderRadius: '4px' }} />
-            <div style={{ width: '28px', height: '120px', background: '#0d9488', borderRadius: '4px' }} />
+            <div style={{ width: '28px', height: '120px', background: '#2563eb', borderRadius: '4px' }} />
           </div>
         </div>
       </div>

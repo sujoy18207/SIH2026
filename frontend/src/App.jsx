@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import HeroLanding from './components/HeroLanding';
 import RiskAlertsFeed from './components/RiskAlertsFeed';
@@ -16,7 +15,6 @@ import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'map' | 'agencies' | 'mps'
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [persona, setPersona] = useState('Ministry');
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -94,22 +92,16 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* 1. Dark Navy Collapsible Left Sidebar with Bubble Effect */}
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        isOpen={isSidebarOpen}
-        setIsOpen={setIsSidebarOpen}
-        onGenerateReport={handleGenerateReport}
-        onOpenCopilot={openCopilot}
-        onOpenCitizenRequest={openCitizenRequest}
-        onOpenLogin={openLogin}
-        loggedInUser={loggedInUser}
-      />
+      {/* Ambient animated gradient background */}
+      <div className="bg-aurora" aria-hidden="true">
+        <span className="orb orb-1" />
+        <span className="orb orb-2" />
+        <span className="orb orb-3" />
+      </div>
 
-      {/* 2. Main Content Wrapper */}
+      {/* 1. Main Content Wrapper */}
       <div className="main-wrapper">
-        {/* Top Header */}
+        {/* Single Horizontal Glass Navbar */}
         <Header
           persona={persona}
           setPersona={setPersona}
@@ -121,10 +113,6 @@ export default function App() {
           onOpenCitizenRequest={openCitizenRequest}
           onOpenLogin={openLogin}
           loggedInUser={loggedInUser}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          isSidebarOpen={isSidebarOpen}
-          setIsOpen={setIsSidebarOpen}
         />
 
         {/* Page Content View */}

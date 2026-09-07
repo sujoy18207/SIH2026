@@ -22,7 +22,7 @@ export default function OverviewCards({ stats }) {
             </div>
           </div>
           <div style={{ background: '#e0f2fe', padding: '0.5rem', borderRadius: '4px' }}>
-            <Layers size={20} color="#002147" />
+            <Layers size={20} color="#173a67" />
           </div>
         </div>
       </div>

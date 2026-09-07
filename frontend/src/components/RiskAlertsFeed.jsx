@@ -132,7 +132,7 @@ export default function RiskAlertsFeed({ alerts, onSelectAlert }) {
           <tbody>
             {filteredAlerts.slice(0, 50).map((alert) => (
               <tr key={alert.alert_id} onClick={() => onSelectAlert(alert.work_id)}>
-                <td style={{ fontWeight: 700, color: '#002147' }}>{alert.work_id}</td>
+                <td style={{ fontWeight: 700, color: '#173a67' }}>{alert.work_id}</td>
                 <td>{getRiskBadge(alert.risk_level, alert.risk_score)}</td>
                 <td style={{ fontWeight: 600, color: '#1e40af' }}>
                   {alert.evidence_confidence_score?.toFixed(0)}%

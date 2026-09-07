@@ -5,9 +5,37 @@ import {
   Navigation
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { API_BASE_URL } from '../apiConfig';
+
+/**
+ * Map tile configuration.
+ *
+ * The default tile provider is configurable via environment variables so a
+ * self-hosted / commercial / CDN tile server can be swapped in without code
+ * changes. OpenStreetMap's public tile server is for light and development
+ * usage only; it is NOT unlimited, so point VITE_MAP_TILE_URL at a dedicated
+ * provider before high-traffic production use.
+ */
+const TILE_LAYERS = {
+  street: {
+    url: import.meta.env.VITE_MAP_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: import.meta.env.VITE_MAP_TILE_ATTRIBUTION
+      || '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+  satellite: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+  },
+  terrain: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attribution: '&copy; OpenStreetMap contributors',
+  },
+};
 
 /**
  * Static table of state CENTROIDS only (the real eSAKSHI extracts carry no
@@ -51,21 +79,6 @@ const STATE_CENTROIDS = {
   'Andaman And Nicobar Islands':         { id: 'AN', lat: 11.7401, lng: 92.6586 },
   'Lakshadweep':                         { id: 'LD', lat: 10.5667, lng: 72.6427 },
   'The Dadra And Nagar Haveli And Daman And Diu': { id: 'DN', lat: 20.2667, lng: 73.0166 },
-};
-
-const TILE_LAYERS = {
-  street: {
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
-  },
-  satellite: {
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-  },
-  terrain: {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; OpenStreetMap contributors',
-  },
 };
 
 /** Imperative fly-to bridge: animates the map when a state is selected. */
@@ -201,7 +214,7 @@ export default function GeoRiskMap({ onSelectAlert }) {
                 fontSize: '0.75rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                background: mapType === 'street' ? '#0d9488' : 'transparent',
+                background: mapType === 'street' ? '#2563eb' : 'transparent',
                 color: mapType === 'street' ? '#ffffff' : '#64748b'
               }}
             >
@@ -216,7 +229,7 @@ export default function GeoRiskMap({ onSelectAlert }) {
                 fontSize: '0.75rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                background: mapType === 'satellite' ? '#0d9488' : 'transparent',
+                background: mapType === 'satellite' ? '#2563eb' : 'transparent',
                 color: mapType === 'satellite' ? '#ffffff' : '#64748b'
               }}
             >
@@ -231,7 +244,7 @@ export default function GeoRiskMap({ onSelectAlert }) {
                 fontSize: '0.75rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                background: mapType === 'terrain' ? '#0d9488' : 'transparent',
+                background: mapType === 'terrain' ? '#2563eb' : 'transparent',
                 color: mapType === 'terrain' ? '#ffffff' : '#64748b'
               }}
             >
@@ -271,53 +284,61 @@ export default function GeoRiskMap({ onSelectAlert }) {
                 maxZoom={18}
               />
               <FlyToState target={flyTarget} />
-              {filteredZones.map(z => {
-                const color = z.status === 'HIGH' ? '#ef4444' : z.status === 'MEDIUM' ? '#f59e0b' : '#10b981';
-                const isHigh = z.status === 'HIGH';
+              <MarkerClusterGroup
+                chunkedLoading
+                maxClusterRadius={50}
+                spiderfyOnMaxZoom
+                showCoverageOnHover={false}
+                zoomToBoundsOnClick
+              >
+                {filteredZones.map(z => {
+                  const color = z.status === 'HIGH' ? '#ef4444' : z.status === 'MEDIUM' ? '#f59e0b' : '#10b981';
+                  const isHigh = z.status === 'HIGH';
 
-                // Custom animated HTML Marker Icon
-                const customIcon = L.divIcon({
-                  className: 'custom-leaflet-marker',
-                  html: `
-                    <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px;">
-                      ${isHigh ? `<div style="position: absolute; width: 32px; height: 32px; border-radius: 50%; background: ${color}; opacity: 0.35; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>` : ''}
-                      <div style="background: ${color}; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 800;">
-                        ${z.id}
-                      </div>
-                    </div>
-                  `,
-                  iconSize: [34, 34],
-                  iconAnchor: [17, 17]
-                });
-
-                return (
-                  <Marker
-                    key={z.state}
-                    position={[z.lat, z.lng]}
-                    icon={customIcon}
-                    eventHandlers={{ click: () => handleSelectState(z) }}
-                  >
-                    <Popup>
-                      {/* Interactive Popup Content (real eSAKSHI aggregates) */}
-                      <div style={{ padding: '4px', minWidth: 220 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px', gap: '8px' }}>
-                          <strong style={{ fontSize: '14px', color: '#0f172a' }}>{z.name}</strong>
-                          <span style={{ background: `${color}20`, color: { color }, fontSize: '10px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', border: `1px solid ${color}40` }}>
-                            {z.status} RISK
-                          </span>
-                        </div>
-                        <div style={{ fontSize: '12px', color: '#475569', lineHeight: 1.6 }}>
-                          <div>• Monitored Works: <strong>{z.total_works.toLocaleString('en-IN')}</strong></div>
-                          <div>• Disbursed: <strong>₹{z.disbursed_cr.toLocaleString('en-IN')} Cr</strong></div>
-                          <div>• High-Risk Flags: <strong style={{ color: '#ef4444' }}>{z.high_risk_works.toLocaleString('en-IN')}</strong></div>
-                          <div>• Avg Risk Score: <strong>{z.avg_risk_score}/100</strong></div>
-                          <div>• Districts: <strong>{z.districts_count}</strong></div>
+                  // Custom animated HTML Marker Icon
+                  const customIcon = L.divIcon({
+                    className: 'custom-leaflet-marker',
+                    html: `
+                      <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px;">
+                        ${isHigh ? `<div style="position: absolute; width: 32px; height: 32px; border-radius: 50%; background: ${color}; opacity: 0.35; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>` : ''}
+                        <div style="background: ${color}; width: 22px; height: 22px; border-radius: 50%; border: 3px solid #ffffff; box-shadow: 0 3px 10px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 800;">
+                          ${z.id}
                         </div>
                       </div>
-                    </Popup>
-                  </Marker>
-                );
-              })}
+                    `,
+                    iconSize: [34, 34],
+                    iconAnchor: [17, 17]
+                  });
+
+                  return (
+                    <Marker
+                      key={z.state}
+                      position={[z.lat, z.lng]}
+                      icon={customIcon}
+                      eventHandlers={{ click: () => handleSelectState(z) }}
+                    >
+                      <Popup>
+                        {/* Interactive Popup Content (real eSAKSHI aggregates) */}
+                        <div style={{ padding: '4px', minWidth: 220 }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px', gap: '8px' }}>
+                            <strong style={{ fontSize: '14px', color: '#0f172a' }}>{z.name}</strong>
+                            <span style={{ background: `${color}20`, color: color, fontSize: '10px', fontWeight: 800, padding: '2px 6px', borderRadius: '4px', border: `1px solid ${color}40` }}>
+                              {z.status} RISK
+                            </span>
+                          </div>
+                          <div style={{ fontSize: '12px', color: '#475569', lineHeight: 1.6 }}>
+                            <div>• Monitored Works: <strong>{z.total_works.toLocaleString('en-IN')}</strong></div>
+                            <div>• Disbursed: <strong>₹{z.disbursed_cr.toLocaleString('en-IN')} Cr</strong></div>
+                            <div>• High-Risk Flags: <strong style={{ color: '#ef4444' }}>{z.high_risk_works.toLocaleString('en-IN')}</strong></div>
+                            <div>• Avg Risk Score: <strong>{z.avg_risk_score}/100</strong></div>
+                            <div>• Districts: <strong>{z.districts_count}</strong></div>
+                          </div>
+                        </div>
+                      </Popup>
+                    </Marker>
+                  );
+                })}
+              </MarkerClusterGroup>
             </MapContainer>
           </div>
         </div>
@@ -378,12 +399,12 @@ export default function GeoRiskMap({ onSelectAlert }) {
               </div>
 
               {/* Real multi-signal insight computed from the loaded aggregates */}
-              <div style={{ background: '#f0fdfa', border: '1px solid #ccfbf1', borderRadius: '8px', padding: '0.85rem', marginBottom: '1.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0f766e', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem' }}>
+              <div style={{ background: '#f0f6ff', border: '1px solid #bfdbfe', borderRadius: '8px', padding: '0.85rem', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0369a1', fontWeight: 700, fontSize: '0.8rem', marginBottom: '0.35rem' }}>
                   <Sparkles size={14} />
                   <span>Multi-Signal Zone Finding</span>
                 </div>
-                <p style={{ fontSize: '0.8rem', color: '#134e4a', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.8rem', color: '#1e3a5f', lineHeight: 1.5 }}>
                   {(() => {
                     const pct = selectedState.total_works
                       ? (selectedState.high_risk_works / selectedState.total_works) * 100

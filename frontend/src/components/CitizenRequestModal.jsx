@@ -183,7 +183,7 @@ export default function CitizenRequestModal({ isOpen, onClose }) {
                   value={formData.mpName}
                   onChange={(e) => setFormData({ ...formData, mpName: e.target.value })}
                   disabled={!formData.state}
-                  style={{ width: '100%', padding: '0.4rem', border: '1px solid var(--goi-border)', borderRadius: '4px', fontSize: '0.825rem', fontWeight: 600, color: '#002147' }}
+                  style={{ width: '100%', padding: '0.4rem', border: '1px solid var(--goi-border)', borderRadius: '4px', fontSize: '0.825rem', fontWeight: 600, color: '#173a67' }}
                 >
                   <option value="">{formData.state ? 'Select your MP...' : 'Select a State first...'}</option>
                   {stateMps.map(m => (

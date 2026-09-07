@@ -133,7 +133,7 @@ export default function MPAllocatedLimitsTable() {
             {filteredMps.slice(0, 200).map((m) => (
               <tr key={m.sr_no}>
                 <td style={{ fontWeight: 700, color: '#64748b', width: '60px' }}>{m.sr_no}</td>
-                <td style={{ fontWeight: 700, color: '#002147' }}>{m.mp_name}</td>
+                <td style={{ fontWeight: 700, color: '#173a67' }}>{m.mp_name}</td>
                 <td>
                   <span style={{
                     fontSize: '0.72rem',

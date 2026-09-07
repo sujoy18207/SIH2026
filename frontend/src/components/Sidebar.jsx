@@ -123,10 +123,10 @@ export default function Sidebar({
               title={item.label}
             >
               <div className="icon-wrapper">
-                <Icon size={18} className="nav-icon" color={item.isSpecial ? '#38bdf8' : undefined} />
+                <Icon size={18} className="nav-icon" color={item.isSpecial ? '#93c5fd' : undefined} />
                 <span className="bubble-effect-glow" />
               </div>
-              {isOpen && <span className="nav-label" style={item.isSpecial ? { color: '#38bdf8', fontWeight: 700 } : {}}>{item.label}</span>}
+              {isOpen && <span className="nav-label" style={item.isSpecial ? { color: '#a5b4fc', fontWeight: 700 } : {}}>{item.label}</span>}
             </button>
           );
         })}

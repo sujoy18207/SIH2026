@@ -72,8 +72,8 @@ export default function AICopilotModal({ isOpen, onClose }) {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '0.85rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ background: '#f0fdfa', width: '42px', height: '42px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sparkles size={22} color="#0d9488" />
+            <div style={{ background: '#e0f2fe', width: '42px', height: '42px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Sparkles size={22} color="#0ea5e9" />
             </div>
             <div>
               <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f2744', margin: 0 }}>AI Investigation Copilot (सक्षम AI)</h2>
@@ -149,7 +149,7 @@ export default function AICopilotModal({ isOpen, onClose }) {
             </div>
           ))}
           {loading && (
-            <div style={{ alignSelf: 'flex-start', background: '#ffffff', border: '1px solid #e2e8f0', padding: '0.75rem 1rem', borderRadius: '12px', color: '#0d9488', fontSize: '0.825rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ alignSelf: 'flex-start', background: '#ffffff', border: '1px solid #e2e8f0', padding: '0.75rem 1rem', borderRadius: '12px', color: '#0ea5e9', fontSize: '0.825rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Sparkles size={16} className="spin" />
               Copilot is generating evidence analysis...
             </div>

@@ -17,7 +17,7 @@ const STATUS_COLORS = {
   'Pending Sanction': '#a16207',
   'Sanctioned': '#0369a1',
   'In Progress': '#6d28d9',
-  'Completed': '#1a936f',
+  'Completed': '#15803d',
 };
 
 const fmtIN = (v) => (v == null ? '0' : v.toLocaleString('en-IN'));
@@ -78,7 +78,7 @@ export default function DashboardCharts({ stats }) {
       {/* Chart 1: Risk-level distribution donut */}
       <div className="goi-card" style={{ padding: '1rem 1.25rem 0.5rem' }}>
         <div className="goi-card-title" style={{ fontSize: '0.95rem' }}>
-          <PieIcon size={18} color="#002147" />
+          <PieIcon size={18} color="#173a67" />
           National Risk Distribution
           <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--goi-text-muted)', marginLeft: 'auto' }}>
             All {fmtIN(s.total_works)} monitored works
@@ -111,7 +111,7 @@ export default function DashboardCharts({ stats }) {
       {/* Chart 2: Work pipeline status */}
       <div className="goi-card" style={{ padding: '1rem 1.25rem 0.5rem' }}>
         <div className="goi-card-title" style={{ fontSize: '0.95rem' }}>
-          <Activity size={18} color="#002147" />
+          <Activity size={18} color="#173a67" />
           Work Pipeline Status
           <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--goi-text-muted)', marginLeft: 'auto' }}>
             {fmtIN(s.total_works)} works
@@ -135,7 +135,7 @@ export default function DashboardCharts({ stats }) {
       {/* Chart 3: Top states by high-risk flags */}
       <div className="goi-card" style={{ padding: '1rem 1.25rem 0.5rem' }}>
         <div className="goi-card-title" style={{ fontSize: '0.95rem' }}>
-          <MapPin size={18} color="#002147" />
+          <MapPin size={18} color="#173a67" />
           Top 10 States by High-Risk Flags
         </div>
         {zonesError ? (

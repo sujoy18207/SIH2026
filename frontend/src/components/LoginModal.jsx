@@ -100,13 +100,13 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
           {/* Header Emblem */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.4rem' }}>
-              <AshokaStambhaLogo size={42} color="#002147" showMotto={true} />
-              <div style={{ textTransform: 'uppercase', fontSize: '0.65rem', fontWeight: 800, color: '#002147', textAlign: 'left', lineHeight: 1.25 }}>
+              <AshokaStambhaLogo size={42} color="#173a67" showMotto={true} />
+              <div style={{ textTransform: 'uppercase', fontSize: '0.65rem', fontWeight: 800, color: '#173a67', textAlign: 'left', lineHeight: 1.25 }}>
                 Government of India<br />
                 <span style={{ color: '#475569', fontWeight: 600 }}>Ministry of Statistics & Programme Implementation</span>
               </div>
             </div>
-            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#002147' }}>Log In</h2>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#173a67' }}>Log In</h2>
           </div>
 
           {errorMsg && (
@@ -213,7 +213,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
               style={{
                 width: '100%',
                 padding: '0.7rem',
-                background: '#0091ff',
+                background: 'linear-gradient(135deg, #2563eb, #4f46e5)',
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '6px',
