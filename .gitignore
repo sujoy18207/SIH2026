@@ -21,7 +21,9 @@ backend/data/
 
 # Large scraped datasets & ML pipeline intermediates (>50MB)
 data/mplads_data/
+DATASET/
 mplads_data/raw/
+*.crdownload
 ml/data/*.db
 ml/data/master_projects.csv
 ml/data/cleaned/works_recommended_all.csv

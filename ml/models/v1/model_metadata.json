@@ -1,6 +1,6 @@
 {
   "model_version": "v1",
-  "training_timestamp": "2026-09-01T19:13:40.959448",
+  "training_timestamp": "2026-09-07T12:36:20.178274",
   "algorithm": "IsolationForest",
   "library": "scikit-learn",
   "hyperparameters": {
@@ -28,7 +28,7 @@
   ],
   "anomalies_detected": 6404,
   "anomaly_rate": 5.0,
-  "training_time_seconds": 1.29,
+  "training_time_seconds": 1.14,
   "normalization": "decision_function inverted and min-max scaled to 0-100",
   "important_note": "MLAnomalyRisk is NOT FraudProbability. It indicates statistical unusualness."
 }

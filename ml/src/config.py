@@ -19,8 +19,9 @@ WORKSPACE_ROOT = PROJECT_ROOT.parent                           # SIH 2026/
 
 # Data directories — try multiple possible locations
 _candidate_data_dirs = [
-    WORKSPACE_ROOT / "mplads_data" / "csv",                    # actual location
-    WORKSPACE_ROOT / "data" / "mplads_data" / "csv",           # alternate
+    WORKSPACE_ROOT / "DATASET" / "mplads_data" / "csv",        # dataset directory
+    WORKSPACE_ROOT / "data" / "mplads_data" / "csv",           # alternate data directory
+    WORKSPACE_ROOT / "mplads_data" / "csv",                    # root location
     PROJECT_ROOT / "data" / "raw",                             # fallback
 ]
 

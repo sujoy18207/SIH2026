@@ -12,6 +12,7 @@ import threading
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from fastapi import FastAPI, Query, HTTPException
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -23,10 +24,31 @@ from app.db import get_db_path, get_connection, init_schema
 from app.engine.risk_engine import RiskEngine
 from app.services.llm_service import LLMCopilotService
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Open/validate the SQLite database. Analytics are precomputed by the ETL — startup is instant."""
+    db_path = get_db_path()
+    if not db_path.exists():
+        raise RuntimeError(
+            f"Database not found at {db_path}. Run `python -m backend.app.etl` first "
+            f"to build it from the real eSAKSHI CSVs."
+        )
+    conn = get_connection()
+    try:
+        init_schema(conn)  # no-op if schema exists
+        n = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
+        print(f"[API Startup] Real eSAKSHI database ready: {n:,} works at {db_path}")
+    finally:
+        conn.close()
+    yield
+
+
 app = FastAPI(
     title="MPLADS AI Anomaly & Risk Detection Platform API",
     description="AI-powered monitoring, anomaly detection, cost benchmarking, duplicate work detection & decision-support API for MPLADS (real eSAKSHI data)",
-    version="2.0.0"
+    version="2.0.0",
+    lifespan=lifespan
 )
 
 app.add_middleware(
@@ -49,23 +71,6 @@ ANALYTICS_STATE = {
     "error": None,
 }
 
-
-@app.on_event("startup")
-def startup_event():
-    """Open/validate the SQLite database. Analytics are precomputed by the ETL — startup is instant."""
-    db_path = get_db_path()
-    if not db_path.exists():
-        raise RuntimeError(
-            f"Database not found at {db_path}. Run `python -m backend.app.etl` first "
-            f"to build it from the real eSAKSHI CSVs."
-        )
-    conn = get_connection()
-    try:
-        init_schema(conn)  # no-op if schema exists
-        n = conn.execute("SELECT COUNT(*) FROM works").fetchone()[0]
-        print(f"[API Startup] Real eSAKSHI database ready: {n:,} works at {db_path}")
-    finally:
-        conn.close()
 
 
 # ---------------------------------------------------------------------------

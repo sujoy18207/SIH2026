@@ -14,10 +14,23 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
+
 from app.db import get_db_path, get_connection, init_schema
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
-CSV_DIR = REPO_ROOT / "data" / "mplads_data" / "csv"
+_candidate_csv_dirs = [
+    REPO_ROOT / "DATASET" / "mplads_data" / "csv",
+    REPO_ROOT / "data" / "mplads_data" / "csv",
+    REPO_ROOT / "mplads_data" / "csv",
+]
+if os.environ.get("MPLADS_DATA_DIR"):
+    CSV_DIR = Path(os.environ["MPLADS_DATA_DIR"])
+else:
+    CSV_DIR = next((d for d in _candidate_csv_dirs if d.exists()), _candidate_csv_dirs[0])
+
 
 HOUSE_MAP = {"1": "Rajya Sabha", "2": "Lok Sabha"}
 

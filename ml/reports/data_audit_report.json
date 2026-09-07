@@ -1,7 +1,7 @@
 {
   "summary": {
-    "audit_timestamp": "2026-09-01T19:11:42.856911",
-    "data_directory": "C:\\SIH 2026\\mplads_data\\csv",
+    "audit_timestamp": "2026-09-07T12:34:52.063422",
+    "data_directory": "C:\\SIH 2026\\SIH2026\\DATASET\\mplads_data\\csv",
     "total_csv_files": 14,
     "total_rows_all_files": 379069,
     "total_size_mb": 150.74,

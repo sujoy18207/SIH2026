@@ -1,688 +1,688 @@
 [
   {
-    "timestamp": "2026-09-01T19:11:43.458224",
+    "timestamp": "2026-09-07T12:34:52.719483",
     "dataset": "works_recommended",
     "action": "LOAD",
     "detail": "Loaded LokSabha: 103331 rows, 24 columns",
     "affected_rows": 103331
   },
   {
-    "timestamp": "2026-09-01T19:11:43.598936",
+    "timestamp": "2026-09-07T12:34:52.884272",
     "dataset": "works_recommended",
     "action": "LOAD",
     "detail": "Loaded RajyaSabha: 24934 rows, 24 columns",
     "affected_rows": 24934
   },
   {
-    "timestamp": "2026-09-01T19:11:43.641792",
+    "timestamp": "2026-09-07T12:34:52.925054",
     "dataset": "works_recommended",
     "action": "MERGE",
     "detail": "Combined LS+RS: 128265 total rows",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:43.726813",
+    "timestamp": "2026-09-07T12:34:53.016874",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "RECOMMENDATION_DATE: parsed 128263 dates as dd-Mon-yyyy",
     "affected_rows": 128263
   },
   {
-    "timestamp": "2026-09-01T19:11:43.763473",
+    "timestamp": "2026-09-07T12:34:53.053943",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "RECOMMENDATION_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:43.823743",
+    "timestamp": "2026-09-07T12:34:53.117035",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "SANCTION_DATE: parsed 96916 dates as dd-Mon-yyyy",
     "affected_rows": 96916
   },
   {
-    "timestamp": "2026-09-01T19:11:43.867537",
+    "timestamp": "2026-09-07T12:34:53.171123",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "SANCTION_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:43.978596",
+    "timestamp": "2026-09-07T12:34:53.279614",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: parsed 128263 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 128263
   },
   {
-    "timestamp": "2026-09-01T19:11:43.986547",
+    "timestamp": "2026-09-07T12:34:53.290822",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:44.124371",
+    "timestamp": "2026-09-07T12:34:53.427628",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: parsed 128263 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 128263
   },
   {
-    "timestamp": "2026-09-01T19:11:44.129846",
+    "timestamp": "2026-09-07T12:34:53.438213",
     "dataset": "works_recommended",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:44.130526",
+    "timestamp": "2026-09-07T12:34:53.439127",
     "dataset": "works_recommended",
     "action": "AMOUNT_CLEAN",
     "detail": "RECOMMENDED_AMOUNT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:44.131130",
+    "timestamp": "2026-09-07T12:34:53.439642",
     "dataset": "works_recommended",
     "action": "AMOUNT_CLEAN",
     "detail": "SANCTION_AMOUNT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:44.131528",
+    "timestamp": "2026-09-07T12:34:53.440072",
     "dataset": "works_recommended",
     "action": "AMOUNT_CLEAN",
     "detail": "Total_Amt: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:44.632597",
+    "timestamp": "2026-09-07T12:34:53.890951",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "WORK_DESCRIPTION: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:44.751219",
+    "timestamp": "2026-09-07T12:34:54.046424",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "STATE_NAME: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:44.859105",
+    "timestamp": "2026-09-07T12:34:54.139185",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "CONSTITUENCY: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.033301",
+    "timestamp": "2026-09-07T12:34:54.280090",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "MP_NAME: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.233576",
+    "timestamp": "2026-09-07T12:34:54.502750",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "IDA_NAME: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.332528",
+    "timestamp": "2026-09-07T12:34:54.639086",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "WORK_CATEGORY: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.657335",
+    "timestamp": "2026-09-07T12:34:54.957395",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "ACTIVITY_NAME: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.779433",
+    "timestamp": "2026-09-07T12:34:55.138708",
     "dataset": "works_recommended",
     "action": "TEXT_CLEAN",
     "detail": "LETTER_NO: stripped whitespace and normalized",
     "affected_rows": 128265
   },
   {
-    "timestamp": "2026-09-01T19:11:45.833928",
+    "timestamp": "2026-09-07T12:34:55.187963",
     "dataset": "works_recommended",
     "action": "DEDUP",
     "detail": "Removed 184 duplicate rows (subset: ['WORK_RECOMMENDATION_DTL_ID'])",
     "affected_rows": 184
   },
   {
-    "timestamp": "2026-09-01T19:11:45.862142",
+    "timestamp": "2026-09-07T12:34:55.207305",
     "dataset": "works_recommended",
     "action": "VALIDATION",
     "detail": "Total invalid records flagged: 0",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:47.543425",
+    "timestamp": "2026-09-07T12:34:56.603780",
     "dataset": "works_recommended",
     "action": "SAVE",
-    "detail": "Saved cleaned data: C:\\SIH 2026\\ml\\data\\cleaned\\works_recommended_all.csv (128081 rows)",
+    "detail": "Saved cleaned data: C:\\SIH 2026\\SIH2026\\ml\\data\\cleaned\\works_recommended_all.csv (128081 rows)",
     "affected_rows": 128081
   },
   {
-    "timestamp": "2026-09-01T19:11:48.044882",
+    "timestamp": "2026-09-07T12:34:56.962530",
     "dataset": "works_sanctioned",
     "action": "LOAD",
     "detail": "Loaded LokSabha: 78233 rows",
     "affected_rows": 78233
   },
   {
-    "timestamp": "2026-09-01T19:11:48.176761",
+    "timestamp": "2026-09-07T12:34:57.043588",
     "dataset": "works_sanctioned",
     "action": "LOAD",
     "detail": "Loaded RajyaSabha: 19275 rows",
     "affected_rows": 19275
   },
   {
-    "timestamp": "2026-09-01T19:11:48.189876",
+    "timestamp": "2026-09-07T12:34:57.052717",
     "dataset": "works_sanctioned",
     "action": "MERGE",
     "detail": "Combined LS+RS: 97508 total rows",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:48.241657",
+    "timestamp": "2026-09-07T12:34:57.090809",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "RECOMMENDATION_DATE: parsed 97506 dates as dd-Mon-yyyy",
     "affected_rows": 97506
   },
   {
-    "timestamp": "2026-09-01T19:11:48.274158",
+    "timestamp": "2026-09-07T12:34:57.112736",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "RECOMMENDATION_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.322805",
+    "timestamp": "2026-09-07T12:34:57.151611",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "SANCTION_DATE: parsed 97506 dates as dd-Mon-yyyy",
     "affected_rows": 97506
   },
   {
-    "timestamp": "2026-09-01T19:11:48.361284",
+    "timestamp": "2026-09-07T12:34:57.172929",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "SANCTION_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.447794",
+    "timestamp": "2026-09-07T12:34:57.235256",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: parsed 97506 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 97506
   },
   {
-    "timestamp": "2026-09-01T19:11:48.452553",
+    "timestamp": "2026-09-07T12:34:57.238785",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.531476",
+    "timestamp": "2026-09-07T12:34:57.300716",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: parsed 97506 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 97506
   },
   {
-    "timestamp": "2026-09-01T19:11:48.534997",
+    "timestamp": "2026-09-07T12:34:57.304107",
     "dataset": "works_sanctioned",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.535514",
+    "timestamp": "2026-09-07T12:34:57.305382",
     "dataset": "works_sanctioned",
     "action": "AMOUNT_CLEAN",
     "detail": "SANCTION_AMOUNT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.536363",
+    "timestamp": "2026-09-07T12:34:57.305825",
     "dataset": "works_sanctioned",
     "action": "AMOUNT_CLEAN",
     "detail": "Total_Amt: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:48.872503",
+    "timestamp": "2026-09-07T12:34:57.571353",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "WORK_DESCRIPTION: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:48.955415",
+    "timestamp": "2026-09-07T12:34:57.633094",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "STATE_NAME: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.038946",
+    "timestamp": "2026-09-07T12:34:57.692646",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "CONSTITUENCY: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.177407",
+    "timestamp": "2026-09-07T12:34:57.783433",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "MP_NAME: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.365414",
+    "timestamp": "2026-09-07T12:34:57.895716",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "IDA_NAME: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.429307",
+    "timestamp": "2026-09-07T12:34:57.957431",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "WORK_CATEGORY: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.685521",
+    "timestamp": "2026-09-07T12:34:58.140068",
     "dataset": "works_sanctioned",
     "action": "TEXT_CLEAN",
     "detail": "ACTIVITY_NAME: stripped whitespace and normalized",
     "affected_rows": 97508
   },
   {
-    "timestamp": "2026-09-01T19:11:49.705800",
+    "timestamp": "2026-09-07T12:34:58.158103",
     "dataset": "works_sanctioned",
     "action": "DEDUP",
     "detail": "Removed 1 duplicate rows (subset: ['WORK_RECOMMENDATION_DTL_ID'])",
     "affected_rows": 1
   },
   {
-    "timestamp": "2026-09-01T19:11:49.714915",
+    "timestamp": "2026-09-07T12:34:58.168074",
     "dataset": "works_sanctioned",
     "action": "VALIDATION",
     "detail": "Total invalid records flagged: 0",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:51.025640",
+    "timestamp": "2026-09-07T12:34:59.502685",
     "dataset": "works_sanctioned",
     "action": "SAVE",
-    "detail": "Saved: C:\\SIH 2026\\ml\\data\\cleaned\\works_sanctioned_all.csv (97507 rows)",
+    "detail": "Saved: C:\\SIH 2026\\SIH2026\\ml\\data\\cleaned\\works_sanctioned_all.csv (97507 rows)",
     "affected_rows": 97507
   },
   {
-    "timestamp": "2026-09-01T19:11:51.216483",
+    "timestamp": "2026-09-07T12:34:59.640250",
     "dataset": "works_completed",
     "action": "LOAD",
     "detail": "Loaded LokSabha: 33956 rows",
     "affected_rows": 33956
   },
   {
-    "timestamp": "2026-09-01T19:11:51.261391",
+    "timestamp": "2026-09-07T12:34:59.678568",
     "dataset": "works_completed",
     "action": "LOAD",
     "detail": "Loaded RajyaSabha: 9888 rows",
     "affected_rows": 9888
   },
   {
-    "timestamp": "2026-09-01T19:11:51.264784",
+    "timestamp": "2026-09-07T12:34:59.682772",
     "dataset": "works_completed",
     "action": "MERGE",
     "detail": "Combined LS+RS: 43844 total rows",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.286619",
+    "timestamp": "2026-09-07T12:34:59.702534",
     "dataset": "works_completed",
     "action": "DATE_PARSE",
     "detail": "ACTUAL_END_DATE: parsed 43842 dates as dd-Mon-yyyy",
     "affected_rows": 43842
   },
   {
-    "timestamp": "2026-09-01T19:11:51.299004",
+    "timestamp": "2026-09-07T12:34:59.712411",
     "dataset": "works_completed",
     "action": "DATE_PARSE",
     "detail": "ACTUAL_END_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:51.299479",
+    "timestamp": "2026-09-07T12:34:59.712688",
     "dataset": "works_completed",
     "action": "AMOUNT_CLEAN",
     "detail": "ACTUAL_AMOUNT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:51.299817",
+    "timestamp": "2026-09-07T12:34:59.712883",
     "dataset": "works_completed",
     "action": "AMOUNT_CLEAN",
     "detail": "Total_Amt: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:51.462412",
+    "timestamp": "2026-09-07T12:34:59.836390",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "WORK_DESCRIPTION: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.498244",
+    "timestamp": "2026-09-07T12:34:59.863744",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "STATE_NAME: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.532415",
+    "timestamp": "2026-09-07T12:34:59.891773",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "CONSTITUENCY: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.593368",
+    "timestamp": "2026-09-07T12:34:59.930298",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "MP_NAME: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.660447",
+    "timestamp": "2026-09-07T12:34:59.985553",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "IDA_NAME: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.692324",
+    "timestamp": "2026-09-07T12:35:00.011739",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "WORK_CATEGORY: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.796523",
+    "timestamp": "2026-09-07T12:35:00.100185",
     "dataset": "works_completed",
     "action": "TEXT_CLEAN",
     "detail": "ACTIVITY_NAME: stripped whitespace and normalized",
     "affected_rows": 43844
   },
   {
-    "timestamp": "2026-09-01T19:11:51.806531",
+    "timestamp": "2026-09-07T12:35:00.107566",
     "dataset": "works_completed",
     "action": "DEDUP",
     "detail": "Removed 1 duplicate rows (subset: ['WORK_RECOMMENDATION_DTL_ID'])",
     "affected_rows": 1
   },
   {
-    "timestamp": "2026-09-01T19:11:51.811868",
+    "timestamp": "2026-09-07T12:35:00.111167",
     "dataset": "works_completed",
     "action": "VALIDATION",
     "detail": "Total invalid records flagged: 0",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:52.285271",
+    "timestamp": "2026-09-07T12:35:00.446598",
     "dataset": "works_completed",
     "action": "SAVE",
-    "detail": "Saved: C:\\SIH 2026\\ml\\data\\cleaned\\works_completed_all.csv (43843 rows)",
+    "detail": "Saved: C:\\SIH 2026\\SIH2026\\ml\\data\\cleaned\\works_completed_all.csv (43843 rows)",
     "affected_rows": 43843
   },
   {
-    "timestamp": "2026-09-01T19:11:52.707749",
+    "timestamp": "2026-09-07T12:35:00.705735",
     "dataset": "expenditure",
     "action": "LOAD",
     "detail": "Loaded LokSabha: 82886 rows",
     "affected_rows": 82886
   },
   {
-    "timestamp": "2026-09-01T19:11:52.813516",
+    "timestamp": "2026-09-07T12:35:00.781239",
     "dataset": "expenditure",
     "action": "LOAD",
     "detail": "Loaded RajyaSabha: 24942 rows",
     "affected_rows": 24942
   },
   {
-    "timestamp": "2026-09-01T19:11:52.825856",
+    "timestamp": "2026-09-07T12:35:00.789374",
     "dataset": "expenditure",
     "action": "MERGE",
     "detail": "Combined LS+RS: 107828 total rows",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:52.883865",
+    "timestamp": "2026-09-07T12:35:00.830134",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "EXPENDITURE_DATE: parsed 107826 dates as dd-Mon-yyyy",
     "affected_rows": 107826
   },
   {
-    "timestamp": "2026-09-01T19:11:52.921544",
+    "timestamp": "2026-09-07T12:35:00.855882",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "EXPENDITURE_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:53.003042",
+    "timestamp": "2026-09-07T12:35:00.922640",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: parsed 107826 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 107826
   },
   {
-    "timestamp": "2026-09-01T19:11:53.007370",
+    "timestamp": "2026-09-07T12:35:00.926559",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:53.101812",
+    "timestamp": "2026-09-07T12:35:00.994169",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: parsed 107826 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 107826
   },
   {
-    "timestamp": "2026-09-01T19:11:53.107061",
+    "timestamp": "2026-09-07T12:35:00.998148",
     "dataset": "expenditure",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:53.107666",
+    "timestamp": "2026-09-07T12:35:01.000020",
     "dataset": "expenditure",
     "action": "AMOUNT_CLEAN",
     "detail": "FUND_DISBURSED_AMT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:53.108156",
+    "timestamp": "2026-09-07T12:35:01.000542",
     "dataset": "expenditure",
     "action": "AMOUNT_CLEAN",
     "detail": "Total_Amt: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:53.195989",
+    "timestamp": "2026-09-07T12:35:01.067270",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "STATE_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:53.287860",
+    "timestamp": "2026-09-07T12:35:01.135764",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "CONSTITUENCY: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:53.424197",
+    "timestamp": "2026-09-07T12:35:01.235093",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "MP_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:53.583189",
+    "timestamp": "2026-09-07T12:35:01.361959",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "IDA_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:53.750508",
+    "timestamp": "2026-09-07T12:35:01.492408",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "IA_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:53.883603",
+    "timestamp": "2026-09-07T12:35:01.592597",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "VENDOR_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:54.130177",
+    "timestamp": "2026-09-07T12:35:01.776244",
     "dataset": "expenditure",
     "action": "TEXT_CLEAN",
     "detail": "ACTIVITY_NAME: stripped whitespace and normalized",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:54.356006",
+    "timestamp": "2026-09-07T12:35:01.958428",
     "dataset": "expenditure",
     "action": "DEDUP",
     "detail": "Removed 0 exact duplicate rows",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:54.357634",
+    "timestamp": "2026-09-07T12:35:01.959817",
     "dataset": "expenditure",
     "action": "VALIDATION",
     "detail": "Total invalid records flagged: 0",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:55.533545",
+    "timestamp": "2026-09-07T12:35:02.863209",
     "dataset": "expenditure",
     "action": "SAVE",
-    "detail": "Saved: C:\\SIH 2026\\ml\\data\\cleaned\\expenditure_all.csv (107828 rows)",
+    "detail": "Saved: C:\\SIH 2026\\SIH2026\\ml\\data\\cleaned\\expenditure_all.csv (107828 rows)",
     "affected_rows": 107828
   },
   {
-    "timestamp": "2026-09-01T19:11:55.559091",
+    "timestamp": "2026-09-07T12:35:02.881505",
     "dataset": "mp_allocation",
     "action": "LOAD",
     "detail": "Loaded LokSabha: 544 rows",
     "affected_rows": 544
   },
   {
-    "timestamp": "2026-09-01T19:11:55.562379",
+    "timestamp": "2026-09-07T12:35:02.884234",
     "dataset": "mp_allocation",
     "action": "LOAD",
     "detail": "Loaded RajyaSabha: 232 rows",
     "affected_rows": 232
   },
   {
-    "timestamp": "2026-09-01T19:11:55.566107",
+    "timestamp": "2026-09-07T12:35:02.886382",
     "dataset": "mp_allocation",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: parsed 774 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 774
   },
   {
-    "timestamp": "2026-09-01T19:11:55.567228",
+    "timestamp": "2026-09-07T12:35:02.887028",
     "dataset": "mp_allocation",
     "action": "DATE_PARSE",
     "detail": "TENURE_START_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:55.571913",
+    "timestamp": "2026-09-07T12:35:02.888825",
     "dataset": "mp_allocation",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: parsed 774 dates as Mon d, yyyy hh:mm:ss",
     "affected_rows": 774
   },
   {
-    "timestamp": "2026-09-01T19:11:55.573252",
+    "timestamp": "2026-09-07T12:35:02.889435",
     "dataset": "mp_allocation",
     "action": "DATE_PARSE",
     "detail": "TENURE_END_DATE: auto-parsed 0 remaining dates",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:55.573524",
+    "timestamp": "2026-09-07T12:35:02.889560",
     "dataset": "mp_allocation",
     "action": "AMOUNT_CLEAN",
     "detail": "ALLOCATED_AMT: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:55.573636",
+    "timestamp": "2026-09-07T12:35:02.889646",
     "dataset": "mp_allocation",
     "action": "AMOUNT_CLEAN",
     "detail": "Total_Amt: already numeric, cast to float",
     "affected_rows": 0
   },
   {
-    "timestamp": "2026-09-01T19:11:55.574715",
+    "timestamp": "2026-09-07T12:35:02.890481",
     "dataset": "mp_allocation",
     "action": "TEXT_CLEAN",
     "detail": "STATE_NAME: stripped whitespace and normalized",
     "affected_rows": 776
   },
   {
-    "timestamp": "2026-09-01T19:11:55.576941",
+    "timestamp": "2026-09-07T12:35:02.891515",
     "dataset": "mp_allocation",
     "action": "TEXT_CLEAN",
     "detail": "MP_NAME: stripped whitespace and normalized",
     "affected_rows": 776
   },
   {
-    "timestamp": "2026-09-01T19:11:55.578570",
+    "timestamp": "2026-09-07T12:35:02.892372",
     "dataset": "mp_allocation",
     "action": "TEXT_CLEAN",
     "detail": "CONSTITUENCY: stripped whitespace and normalized",
     "affected_rows": 776
   },
   {
-    "timestamp": "2026-09-01T19:11:55.584823",
+    "timestamp": "2026-09-07T12:35:02.899514",
     "dataset": "mp_allocation",
     "action": "SAVE",
-    "detail": "Saved: C:\\SIH 2026\\ml\\data\\cleaned\\mp_allocation_all.csv (776 rows)",
+    "detail": "Saved: C:\\SIH 2026\\SIH2026\\ml\\data\\cleaned\\mp_allocation_all.csv (776 rows)",
     "affected_rows": 776
   }
 ]
