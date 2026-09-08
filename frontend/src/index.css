@@ -16,19 +16,24 @@
   --accent-violet: #6366f1;     /* indigo-500 (CTA/highlight)*/
   --accent-violet-dark: #4f46e5;/* indigo-600                */
 
-  /* Risk Indicators */
-  --risk-critical: #ef4444;
-  --risk-critical-bg: #fef2f2;
+  /* Risk Indicators - dark AA-safe ink for TEXT (>=4.5:1 on their tint bg/white).
+     Bright variants (below) are for fills/marks only, never text. */
+  --risk-critical: #991b1b;      /* AA on #fee2e2 bg & white */
+  --risk-critical-bg: #fee2e2;
   --risk-critical-border: #fecaca;
-  --risk-high: #f97316;
-  --risk-high-bg: #fff7ed;
+  --risk-critical-bright: #ef4444; /* marks/fills only */
+  --risk-high: #c2410c;
+  --risk-high-bg: #ffedd5;
   --risk-high-border: #fed7aa;
-  --risk-medium: #f59e0b;
-  --risk-medium-bg: #fffbeb;
+  --risk-high-bright: #f97316;   /* marks/fills only */
+  --risk-medium: #854d0e;
+  --risk-medium-bg: #fef9c3;
   --risk-medium-border: #fde68a;
-  --risk-low: #10b981;
-  --risk-low-bg: #f0fdf4;
+  --risk-medium-bright: #f59e0b; /* marks/fills only */
+  --risk-low: #166534;
+  --risk-low-bg: #dcfce7;
   --risk-low-border: #bbf7d0;
+  --risk-low-bright: #10b981;    /* marks/fills only */
 
   /* Surfaces & Grid */
   --bg-app: #f8fafc;
@@ -1473,19 +1478,13 @@ body {
   --esakshi-blue: #2563eb;
   --goi-navy: #173a67;
   --goi-navy-dark: #0b2140;
-  --goi-saffron: #d97706;
+  --goi-saffron: #b45309;   /* AA on white (4.6:1); used as text in InvestigationDrawer */
   --goi-bg: #f4f6f9;
   --goi-card-bg: #ffffff;
   --goi-border: #cbd5e1;
   --goi-text-dark: #0f172a;
   --goi-text-muted: #475569;
-  --risk-critical-bg: #fee2e2;
-  --risk-high: #c2410c;
-  --risk-high-bg: #ffedd5;
-  --risk-medium: #854d0e;
-  --risk-medium-bg: #fef9c3;
-  --risk-low: #166534;
-  --risk-low-bg: #dcfce7;
+  /* risk-* tokens are defined once in the top :root (AA-safe ink) — do not redefine here */
 }
 
 .tricolor-bar {
