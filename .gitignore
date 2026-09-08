@@ -40,3 +40,8 @@ Thumbs.db
 
 .vercel
 .gstack/
+
+# AI Tooling & Skills
+.agents/
+.claude/
+skills-lock.json
