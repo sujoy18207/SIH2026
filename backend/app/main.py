@@ -322,10 +322,30 @@ def get_work_investigation_dossier(work_id: str):
 # Alerts
 # ---------------------------------------------------------------------------
 
+def _alert_search_filter(search: str):
+    """Build a WHERE clause matching an alert across the fields users actually
+    search for in the Risk Intelligence feed (MP / MLA / representative,
+    constituency, district, state, work ID, or executing agency).
+
+    Returns (clause_sql, params). Only the provided filters are applied.
+    """
+    if not search:
+        return "", []
+    like = f"%{search.lower()}%"
+    return (
+        "(LOWER(work_id) LIKE ? OR LOWER(work_title) LIKE ? OR "
+        "LOWER(state) LIKE ? OR LOWER(district) LIKE ? OR "
+        "LOWER(constituency) LIKE ? OR LOWER(mp_name) LIKE ? OR "
+        "LOWER(agency_name) LIKE ?)",
+        [like] * 7,
+    )
+
+
 @app.get("/api/v1/alerts")
 def list_alerts(
     risk_level: Optional[str] = None,
     signal_type: Optional[str] = None,
+    search: Optional[str] = None,
     limit: int = Query(50, le=500),
     offset: int = 0
 ):
@@ -337,15 +357,28 @@ def list_alerts(
         if risk_level:
             where_clauses.append("risk_level = ?"); params.append(risk_level)
         if signal_type:
-            # Match against the JSON signals array text
+            # Match against the JSON signals array text (case-insensitive).
+            # The stored signal_type values are UPPERCASE (e.g. RULE_VENDOR_SPLITTING),
+            # so the fragment must match the raw keyword embedded in the JSON — no
+            # surrounding quotes.
             where_clauses.append("LOWER(triggering_signals) LIKE ?")
-            params.append(f'%"{signal_type.lower()}"%')
+            params.append(f"%{signal_type.lower()}%")
+        if search:
+            search_sql, search_params = _alert_search_filter(search)
+            if search_sql:
+                where_clauses.append(search_sql)
+                params.extend(search_params)
 
         where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
 
         total = conn.execute(f"SELECT COUNT(*) FROM alerts {where_sql}", params).fetchone()[0]
         rows = conn.execute(
-            f"SELECT * FROM alerts {where_sql} ORDER BY risk_score DESC LIMIT ? OFFSET ?",
+            f"""SELECT alert_id, work_id, work_title, state, district, constituency,
+                       mp_name, agency_name AS implementing_agency_name, created_at,
+                       risk_score, risk_level, data_quality_score, data_quality_status,
+                       evidence_confidence_score, evidence_confidence_level,
+                       triggering_signals, duplicate_candidate_id, is_reviewed
+                FROM alerts {where_sql} ORDER BY risk_score DESC LIMIT ? OFFSET ?""",
             params + [limit, offset]
         ).fetchall()
 
@@ -353,20 +386,13 @@ def list_alerts(
         for r in rows:
             a = dict(r)
             try:
-                a["risk_breakdown"] = json.loads(a["risk_breakdown"] or "{}")
                 a["triggering_signals"] = json.loads(a["triggering_signals"] or "[]")
             except json.JSONDecodeError:
-                a["risk_breakdown"] = {}
                 a["triggering_signals"] = []
-            if a.get("latest_review"):
-                try:
-                    a["latest_review"] = json.loads(a["latest_review"])
-                except json.JSONDecodeError:
-                    a["latest_review"] = None
-            a["is_reviewed"] = bool(a.get("is_reviewed"))
+            a["is_reviewed"] = bool(a.get("is_reviewed") or 0)
             alerts.append(a)
 
-        return {"total": total, "alerts": alerts}
+        return {"total": total, "offset": offset, "limit": limit, "alerts": alerts}
     finally:
         conn.close()
 

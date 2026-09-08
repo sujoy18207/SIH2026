@@ -81,7 +81,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }) {
             color: '#ffffff',
             display: 'flex',
             flexDirection: 'column',
-            justify: 'flex-end'
+            justifyContent: 'flex-end'
           }}
         >
           <h1 style={{ fontSize: '3rem', fontWeight: 800, letterSpacing: '1px', marginBottom: '0.2rem' }}>

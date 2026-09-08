@@ -90,7 +90,8 @@ export default function InvestigationDrawer({ workId, onClose, onSubmitReview })
               marginBottom: '1.25rem',
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'flex-start'
+              alignItems: 'flex-start',
+              width: '100%'
             }}>
               <div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--goi-saffron)', fontWeight: 800, letterSpacing: '0.5px' }}>

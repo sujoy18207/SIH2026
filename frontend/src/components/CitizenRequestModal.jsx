@@ -64,7 +64,7 @@ export default function CitizenRequestModal({ isOpen, onClose }) {
           paddingBottom: '0.85rem',
           marginBottom: '1.25rem',
           display: 'flex',
-          justify: 'space-between',
+          justifyContent: 'space-between',
           alignItems: 'center'
         }}>
           <div>

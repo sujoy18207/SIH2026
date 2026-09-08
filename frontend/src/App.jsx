@@ -15,11 +15,12 @@ import { API_BASE_URL } from './apiConfig';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home'); // 'home' | 'alerts' | 'map' | 'agencies' | 'mps'
-  const [searchTerm, setSearchTerm] = useState('');
   const [persona, setPersona] = useState('Ministry');
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [stats, setStats] = useState(null);
   const [alerts, setAlerts] = useState([]);
+  const [alertsTotal, setAlertsTotal] = useState(0);
+  const [alertsLoading, setAlertsLoading] = useState(false);
   const [selectedWorkId, setSelectedWorkId] = useState(null);
 
   // Modals
@@ -28,23 +29,65 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
+  // Risk Intelligence feed filters — pushed to the API (server-side) so the
+  // full 48k+ alert dataset is searchable, not just the first page.
+  const [alertsSearch, setAlertsSearch] = useState('');
+  const [alertsRiskFilter, setAlertsRiskFilter] = useState('ALL');
+  const [alertsSignalFilter, setAlertsSignalFilter] = useState('ALL');
+  const [alertsPage, setAlertsPage] = useState(0);
+  const ALERTS_PAGE_SIZE = 50;
+
   const fetchDashboardData = () => {
     fetch(`${API_BASE_URL}/api/v1/overview`)
       .then(res => res.json())
       .then(data => setStats(data))
       .catch(err => console.error("Failed to fetch overview stats", err));
+  };
 
-    fetch(`${API_BASE_URL}/api/v1/alerts?limit=100`)
+  const fetchAlerts = () => {
+    setAlertsLoading(true);
+    const params = new URLSearchParams({
+      limit: String(ALERTS_PAGE_SIZE),
+      offset: String(alertsPage * ALERTS_PAGE_SIZE),
+    });
+    if (alertsRiskFilter !== 'ALL') params.set('risk_level', alertsRiskFilter);
+    if (alertsSignalFilter !== 'ALL') params.set('signal_type', alertsSignalFilter);
+    if (alertsSearch.trim()) params.set('search', alertsSearch.trim());
+
+    fetch(`${API_BASE_URL}/api/v1/alerts?${params.toString()}`)
       .then(res => res.json())
       .then(data => {
         setAlerts(data.alerts || []);
+        setAlertsTotal(data.total || 0);
+        setAlertsLoading(false);
       })
-      .catch(err => console.error("Failed to fetch alerts", err));
+      .catch(err => {
+        console.error("Failed to fetch alerts", err);
+        setAlertsLoading(false);
+      });
   };
 
   useEffect(() => {
     fetchDashboardData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Reset to the first page whenever filters or the search term change.
+  // (No fetch here — the fetch effect below reacts to the combined change and
+  // issues exactly one request per change.)
+  useEffect(() => {
+    setAlertsPage(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alertsRiskFilter, alertsSignalFilter, alertsSearch]);
+
+  // Debounced fetch. Filter/page changes fire immediately; typing an area /
+  // MP / work-ID search debounces at 350ms so the full dataset is searchable
+  // without a request per keystroke.
+  useEffect(() => {
+    const t = setTimeout(() => fetchAlerts(), alertsSearch ? 350 : 0);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alertsPage, alertsRiskFilter, alertsSignalFilter, alertsSearch]);
 
   const handleTriggerAnalytics = () => {
     setIsRefreshing(true);
@@ -133,8 +176,18 @@ export default function App() {
               <DashboardCharts stats={stats} />
               <RiskAlertsFeed
                 alerts={alerts}
+                total={alertsTotal}
+                loading={alertsLoading}
+                searchTerm={alertsSearch}
+                onSearchChange={setAlertsSearch}
+                riskFilter={alertsRiskFilter}
+                onRiskFilterChange={setAlertsRiskFilter}
+                signalFilter={alertsSignalFilter}
+                onSignalFilterChange={setAlertsSignalFilter}
+                page={alertsPage}
+                onPageChange={setAlertsPage}
+                pageSize={ALERTS_PAGE_SIZE}
                 onSelectAlert={openInvestigation}
-                stats={stats}
               />
             </>
           )}
