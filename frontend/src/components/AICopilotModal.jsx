@@ -7,8 +7,8 @@ export default function AICopilotModal({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: 'नमस्ते! I am your AI MPLADS Investigation Copilot (सक्षम AI). Ask me about high-risk works, expenditure anomalies, progress mismatches, or implementing agency performance.',
-      source: 'eSAKSHI AI Engine'
+      text: 'नमस्ते! I am your AI MPLADS Investigation Copilot (सक्षम AI), powered by DeepSeek-V4-Flash over 1,28,670 real eSAKSHI works. Ask me about high-risk works, vendor concentration, cost anomalies, or implementing agency performance.',
+      source: 'DeepSeek-V4-Flash + eSAKSHI Engine'
     }
   ]);
   const [loading, setLoading] = useState(false);
@@ -26,12 +26,17 @@ export default function AICopilotModal({ isOpen, onClose }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: textToSend })
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Server returned HTTP ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         setMessages(prev => [...prev, {
           sender: 'ai',
           text: data.answer || 'No specific anomalies found matching this criteria.',
-          source: data.source || 'Local RAG Risk Engine',
+          source: data.source || 'DeepSeek-V4-Flash + eSAKSHI Engine',
           relevantWorks: data.relevant_works || []
         }]);
         setLoading(false);
@@ -40,8 +45,8 @@ export default function AICopilotModal({ isOpen, onClose }) {
         console.error("Copilot query failed", err);
         setMessages(prev => [...prev, {
           sender: 'ai',
-          text: 'Analysis for High-Risk Works:\n- High / Critical Risk Works flagged: 1,673\n- Top flagged categories: Roads, Community Cultural Halls, Solar High-Mast Lighting.\n- Primary triggers: Physical vs Financial progress gaps >30% and statistical cost deviations.',
-          source: 'Offline Fallback Engine'
+          text: '⚠️ **Backend Connection Error**\n\nUnable to reach the API server at `http://localhost:8000`.\n\nPlease start the backend server in your terminal:\n```powershell\npython -m uvicorn app.main:app --port 8000 --app-dir backend\n```',
+          source: 'System Connection Alert'
         }]);
         setLoading(false);
       });
@@ -61,8 +66,10 @@ export default function AICopilotModal({ isOpen, onClose }) {
 
   const samplePrompts = [
     "Show high-risk works in West Bengal",
-    "Find projects with expenditure-progress mismatch",
-    "Which implementing agencies have severe delay risk?"
+    "Which implementing agencies have severe delay risk?",
+    "Investigate work 80688",
+    "Which vendors receive the most payments?",
+    "How does the AI detection algorithm work?"
   ];
 
   return (
@@ -76,8 +83,13 @@ export default function AICopilotModal({ isOpen, onClose }) {
               <Sparkles size={22} color="#0ea5e9" />
             </div>
             <div>
-              <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f2744', margin: 0 }}>AI Investigation Copilot (सक्षम AI)</h2>
-              <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>Decision-Support Natural Language Query Assistant</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f2744', margin: 0 }}>AI Investigation Copilot (सक्षम AI)</h2>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, background: '#eff6ff', color: '#2563eb', border: '1px solid #bfdbfe', borderRadius: '12px', padding: '0.1rem 0.5rem' }}>
+                  DeepSeek-V4-Flash
+                </span>
+              </div>
+              <p style={{ fontSize: '0.78rem', color: '#64748b', margin: 0 }}>Decision-Support Natural Language Query Assistant (1,28,670 real eSAKSHI works)</p>
             </div>
           </div>
           <button

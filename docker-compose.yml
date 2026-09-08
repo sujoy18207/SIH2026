@@ -19,7 +19,9 @@ services:
       - mplads_db:/data
     environment:
       - MPLADS_DB=/data/mplads.db
-      # Set your Gemini API key for the AI Copilot (optional — local engine works without it)
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - DEEPSEEK_BASE_URL=${DEEPSEEK_BASE_URL:-https://inference.makora.com/v1}
+      - DEEPSEEK_MODEL=${DEEPSEEK_MODEL:-deepseek-ai/DeepSeek-V4-Flash}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
     ports:
       - "8000:8000"

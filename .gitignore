@@ -37,6 +37,8 @@ Thumbs.db
 .vscode/
 .idea/
 .env
+.env.*
+backend/.env
 
 .vercel
 .gstack/
