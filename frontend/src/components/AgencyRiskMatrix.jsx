@@ -199,7 +199,7 @@ export default function AgencyRiskMatrix({ onSelectAgency }) {
             <tbody>
               {filteredAgencies.length === 0 ? (
                 <tr>
-                  <td colSpan={9} style={{ textAlign: 'center', padding: '2.5rem', color: '#94a3b8' }}>
+                  <td colSpan={9} style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
                     {loading ? 'Loading agency performance matrix...' : 'No matching agencies found.'}
                   </td>
                 </tr>
@@ -227,7 +227,7 @@ export default function AgencyRiskMatrix({ onSelectAgency }) {
                         <td style={{ color: '#16a34a', fontWeight: 600 }}>
                           {ag.completed_works}
                         </td>
-                        <td style={{ color: ag.delayed_works > 0 ? '#ef4444' : '#64748b', fontWeight: 700 }}>
+                        <td style={{ color: ag.delayed_works > 0 ? 'var(--risk-critical)' : 'var(--text-muted)', fontWeight: 700 }}>
                           {ag.delayed_works}
                         </td>
                         <td style={{ fontWeight: 600 }}>
@@ -235,11 +235,11 @@ export default function AgencyRiskMatrix({ onSelectAgency }) {
                         </td>
                         <td>
                           {ag.anomaly_count > 0 ? (
-                            <span style={{ background: '#fef2f2', color: '#ef4444', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.75rem' }}>
+                            <span style={{ background: 'var(--risk-critical-bg)', color: 'var(--risk-critical)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.75rem' }}>
                               {ag.anomaly_count}
                             </span>
                           ) : (
-                            <span style={{ color: '#94a3b8' }}>0</span>
+                            <span style={{ color: 'var(--text-muted)' }}>0</span>
                           )}
                         </td>
                         <td>

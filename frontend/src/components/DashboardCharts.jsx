@@ -139,11 +139,11 @@ export default function DashboardCharts({ stats }) {
           Top 10 States by High-Risk Flags
         </div>
         {zonesError ? (
-          <div style={{ color: '#ef4444', fontSize: '0.8rem', padding: '2rem 0', textAlign: 'center' }}>
+          <div style={{ color: 'var(--risk-critical)', fontSize: '0.8rem', padding: '2rem 0', textAlign: 'center' }}>
             Failed to load state data: {zonesError}
           </div>
         ) : zones === null ? (
-          <div style={{ color: '#94a3b8', fontSize: '0.8rem', padding: '2rem 0', textAlign: 'center' }}>
+          <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', padding: '2rem 0', textAlign: 'center' }}>
             Loading state risk aggregates from the eSAKSHI database...
           </div>
         ) : (
