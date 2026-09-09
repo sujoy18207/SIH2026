@@ -1,9 +1,6 @@
-// Robust API Base URL supporting localhost, 127.0.0.1, custom ports & proxy
-export const API_BASE_URL = typeof window !== 'undefined' && (
-  window.location.hostname === 'localhost' ||
-  window.location.hostname === '127.0.0.1' ||
-  window.location.port === '5173' ||
-  window.location.port === '3000'
-)
-  ? 'http://localhost:8000'
+// In development (Vite dev server), point to local FastAPI backend directly.
+// In production (Docker / Nginx), use relative '' so Nginx reverse-proxies /api/ automatically.
+export const API_BASE_URL = import.meta.env.DEV
+  ? (import.meta.env.VITE_API_URL || 'http://localhost:8000')
   : '';
+
